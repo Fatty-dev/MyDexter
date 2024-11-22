@@ -67,7 +67,6 @@ const ChatBubblePage = () => {
       </p>
       </div>
 
-      {/* Footer text */}
     
     </div>
   );
