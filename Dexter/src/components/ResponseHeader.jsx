@@ -13,9 +13,9 @@ const ResponseHeader = () => {
       <div className='flex items-center gap-10'>
   
 
-      <div className='w-full flex items-center justify-between  mb-2 sm:mb-0 '>
+      <div className='w-full flex flex-col md:flex-row items-start md:items-center justify-between  mb-2 sm:mb-0 '>
       {/* Left Section */}
-      <div className='text-secondary flex items-center gap-2 '>
+      <div className='text-secondary flex items-center gap-2 mb-2 md:mb-0 '>
         <MdAccessTime size={20} /> 
         <p className='text-xs'>1 mins ago</p>
       </div>
