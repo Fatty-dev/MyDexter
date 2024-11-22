@@ -39,11 +39,11 @@ const ChatBubblePage = () => {
           >
             {/* AI Logo for incoming messages */}
             {message.sender === "incoming" ? (
-              <div className="flex items-start mr-2">
-                <img src={profile_logo} alt="AI Logo" className="w-8 h-8" />
+              <div className="flex items-start mr-2 flex-shrink-0">
+                <img src={profile_logo} alt="AI Logo" className="lg:size-8 size-6" />
               </div>
             ) : (
-              <div className="flex items-center ml-2">
+              <div className="flex items-center lg:ml-2 ml-1">
                 <FiUser className="text-gray-500 text-xl" />
               </div>
             )}
@@ -51,7 +51,7 @@ const ChatBubblePage = () => {
             <div
               className={`${
                 message.sender === "outgoing" ? "text-black" : "text-black"
-              } rounded-lg px-3 max-w-lg `}
+              } rounded-lg lg:px-3 px-2 max-w-lg `}
             >
               {message.text}
             </div>

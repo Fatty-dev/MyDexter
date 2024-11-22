@@ -8,7 +8,7 @@ const Layout = () => {
     <div className="flex flex-1">
       <Sidebar />
 
-      <div className="flex-grow duration-300 bg-[#F8F8F8] ">
+      <div className="flex-grow duration-300 bg-[#F8F8F8] lg:ml-64">
         <Outlet />
       </div>
     </div>
