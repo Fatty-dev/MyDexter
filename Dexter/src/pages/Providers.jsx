@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Provider = ({children}) => {
+const Providers = ({children}) => {
   return (
   <>{children}</>
   )
 }
 
-export default Provider
+export default Providers
