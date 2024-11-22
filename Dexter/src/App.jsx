@@ -3,7 +3,6 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Layout from './components/Layout'
 import Prompt from './pages/Prompt';
 import ChatBubble from './pages/ChatBubble';
-import Provider from './pages/Providers';
 import Signup from './pages/Onboard/Signup';
 import Login from './pages/Onboard/Login';
 const App = () => {
@@ -14,9 +13,7 @@ const App = () => {
     <Route
           path="/"
           element={
-            <Provider>
               <Layout />
-            </Provider>
           }
         >
           <Route path="/login" element={<Login/>}/>
