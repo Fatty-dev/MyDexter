@@ -9,7 +9,7 @@ const ResponseHeader = () => {
 
   const toggleSidebar = () => setIsOpen(!isOpen);
   return (
-    <div className='fixed z-[1000] top-0 start-0   w-full lg:ml-[17rem] lg:w-[81%] border-b py-3 px-4'>
+    <div className='fixed z-[1000] top-0  bg-[#F3F4F6] w-full lg:w-[81%] border-b py-3 px-4'>
       <div className='flex items-center gap-10'>
   
 
