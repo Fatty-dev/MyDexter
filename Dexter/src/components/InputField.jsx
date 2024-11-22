@@ -24,7 +24,7 @@ const InputField = () => {
 
   return (
     <div className="mt-6 flex justify-center w-full px-4 sm:px-6 md:px-8">
-      <div className="flex items-center justify-between w-full max-w-3xl px-4 py-3 border bg-white border-gray-300 rounded-xl">
+      <div className="flex items-center justify-between w-full max-w-3xl mx-auto px-4 py-3 border bg-white border-gray-300 rounded-xl">
         <div className="flex items-center gap-2 flex-grow">
           <PiMagicWand size={22} className="text-secondary" />
           <textarea

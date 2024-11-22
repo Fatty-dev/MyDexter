@@ -29,7 +29,7 @@ const ChatBubblePage = () => {
       <ResponseHeader />
 
       {/* Chat body */}
-      <div className="w-full sm:w-[80%] mt-[8rem] lg:mt-[5rem] md:w-[70%] lg:w-[60%]  flex-1 overflow-y-auto p-4">
+      <div className="w-full sm:w-[80%] mt-[8rem] lg:mt-[5rem] md:w-[70%] lg:w-[50%] mx-auto flex-1 overflow-y-auto p-4">
         {messages.map((message) => (
           <div
             key={message.id}

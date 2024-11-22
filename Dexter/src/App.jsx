@@ -1,9 +1,9 @@
 import React from 'react'
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Layout from './components/Layout'
-import Provider from './pages/Provider';
 import Prompt from './pages/Prompt';
 import ChatBubble from './pages/ChatBubble';
+import Provider from './pages/Provider';
 import Signup from './pages/Onboard/Signup';
 import Login from './pages/Onboard/Login';
 const App = () => {
