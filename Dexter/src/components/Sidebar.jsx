@@ -34,6 +34,17 @@ const Sidebar = ({isOpen}) => {
         { id: 4, label: "Sign In", icon: signin, path: "/login" },
       ];
 
+    
+  
+    const onLinkClick = (item) => {
+      if (item.path !== '/login') {
+        navigate(item.path)
+        return;
+      }
+
+      setIsSignedUp(true)
+    }
+
   return (
     <div
     className={`fixed top-0 left-0 w-64 bg-white h-full shadow-xl z-20 transform transition-transform duration-300 ease-in-out ${
@@ -56,10 +67,10 @@ const Sidebar = ({isOpen}) => {
             key={item.id}
             className={`flex items-center space-x-3 cursor-pointer py-2 px-2 rounded-md ${
               location.pathname === item.path
-                ? "bg-hover text-white" // Active tab style
+                ? "bg-hover text-white" 
                 : "hover:text-primary hover:bg-hover"
             }`}
-            onClick={() => navigate(item.path)}
+            onClick={() => onLinkClick(item)}
           >
             <img
               src={item.icon}
@@ -82,7 +93,7 @@ const Sidebar = ({isOpen}) => {
           </p>
           <button
             className="px-4 py-2 text-primary border border-primary rounded-full w-full font-medium hover:bg-primary hover:text-white"
-            onClick={() => setIsSignedUp(true)} // Set Sign-Up State
+            // onClick={() => setIsSignedUp(true)} 
           >
             Sign Up
           </button>
