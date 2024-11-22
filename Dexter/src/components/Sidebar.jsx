@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import logo from "../assets/Main_logo.svg";
+import logo from "../assets/Main_Logo.svg";
 import blog from "../assets/blog.svg";
 import signin from "../assets/signin.svg";
 import { BsPersonCircle } from "react-icons/bs";
