@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { FiUser } from "react-icons/fi";
 
-import profile_logo from "../assets/logo.svg"; 
+import profile_logo from "../assets/logo.svg";
 import InputField from "../components/InputField";
 import ResponseHeader from "../components/ResponseHeader";
 
 const ChatBubblePage = () => {
-
   const [messages, setMessages] = useState([
-    { id: 1, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sit amet neque nec tellus vulputate aliquam tincidunt sit amet risus. Vestibulum luctus dapibus ex in pellentesque. Proin placerat suscipit tellus ut iaculis. Nulla dictum aliquet tellus.", sender: "incoming" },
+    {
+      id: 1,
+      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sit amet neque nec tellus vulputate aliquam tincidunt sit amet risus. Vestibulum luctus dapibus ex in pellentesque. Proin placerat suscipit tellus ut iaculis. Nulla dictum aliquet tellus.",
+      sender: "incoming",
+    },
     // { id: 2, text: "I'm good, thanks! What about you?", sender: "outgoing" },
   ]);
   const [input, setInput] = useState("");
@@ -25,7 +28,6 @@ const ChatBubblePage = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center py-4">
-      
       <ResponseHeader />
 
       {/* Chat body */}
@@ -40,7 +42,11 @@ const ChatBubblePage = () => {
             {/* AI Logo for incoming messages */}
             {message.sender === "incoming" ? (
               <div className="flex items-start mr-2 flex-shrink-0">
-                <img src={profile_logo} alt="AI Logo" className="lg:size-8 size-6" />
+                <img
+                  src={profile_logo}
+                  alt="AI Logo"
+                  className="lg:size-8 size-6"
+                />
               </div>
             ) : (
               <div className="flex items-center lg:ml-2 ml-1">
@@ -61,13 +67,15 @@ const ChatBubblePage = () => {
 
       {/* Chat footer */}
       <div className="fixed bottom-2 w-full">
-      <InputField input={input} setInput={setInput} sendMessage={sendMessage} />
-      <p className="text-secondary text-center text-sm mt-2 px-4 ">
-        3 searches left today. Reloads daily.
-      </p>
+        <InputField
+          input={input}
+          setInput={setInput}
+          sendMessage={sendMessage}
+        />
+        <p className="text-secondary text-center text-sm mt-2 px-4 ">
+          3 searches left today. Reloads daily.
+        </p>
       </div>
-
-    
     </div>
   );
 };

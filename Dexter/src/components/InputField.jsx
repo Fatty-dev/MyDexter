@@ -1,10 +1,13 @@
 import { FiSend } from "react-icons/fi";
 import { useState, useRef } from "react";
 import { PiMagicWand } from "react-icons/pi";
+import { useNavigate } from "react-router-dom";
 
 const InputField = () => {
   const [input, setInput] = useState("");
   const textareaRef = useRef(null);
+
+  const navigate = useNavigate()
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
@@ -15,7 +18,7 @@ const InputField = () => {
 
   const handleSubmit = () => {
     if (input.trim()) {
-      alert(`Your question: ${input}`);
+      navigate(`/chat?prompt=${input}`);
       setInput(""); 
       const textarea = textareaRef.current;
       textarea.style.height = "auto"; 
