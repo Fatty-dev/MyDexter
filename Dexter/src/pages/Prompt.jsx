@@ -17,7 +17,7 @@ const Prompt = () => {
       <Header />
 
       {/* Hamburger Menu */}
-      <div className="block sm:hidden absolute top-4 left-4 z-20">
+      <div className="sm:block lg:hidden absolute top-4 left-4 z-20">
         <button onClick={toggleSidebar} className="text-3xl text-gray-700">
           {isOpen ? <FiX  size={22}/> : <CgMenuRight size={22} />}
         </button>

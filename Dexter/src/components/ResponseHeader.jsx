@@ -9,11 +9,11 @@ const ResponseHeader = () => {
 
   const toggleSidebar = () => setIsOpen(!isOpen);
   return (
-    <div className='fixed z-[1000] top-0  bg-[#F3F4F6] w-full lg:w-[81%] border-b py-3 px-4'>
+    <div className='fixed z-[1000] top-0  bg-[#F3F4F6] w-full lg:w-[81%] lg:ml-[4rem] xl:ml-0 border-b py-3 px-4'>
       <div className='flex items-center gap-10'>
   
 
-      <div className='w-full flex flex-col md:flex-row items-start md:items-center justify-between  mb-2 sm:mb-0 '>
+      <div className='w-full flex flex-col xl:flex-row items-start xl:items-center  justify-between  mb-2 sm:mb-0 '>
       {/* Left Section */}
       <div className='text-secondary flex items-center gap-2 mb-2 md:mb-0 '>
         <MdAccessTime size={20} /> 
@@ -28,7 +28,7 @@ const ResponseHeader = () => {
       </div>
 
       {/* Right Section */}
-      <div className='flex items-center font-medium gap-1 sm:ml-4'>
+      <div className='flex items-center font-medium gap-1 '>
         <button className='text-primary text-md'>Signup</button>
         <p className='text-secondary'>for more SEO features!</p>
       </div>
@@ -36,7 +36,7 @@ const ResponseHeader = () => {
 
                 {/* Hamburger Menu */}
                 <div>
-            <div className="block sm:hidden absolute right-4 top-4  z-20">
+            <div className="sm:block lg:hidden absolute right-4 top-4  z-20">
         <button onClick={toggleSidebar} className="text-3xl text-gray-700">
           {isOpen ? <FiX  size={22}/> : <CgMenuRight size={22} />}
         </button>
