@@ -3,7 +3,7 @@ import chat from "../../../assets/chat.svg";
 import image1 from "../../../assets/1.svg";
 import image2 from "../../../assets/3.svg";
 import blog from "../../../assets/blog 2.svg";
-import dexter from "../../../assets/dextarAi.svg";
+import dexter from "../../../assets/dextarAI.svg";
 import down from "../../../assets/down background.png";
 import Analytic from "../../../assets/Analytics 2.svg";
 import blogpost from "../../../assets/blogpost.svg";

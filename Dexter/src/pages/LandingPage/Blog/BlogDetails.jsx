@@ -5,7 +5,7 @@ import girl from "../../../assets/girl.svg";
 import Img2 from "../../../assets/Img2.svg";
 import Img3 from "../../../assets/Img3.svg";
 import Img4 from "../../../assets/Img4.svg";
-import Img5 from "../../../assets/Img5.svg";
+// import Img5 from "../../../assets/Img5.svg";
 import { useNavigate } from 'react-router-dom';
 
 
