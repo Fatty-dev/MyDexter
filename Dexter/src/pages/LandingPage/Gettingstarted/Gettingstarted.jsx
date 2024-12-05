@@ -1,7 +1,7 @@
 import React from 'react'
 import Hero from './Hero'
 import Update from '../Home/Update'
-import What from './what'
+import What from './What'
 import Details from './Details'
 
 
