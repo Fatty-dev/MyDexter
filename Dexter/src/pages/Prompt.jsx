@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { CgMenuRight } from "react-icons/cg";
-import Header from "../components/Header";
-import InputField from "../components/InputField";
-import PromptTags from "../components/PromptTag";
-import Sidebar from "../components/Sidebar";
+import Header from "../components/Dashboardcomp/Header";
+import InputField from "../components/Dashboardcomp/InputField";
+import PromptTags from "../components/Dashboardcomp/PromptTag";
+import Sidebar from "../components/Dashboardcomp/Sidebar";
 
 const Prompt = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +19,7 @@ const Prompt = () => {
       {/* Hamburger Menu */}
       <div className="sm:block lg:hidden absolute top-4 left-4 z-20">
         <button onClick={toggleSidebar} className="text-3xl text-gray-700">
-          {isOpen ? <FiX  size={22}/> : <CgMenuRight size={22} />}
+          {isOpen ? <FiX size={22} /> : <CgMenuRight size={22} />}
         </button>
       </div>
 
@@ -36,8 +36,7 @@ const Prompt = () => {
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <Sidebar 
-        isOpen={isOpen}/>
+        <Sidebar isOpen={isOpen} />
       </div>
 
       {/* Main Content */}

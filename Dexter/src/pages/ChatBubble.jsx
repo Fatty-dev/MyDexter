@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { FiUser } from "react-icons/fi";
 
 import profile_logo from "../assets/logo.svg";
-import InputField from "../components/InputField";
-import ResponseHeader from "../components/ResponseHeader";
+import InputField from "../components/Dashboardcomp/InputField";
+import ResponseHeader from "../components/Dashboardcomp/ResponseHeader";
 
 const ChatBubblePage = () => {
   const [messages, setMessages] = useState([

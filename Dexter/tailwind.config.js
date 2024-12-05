@@ -10,8 +10,14 @@ export default {
         primary: " #6D68FB",
         secondary: "#7A8EAC",
         tetiary:"#344054",
+        layer:"#F1F1FF",
         hover:"#F9FAFB"
-       
+      },
+      container: {
+        padding: '1rem', 
+      },
+      container_none: {
+          padding: '0',
       },
     },
   },
