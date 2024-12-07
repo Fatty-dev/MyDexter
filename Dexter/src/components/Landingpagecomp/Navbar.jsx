@@ -43,7 +43,7 @@ const Navbar = () => {
 
       {/* Navigation links */}
       <ul
-        className={`lg:flex lg:space-x-6 text-lg text-gray-600 transition-transform duration-300 ease-in-out ${
+        className={`lg:flex  lg:space-x-6 text-lg text-gray-600 transition-transform duration-300 ease-in-out ${
           isOpen ? 'block' : 'hidden lg:block'
         }`}
       >

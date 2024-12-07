@@ -1,8 +1,8 @@
 import React from 'react';
 import { HiMiniXMark } from "react-icons/hi2";
 import { IoCheckmark } from "react-icons/io5";
-import Man from "../../../assets/Man.svg";
-import Woman from "../../../assets/Woman.svg";
+import Man from "../../../assets/rec1.png";
+import Woman from "../../../assets/rec2.png";
 
 const Risk = () => {
   // Data for Jon and Sarah
