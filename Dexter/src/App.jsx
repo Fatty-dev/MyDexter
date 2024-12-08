@@ -33,7 +33,7 @@ const App = () => {
 
         {/* Nested Routes under Dashboard */}
         <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route path="prompt" element={<Prompt />} />
+          <Route path="" element={<Prompt />} />
           <Route path="chat" element={<ChatBubble />} />
         </Route>
       </Routes>

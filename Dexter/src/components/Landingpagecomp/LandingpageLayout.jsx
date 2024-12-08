@@ -2,9 +2,13 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
+import PublicWrapper from "../../lib/providers/public-wrapper";
+import Cursor from "../Common/Cursor";
 
 const LandingpageLayout = () => {
   return (
+    <PublicWrapper>
+      <Cursor/>
     <div className="container mx-auto flex flex-col min-h-screen">
       {/* Navbar */}
       <Navbar />
@@ -17,6 +21,7 @@ const LandingpageLayout = () => {
       {/* Footer */}
       <Footer />
     </div>
+    </PublicWrapper>
   );
 };
 
