@@ -41,7 +41,7 @@ const Risk = () => {
         </h1>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* Jon Section */}
-          <div className="flex flex-col lg:mt-14">
+          <div className="flex flex-col">
             <img
               src={Man}
               alt="Jon"
