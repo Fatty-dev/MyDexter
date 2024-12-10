@@ -1,15 +1,25 @@
 import gsap from "gsap";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const Cursor = () => {
+  const [isMobile, setIsMobile] = useState(false);
   const ref = useRef();
 
   useEffect(() => {
-    if (!ref.current) return;
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768); // Change this breakpoint as needed
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile || !ref.current) return;
 
     const handleMouseMove = (e) => {
-      if (!ref.current) return;
-
       const mouseX = e.clientX;
       const mouseY = e.clientY;
 
@@ -42,7 +52,9 @@ const Cursor = () => {
         link.removeEventListener("mouseout", removeCursorClass);
       });
     };
-  }, []);
+  }, [isMobile]);
+
+  if (isMobile) return null; // Hide the cursor on mobile view
 
   return (
     <div

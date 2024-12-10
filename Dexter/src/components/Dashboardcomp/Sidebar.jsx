@@ -7,13 +7,21 @@ import { BsPersonCircle } from "react-icons/bs";
 import ai from "../../assets/ai.svg";
 import analytics from "../../assets/analytics.svg";
 import collapse from "../../assets/collapse.svg";
-import Signup from "../../pages/Onboard/Signup";
+// import Signup from "../../pages/Onboard/Signup";
 
 const Sidebar = ({ isOpen }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isSignedUp, setIsSignedUp] = useState(false);
-  const [isModalOpen, setModalOpen] = useState(false); // State for modal visibility
+  // const [isModalOpen, setModalOpen] = useState(false); // State for modal visibility
+
+  const handleSignup = () => {
+    navigate("/signup");
+  };
+
+  const handleLogin = () => {
+    navigate("/login"); // Navigate to the login page when "Sign In" is clicked
+  };
 
   const navigationItems = isSignedUp
     ? [
@@ -25,15 +33,15 @@ const Sidebar = ({ isOpen }) => {
         { id: 1, label: "Dexter AI", icon: ai, path: "/" },
         { id: 2, label: "Analytics", icon: analytics, path: "/analytics" },
         { id: 3, label: "Blog Post", icon: blog, path: "/blog-post" },
-        { id: 4, label: "Sign In", icon: signin, path: "/login" },
+        { id: 4, label: "Sign In", icon: signin, path: "/login", onClick: handleLogin }, // Handle click for "Sign In"
       ];
 
   const onLinkClick = (item) => {
     if (item.path !== "/login") {
       navigate(item.path);
-      return;
+    } else {
+      item.onClick && item.onClick(); // Call handleLogin if "Sign In" is clicked
     }
-    setIsSignedUp(true);
   };
 
   return (
@@ -51,7 +59,7 @@ const Sidebar = ({ isOpen }) => {
       </div>
 
       {/* Navigation Links */}
-      <nav className="space-y-3 px-6 md:px-4 mt-6">
+      <nav className="space-y-3 px-6 md:px-6 mt-6">
         <p className="text-secondary text-xs">ASSISTANT</p>
         {navigationItems.map((item) => (
           <div
@@ -77,14 +85,14 @@ const Sidebar = ({ isOpen }) => {
 
       {/* Conditional Sign-Up Section */}
       {!isSignedUp ? (
-        <div className="mt-6 border-t px-6 md:px-4">
+        <div className="mt-6 border-t px-6 md:px-6">
           <p className="text-secondary text-sm mt-4 mb-3">
             Create a free account, or go Pro to unlock automated blog creation
             and domain analytics!
           </p>
           <button
             className="px-4 py-2 text-primary border border-primary rounded-full w-full font-medium hover:bg-primary hover:text-white"
-            onClick={() => setModalOpen(true)} // Open the modal on button click
+            onClick={handleSignup} // Open the modal on button click
           >
             Sign Up
           </button>
@@ -97,8 +105,9 @@ const Sidebar = ({ isOpen }) => {
         </div>
       )}
 
-{!isSignedUp && (
-        <div className="px-6 mt-6 pb-6 border-t md:px-4">
+      {/* Footer */}
+      {!isSignedUp && (
+        <div className="px-6 mt-6 pb-6 border-t md:px-6">
           <ul className="space-y-2 text-secondary font-semibold mt-4">
             <li className="cursor-pointer hover:text-primary">Why My Dexter?</li>
             <li className="cursor-pointer hover:text-primary">FAQ</li>
@@ -111,7 +120,7 @@ const Sidebar = ({ isOpen }) => {
       )}
 
       {/* Signup Modal */}
-      <Signup isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
+      {/* <Signup isOpen={isModalOpen} onClose={() => setModalOpen(false)} /> */}
     </div>
   );
 };
