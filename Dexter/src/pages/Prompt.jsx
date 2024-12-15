@@ -17,7 +17,7 @@ const Prompt = () => {
       <Header />
 
       {/* Hamburger Menu */}
-      <div className="sm:block lg:hidden absolute top-4 left-4 z-20">
+      <div className="sm:block md:hidden absolute top-4 left-4 z-20">
         <button onClick={toggleSidebar} className="text-3xl text-gray-700">
           {isOpen ? <FiX size={22} /> : <CgMenuRight size={22} />}
         </button>
@@ -32,7 +32,7 @@ const Prompt = () => {
       ></div>
 
       <div
-        className={`fixed top-0 left-0 w-64 lg:hidden bg-white h-full shadow-xl z-20 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 w-64 md:hidden bg-white h-full shadow-xl z-20 transform transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >

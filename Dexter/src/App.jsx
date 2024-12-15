@@ -13,6 +13,8 @@ import Pricing from "./pages/LandingPage/Pricing/Pricing";
 import Blog from "./pages/LandingPage/Blog/Blog";
 import Privacy from "./pages/LandingPage/Privacy";
 import BlogDetails from "./pages/LandingPage/Blog/BlogDetails";
+import Settings from "./pages/Dashboard/Settings/Settings";
+
 
 const App = () => {
   return (
@@ -34,7 +36,9 @@ const App = () => {
         {/* Nested Routes under Dashboard */}
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route path="" element={<Prompt />} />
-          <Route path="chat" element={<ChatBubble />} />
+          <Route path="chat/:chatId" element={<ChatBubble />} />
+          <Route path="settings" element={<Settings />} />
+
         </Route>
       </Routes>
     </BrowserRouter>
