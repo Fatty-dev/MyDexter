@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import logo from "../../assets/Main_Logo.svg";
 import blog from "../../assets/blog.svg";
 import signin from "../../assets/signin.svg";
@@ -19,6 +19,8 @@ const Sidebar = ({ isOpen }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { email } = useEmailStore();
+  const { chatId } = useParams();
+
   const isSignedUp = Boolean(localStorage.getItem("accessToken"));
 
   const [recentChats, setRecentChats] = useState([]);
@@ -35,7 +37,7 @@ const Sidebar = ({ isOpen }) => {
           toast.error("Failed to load chat history.");
         }
       } catch (error) {
-        toast.error("Error fetching chat history.");
+        // toast.error("Error fetching chat history.");
       } finally {
         setLoading(false);
       }
@@ -46,7 +48,6 @@ const Sidebar = ({ isOpen }) => {
   const toggleDropdown = () => setShowDropdown((prev) => !prev);
 
 
-
   const navigationItems = isSignedUp
     ? [
         { id: 1, label: "Dexter AI", icon: ai, path: "/dashboard" },
@@ -54,7 +55,7 @@ const Sidebar = ({ isOpen }) => {
         { id: 3, label: "Blog Post", icon: blog, path: "/blog-post" },
       ]
     : [
-        { id: 1, label: "Dexter AI", icon: ai, path: "/" },
+        { id: 1, label: "Dexter AI", icon: ai, path: "/dashboard" },
         { id: 2, label: "Analytics", icon: analytics, path: "/analytics" },
         { id: 3, label: "Blog Post", icon: blog, path: "/blog-post" },
         { id: 4, label: "Sign In", icon: signin, path: "/login" },
@@ -74,8 +75,9 @@ const Sidebar = ({ isOpen }) => {
         </button>
       </div>
 
+
       {/* Navigation Links */}
-      <nav className="space-y-3 px-6 md:px-4 mt-6">
+      <nav className="space-y-3 px-6 md:px-6 mt-6">
         <p className="text-secondary text-xs">ASSISTANT</p>
         {navigationItems.map((item) => (
           <div
@@ -99,36 +101,54 @@ const Sidebar = ({ isOpen }) => {
         ))}
       </nav>
 
-      {/* Recent Chats Section */}
-      {isSignedUp && (
-        <div className="mt-6 border-t px-6 md:px-4">
-          <p className="text-secondary my-4 text-sm font-semibold mb-2">
-            RECENT CHATS
-          </p>
-          {loading ? (
-            <p className="text-sm text-gray-500">Loading chats...</p>
-          ) : recentChats.length > 0 ? (
-            <ul className="space-y-4 text-tetiary text-sm">
-              {recentChats.map((chat) => (
-                <div
-                  key={chat._id}
-                  className="cursor-pointer hover:text-primary flex items-center"
-                  onClick={() => navigate(`dashboard/chat/${chat._id}`)}
-                >
-                  <span className="truncate">{chat.title}</span>
-                </div>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-sm text-gray-500">No recent chats available.</p>
-          )}
-        </div>
+      {!isSignedUp && (
+        <div className="mt-6 border-t px-6">
+        <p className="text-secondary text-sm mt-4 mb-3">
+          Create a free account, or go Pro to unlock automated blog creation and domain analytics!
+        </p>
+        <button
+          className="px-4 py-2 text-primary border border-primary rounded-full w-full font-medium hover:bg-primary hover:text-white"
+         onClick={() => navigate("/signup")}
+        >
+          Sign Up
+        </button>
+      </div>
       )}
+
+      {/* Recent Chats Section */}
+{isSignedUp && (
+  <div className="mt-6 border-t  px-6 md:px-4">
+    <p className="text-secondary my-4 text-sm font-semibold mb-2">
+      RECENT CHATS
+    </p>
+    {loading ? (
+      <p className="text-sm text-gray-500">Loading chats...</p>
+    ) : recentChats.length > 0 ? (
+      <ul className="space-y-2 overflow-y-auto h-[24rem] text-tetiary text-sm">
+        {recentChats.map((chat) => (
+          <div
+            key={chat._id}
+            className={`cursor-pointer flex items-center py-2 px-2 rounded-md ${
+              chat._id === chatId
+                ? "text-primary" // Active chat style
+                : "hover:text-primary hover:bg-hover"
+            }`}
+            onClick={() => navigate(`/dashboard/chat/${chat._id}`)} // Use chat._id here
+          >
+            <span className="truncate">{chat.title}</span>
+          </div>
+        ))}
+      </ul>
+    ) : (
+      <p className="text-sm text-gray-500">No recent chats available.</p>
+    )}
+  </div>
+)}
 
       {/* Conditional Footer Section */}
       {isSignedUp && (
         <div className="mt-auto px-6 pb-6">
-          <div className="flex items-center space-x-3 relative">
+          <div className="flex items-center space-x-2 relative">
             <div
               className="w-8 h-8 rounded-full text-gray-200 flex items-center justify-center cursor-pointer"
               onClick={toggleDropdown}
@@ -178,7 +198,7 @@ const Sidebar = ({ isOpen }) => {
       )}
 
       {!isSignedUp && (
-        <div className="px-6 mt-6 pb-6 border-t md:px-4">
+        <div className="px-6 mt-6 pb-6 border-t md:px-6">
           <ul className="space-y-2 text-secondary font-semibold mt-4">
             <li className="cursor-pointer hover:text-primary">
               Why My Dexter?

@@ -9,7 +9,7 @@ const LandingpageLayout = () => {
   return (
     <PublicWrapper>
       <Cursor/>
-    <div className="container mx-auto flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen">
       {/* Navbar */}
       <Navbar />
 

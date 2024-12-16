@@ -1,18 +1,15 @@
 import React from 'react';
 import { IoArrowForward } from "react-icons/io5";
 import Background from '../../../assets/Background.png';
+import Laptop from '../../../assets/Macbook.png';
+
 
 const Hero = () => {
   return (
-    <div
-      className="relative bg-no-repeat bg-center"
-      style={{
-        backgroundImage: `url(${Background})`,
-        backgroundSize: 'cover', 
-        backgroundPosition: 'center',
-        minHeight: '700px',
-      }}
-    >
+    <div className="relative container mx-auto">
+<div className='absolute left-1/2 top-5 -translate-x-1/2 w-[80%] -z-[1]'>
+  <img src={Background} alt=""/>
+</div>
       {/* Hero Container */}
       <div className="max-w-6xl mx-auto px-4 py-16 text-center">
         {/* Badge */}
@@ -46,11 +43,7 @@ const Hero = () => {
 
       {/* Placeholder for Video Section */}
       <div className="flex justify-center items-center mt-2 pt-10">
-        <div className="w-full max-w-4xl h-72 sm:h-80 md:h-96 bg-gray-200 flex items-center justify-center border border-gray-300 rounded-lg">
-          <span className="text-gray-500 text-lg font-medium">
-            Promotional Video
-          </span>
-        </div>
+        <img src={Laptop} alt="" />
       </div>
     </div>
   );

@@ -47,7 +47,7 @@ const Why = () => {
   ];
 
   return (
-    <section className="py-16">
+    <section className="container mx-auto py-16">
       <div className="max-w-7xl mx-auto px-6 text-center">
         {/* Header */}
         <div className="mb-12">
@@ -56,7 +56,7 @@ const Why = () => {
               Why Dexter
             </p>
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold w-full sm:w-[80%] md:w-[70%] mx-auto text-gray-900 mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-semibold w-full sm:w-[80%] md:w-[90%] mx-auto text-gray-900 mb-4">
             <span className="text-primary">Dexter AI SEO Tool</span> That Builds Strategies, Writes Blogs, and Analyzes Data
           </h1>
           <p className="mt-4 w-full sm:w-[80%] md:w-[70%] mx-auto text-lg sm:text-xl text-gray-600">

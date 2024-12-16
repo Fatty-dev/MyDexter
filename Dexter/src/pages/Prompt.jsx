@@ -8,8 +8,20 @@ import Sidebar from "../components/Dashboardcomp/Sidebar";
 
 const Prompt = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [dailyUsage, setDailyUsage] = useState(0);
+  const [dailyLimit, setDailyLimit] = useState(0);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
+
+  const addMessage = (newMessage) => {
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+  };
+
+  const updateUsage = (usage, limit) => {
+    setDailyUsage(usage);
+    setDailyLimit(limit);
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-8 relative">
@@ -44,7 +56,7 @@ const Prompt = () => {
         <h2 className="mt-6 text-3xl sm:text-4xl font-semibold text-[#101828] text-center">
           Good day!
         </h2>
-        <InputField />
+        <InputField addMessage={addMessage} updateUsage={updateUsage} />
         <p className="mt-4 text-sm sm:text-md text-[#0F182A] text-center">
           Choose a prompt below or write your own to start chatting with Dexter.
         </p>

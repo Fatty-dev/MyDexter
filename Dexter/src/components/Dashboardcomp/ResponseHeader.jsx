@@ -13,7 +13,7 @@ const ResponseHeader = ({chatTitle,timestamp }) => {
   const toggleSidebar = () => setIsOpen(!isOpen);
 
   return (
-    <div className="fixed z-[1000] top-0 bg-[#F3F4F6] w-full md:w-[70%] lg:w-[78%] md:ml-[1.5rem] xl:ml-0 border-b py-3 px-4">
+    <div className="fixed z-[1000] top-0 bg-[#F3F4F6] w-full md:w-[70%]  lg:w-[78%] md:ml-[1.5rem] xl:ml-0  py-3 px-4">
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         {/* Left Section */}
         <div className="flex items-center gap-2">

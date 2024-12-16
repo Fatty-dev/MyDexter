@@ -3,7 +3,7 @@ import Background from '../../../assets/Background.png';
 
 const Update = () => {
   return (
-    <div>
+    <div className='container mx-auto'>
       <div
         className="relative bg-no-repeat bg-center"
         style={{

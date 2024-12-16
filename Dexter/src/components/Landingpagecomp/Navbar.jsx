@@ -27,7 +27,7 @@ navigate("/signup")
   const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className="flex flex-col lg:flex-row justify-between items-center py-4 bg-white">
+    <nav className="container mx-auto flex flex-col lg:flex-row justify-between items-center py-4 bg-white">
       <div className="flex justify-between w-full lg:w-auto">
         <div
           className="text-xl font-bold cursor-pointer text-primary"

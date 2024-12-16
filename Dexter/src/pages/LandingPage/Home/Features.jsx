@@ -39,7 +39,8 @@ const featuresDataset = [
 
 const Features = () => {
   return (
-    <section className="py-16 relative">
+    <div class="bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#F2F6FC_100%)]">
+    <section className="container mx-auto py-16">
       {/* Background Decorations */}
       <div className="absolute inset-0 to-transparent pointer-events-none"></div>
 
@@ -102,15 +103,10 @@ const Features = () => {
         </div>
 
         {/* Footer Section */}
-        <div
-          className="relative bg-no-repeat bg-center"
-          style={{
-            backgroundImage: `url(${down})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            minHeight: '700px',
-          }}
-        >
+        <div className="relative">
+        <div className='absolute left-1/2 top-5 -translate-x-1/2 w-[80%] -z-[1]'>
+  <img src={down} alt=""/>
+</div>
           <div className="bg-white w-full lg:w-[90%] max-w-4xl p-6 lg:p-8 rounded-xl shadow-lg mx-auto relative mt-20">
             {/* Logo Section */}
             <div className="text-center mb-6">
@@ -174,6 +170,7 @@ const Features = () => {
         </div>
       </div>
     </section>
+    </div>
   );
 };
 
