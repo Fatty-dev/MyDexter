@@ -14,7 +14,9 @@ const Gettingstarted = () => {
         <What/>
         <Details/>
         <Update/>
+        <div className='container mx-auto'>
         <Trial/>
+        </div>
     </div>
   )
 }

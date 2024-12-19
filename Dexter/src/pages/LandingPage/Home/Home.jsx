@@ -15,7 +15,9 @@ const Home = () => {
     <Why/>
     <Review/>
     <Update/>
+    <div className="container mx-auto">
     <Trial/>
+    </div>
 
   </div>
   );
