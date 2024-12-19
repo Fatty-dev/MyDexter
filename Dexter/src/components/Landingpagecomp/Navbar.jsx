@@ -67,7 +67,7 @@ navigate("/dashboard")
 
         {/* CTA Button (Only visible in mobile dropdown) */}
         <li className="block lg:hidden mb-4">
-          <button className="w-full bg-primary text-white px-4 py-2 rounded transition duration-200 hover:bg-opacity-80">
+          <button className="w-full bg-primary text-white px-4 py-2 rounded transition duration-200 hover:bg-opacity-80" onClick={handleTry}>
             Try Dexter for free
           </button>
         </li>
