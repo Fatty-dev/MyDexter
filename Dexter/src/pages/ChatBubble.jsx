@@ -52,6 +52,41 @@ const ChatBubblePage = () => {
     fetchChat();
   }, [chatId]);
 
+  const fetchPublicChat = async () => {
+    setLoading(true); // Set loading to true before fetching
+    try {
+      const response = await publicApi.get(`/chat/detail?chatId=${chatId}`);
+      if (response.data.success) {
+        const chatData = response.data.data;
+        setChatTitle(chatData.title);
+        setMessages(
+          chatData.messages.map((msg, index) => ({
+            id: index + 1,
+            text: msg.content,
+            sender: msg.role === "user" ? "outgoing" : "incoming",
+            timestamp: new Date(msg.timestamp).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            }),
+          }))
+        );
+        setDailyUsage(chatData.usage.dailyUsage);
+        setDailyLimit(chatData.usage.dailyLimit);
+      } else {
+        toast.error("Failed to fetch chat");
+      }
+    } catch (error) {
+      console.error("Error fetching chat:", error);
+      // toast.error("An error occurred while fetching chat");
+    } finally {
+      setLoading(false); // Set loading to false after fetching
+    }
+  };
+  useEffect(() => {
+    if (!chatId) return;
+    fetchPublicChat();
+  }, [chatId]);
+
   const addMessage = (newMessage) => {
     setMessages((prevMessages) => [...prevMessages, newMessage]);
   };
@@ -69,7 +104,7 @@ const ChatBubblePage = () => {
       />
 
       {/* Chat body */}
-      <div className="w-full sm:w-[80%] mt-[8rem] lg:mt-[5rem] md:w-[90%] lg:w-[70%] mx-auto flex-1 overflow-y-auto p-4">
+      <div className="w-full sm:w-[80%] mt-[1rem] lg:mt-[2rem] md:w-[70%] lg:w-[65%] mx-auto flex-1 overflow-y-auto p-4">
         {loading ? (
           <SkeletonLoader />
         ) : (

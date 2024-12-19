@@ -54,7 +54,7 @@ const Features = () => {
                 Features
               </p>
             </div>
-            <h1 className="text-2xl lg:text-5xl font-semibold w-[30rem] text-gray-900 mb-4 leading-snug">
+            <h1 className="text-2xl lg:text-5xl font-semibold text-gray-900 mb-4 leading-snug">
               <span className="text-primary">Simplify Your SEO</span> Management
             </h1>
           </div>

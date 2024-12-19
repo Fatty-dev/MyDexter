@@ -37,13 +37,19 @@ const Sidebar = ({ isOpen }) => {
           toast.error("Failed to load chat history.");
         }
       } catch (error) {
-        // toast.error("Error fetching chat history.");
+        toast.error("Error fetching chat history.");
       } finally {
         setLoading(false);
       }
     };
-    fetchChatHistory();
-  }, []);
+  
+    if (isSignedUp) {
+      fetchChatHistory();
+    } else {
+      setLoading(false); 
+    }
+  }, [isSignedUp]);
+  
 
   const toggleDropdown = () => setShowDropdown((prev) => !prev);
 
@@ -124,7 +130,7 @@ const Sidebar = ({ isOpen }) => {
     {loading ? (
       <p className="text-sm text-gray-500">Loading chats...</p>
     ) : recentChats.length > 0 ? (
-      <ul className="space-y-2 overflow-y-auto h-[24rem] text-tetiary text-sm">
+      <ul className="space-y-2 overflow-y-auto h-[20rem] text-tetiary text-sm">
         {recentChats.map((chat) => (
           <div
             key={chat._id}

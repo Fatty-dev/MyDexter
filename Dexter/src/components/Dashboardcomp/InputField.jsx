@@ -80,8 +80,9 @@ const InputField = ({ addMessage, updateUsage }) => {
 
   // Chat function to interact with the public backend
   const publicChat = async (params) => {
+    const isLoggedIn = !!localStorage.getItem('accessToken')
     try {
-      const { data } = await publicApi.post("/chat/message", params);
+      const { data } = await (!isLoggedIn ? publicApi : authApi).post("/chat/message", params);
 
       // Handle response: Update parent component with message and usage
       addMessage({
@@ -126,7 +127,7 @@ const InputField = ({ addMessage, updateUsage }) => {
 
   return (
     <div className="mt-6 flex justify-center px-4 sm:px-6 md:px-8">
-      <div className="flex items-center justify-between w-full md:w-[90%] lg:w-full max-w-3xl mx-auto px-4 py-3 border bg-white border-gray-300 rounded-xl">
+      <div className="flex items-center justify-between w-full md:w-[60%] lg:w-[80%] xl:w-[90%]  max-w-3xl mx-auto px-4 py-3 border bg-white border-gray-300 rounded-xl">
         <div className="flex items-center gap-2 flex-grow">
           <PiMagicWand size={22} className="text-secondary" />
           <textarea

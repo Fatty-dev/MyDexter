@@ -22,7 +22,7 @@ authApi.interceptors.request.use(async (config) => {
   // console.log({accessToken});
 
   // const refreshToken = localStorage.getItem("refresh_token") ?? "";
-  config.headers["Authorization"] = `Bearer ${accessToken}`;
+  if (accessToken) config.headers["Authorization"] = `Bearer ${accessToken}`;
   // config.headers["X-refresh"] = `${refreshToken}`;
 
   return config;

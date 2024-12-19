@@ -21,7 +21,7 @@ const Navbar = () => {
   };
  
   const handleTry = () => {
-navigate("/signup")
+navigate("/dashboard")
   }
 
   const isActive = (path) => location.pathname === path;
