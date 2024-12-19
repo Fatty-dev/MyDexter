@@ -2,6 +2,7 @@ import React from "react";
 import dex1 from "../../../assets/dex1.svg";
 import dex2 from "../../../assets/dex2.svg";
 import dex3 from "../../../assets/dex3.svg";
+// import dex1 from "../../../assets/box.svg";
 import image1 from "../../../assets/1.svg";
 import image2 from "../../../assets/3.svg";
 import blog from "../../../assets/blog 2.svg";
@@ -66,28 +67,24 @@ const Details = () => {
         </div>
 
         {/* Features Section */}
-        <div className="space-y-12">
+        <div className="space-y-10 md:space-y-20">
           {features.map((feature, index) => (
             <div
               key={feature.id}
-              className={`flex flex-col md:flex-row items-center md:items-start gap-12 ${
-                index === 1 ? "md:flex-row-reverse" : ""
-              }`} // Apply reverse layout for the second feature
+              className={`flex md:flex-row flex-col ${index % 2 !== 0 ? "md:flex-row-reverse" : ""}`} // Apply reverse layout for the second feature
             >
-         
-
               {/* Text Section */}
-              <div className="w-full md:w-1/2 space-y-6">
-                <img
-                  src={feature.icon}
-                  alt={feature.title}
-                  className="w-12 h-12"
-                />
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900">
-                    {feature.title}
-                  </h3>
-                  <p className="mt-2 text-gray-600">{feature.description}</p>
+              <div className="w-full mx-auto flex flex-1 items-center">
+                <div className="flex flex-col justify-between">
+                  <div className="">
+                    <img src={feature.icon} alt={feature.title} className="" />
+                  </div>
+                  <div className="">
+                    <h3 className="text-xl font-semibold text-gray-900">
+                      {feature.title}
+                    </h3>
+                    <p className="mt-2 text-gray-600 ">{feature.description}</p>
+                  </div>
                   <ul className="mt-4 space-y-2 text-gray-600">
                     {feature.points.map((point, index) => (
                       <li key={index} className="flex items-start space-x-2">
@@ -99,13 +96,17 @@ const Details = () => {
                 </div>
               </div>
 
-                   {/* Image Section */}
-                   <div className="w-full md:w-1/2 mb-6 md:mb-0">
-                <img
-                  src={feature.image}
-                  alt={`${feature.title} Interface`}
-                  className="w-full  mx-auto"
-                />
+              {/* Image Section */}
+              <div className={`w-full mb-6 mt-8 md:mt-0 md:mb-0 flex-1 flex items-center justify-center ${index % 2 !== 0 ? "md:justify-start" : ""}`}>
+                <div
+                  className={`w-full md:size-[30rem] `}
+                >
+                  <img
+                    src={feature.image}
+                    alt={`${feature.title} Interface`}
+                    className="w-full h-full"
+                  />
+                </div>
               </div>
             </div>
           ))}

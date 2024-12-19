@@ -5,7 +5,7 @@ import Trial from './Trial'
 
 const Pricing = () => {
   return (
-    <div>
+    <div className='container mx-auto'>
         <Plans/>
         <Grow/>
         <Trial/>

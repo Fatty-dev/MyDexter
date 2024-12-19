@@ -2,7 +2,7 @@ import React from 'react'
 
 const Trial = () => {
   return (
-    <div className="bg-layer py-14 mb-[6rem] px-4 rounded-xl">
+    <div className="bg-layer container mx-auto py-14 mb-[6rem] px-4 rounded-xl">
     <div className="flex flex-col sm:flex-row w-full sm:w-[90%] mx-auto items-start md:items-center justify-between">
       <div className="mb-6 sm:mb-0">
         <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 mb-4">

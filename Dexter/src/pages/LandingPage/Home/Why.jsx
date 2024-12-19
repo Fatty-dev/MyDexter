@@ -47,7 +47,7 @@ const Why = () => {
   ];
 
   return (
-    <section className="container mx-auto py-16">
+    <section className="py-16 container mx-auto">
       <div className="max-w-7xl mx-auto px-6 text-center">
         {/* Header */}
         <div className="mb-12">

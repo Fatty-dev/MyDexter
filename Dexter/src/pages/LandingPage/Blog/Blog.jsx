@@ -90,7 +90,7 @@ const Blog = () => {
   ];
 
   return (
-    <div>
+    <div className="container mx-auto">
       <div
         className="">
         <div className="hidden md:absolute top-0 w-full -z-[1] left-0">

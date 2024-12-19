@@ -1,6 +1,7 @@
 import React from 'react';
 import Background from '../../../assets/Background.png';
 
+
 const Update = () => {
   return (
     <div className='container mx-auto'>
@@ -13,7 +14,7 @@ const Update = () => {
           minHeight: '700px',
         }}
       >
-        <div className="max-w-6xl mx-auto px-4 pt-24 sm:pt-32 md:pt-40 text-center">
+        <div className="max-w-6xl  mx-auto px-4 pt-24 sm:pt-32 md:pt-40 text-center">
           {/* Badge */}
           <div className="bg-layer inline-flex px-2 py-1 rounded-lg mb-4">
             <p className="text-sm font-normal text-primary rounded-lg py-1 px-3">
@@ -56,7 +57,7 @@ const Update = () => {
       </div>
 
       {/* Section for Free Trial */}
-      <div className="bg-layer py-14 mb-[6rem] px-4 rounded-xl">
+      {/* <div className="bg-layer py-14 mb-[6rem] px-4 rounded-xl">
         <div className="flex flex-col sm:flex-row w-full sm:w-[90%] mx-auto items-start md:items-center justify-between">
           <div className="mb-6 sm:mb-0">
             <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 mb-4">
@@ -72,7 +73,7 @@ const Update = () => {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

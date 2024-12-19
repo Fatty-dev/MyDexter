@@ -52,7 +52,7 @@ const Prompt = () => {
       </div>
 
       {/* Main Content */}
-      <div className="w-full p-4 mx-auto sm:w-3/4">
+      <div className="w-full p-4 mx-auto sm:w-[90%]">
         <h2 className="mt-6 text-3xl sm:text-4xl font-semibold text-[#101828] text-center">
           Good day!
         </h2>

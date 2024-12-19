@@ -5,6 +5,7 @@ import { API_URL } from "../../constants";
 export const publicApi = axios.create({
   headers: { "Content-Type": "application/json" },
   baseURL: API_URL,
+  withCredentials: true,
 });
 
 // protected endpoints
@@ -12,6 +13,7 @@ export const publicApi = axios.create({
 export const authApi = axios.create({
   headers: { "Content-Type": "application/json" },
   baseURL: API_URL,
+  withCredentials: true,
 });
 
 authApi.interceptors.request.use(async (config) => {

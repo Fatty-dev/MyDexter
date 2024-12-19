@@ -11,7 +11,7 @@ const Hero = () => {
   <img src={Background} alt=""/>
 </div>
       {/* Hero Container */}
-      <div className="max-w-6xl mx-auto px-4 py-16 text-center">
+      <div className="max-w-6xl container mx-auto px-4 py-16 text-center">
         {/* Badge */}
         <div className="inline-flex items-center bg-layer text-gray-800 px-2 py-1 rounded-lg mb-4">
           <p className="text-sm font-semibold bg-white rounded-lg py-1 px-3">MyDexter3.0</p>

@@ -1,5 +1,7 @@
 import React from 'react';
 import { IoArrowForward } from "react-icons/io5";
+import Laptop from '../../../assets/Macbook.png';
+
 
 const Hero = () => {
   return (
@@ -29,12 +31,8 @@ const Hero = () => {
       </div>
 
       {/* Placeholder for Video Section */}
-      <div className="flex justify-center items-center mt-4 pt-10">
-        <div className="w-full max-w-4xl h-72 sm:h-80 md:h-96 bg-gray-200 flex items-center justify-center border border-gray-300 rounded-lg">
-          <span className="text-gray-500 text-lg font-medium">
-            Promotional Video
-          </span>
-        </div>
+      <div className="flex justify-center items-center mt-2 pt-10">
+        <img src={Laptop} alt="" />
       </div>
     </div>
   );

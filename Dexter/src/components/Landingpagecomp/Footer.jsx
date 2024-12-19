@@ -41,8 +41,9 @@ const Footer = () => {
   };
 
   return (
+    <div className="container mx-auto">
     <footer className="bg-white pt-8 pb-10 border-t border-gray-200">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="w-full">
         <div className="flex flex-col md:flex-row items-start gap-8 md:gap-4">
           {/* Logo and Description */}
           <div className="flex flex-col items-start mb-6 md:mb-0">
@@ -100,6 +101,7 @@ const Footer = () => {
         </div>
       </div>
     </footer>
+    </div>
   );
 };
 

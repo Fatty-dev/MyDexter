@@ -44,9 +44,9 @@ const Features = () => {
       {/* Background Decorations */}
       <div className="absolute inset-0 to-transparent pointer-events-none"></div>
 
-      <div className="container mx-auto px-6  lg:px-10">
+      <div className="">
         {/* Title Section */}
-        <div className="flex flex-col lg:flex-row justify-between items-center mb-12">
+        <div className="flex flex-col lg:flex-row justify-between items-center w-[90%] mx-auto mb-12">
           {/* Left Section (Title) */}
           <div className="flex flex-col w-full lg:w-1/2 mb-4 lg:mb-0">
             <div className="bg-layer w-24 px-2 py-1 rounded-lg mb-4">
@@ -54,7 +54,7 @@ const Features = () => {
                 Features
               </p>
             </div>
-            <h1 className="text-2xl lg:text-3xl font-semibold text-gray-900 mb-4 leading-snug">
+            <h1 className="text-2xl lg:text-5xl font-semibold w-[30rem] text-gray-900 mb-4 leading-snug">
               <span className="text-primary">Simplify Your SEO</span> Management
             </h1>
           </div>
@@ -70,7 +70,8 @@ const Features = () => {
         </div>
 
         {/* Features Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="">
+        <div className="grid grid-cols-1 md:bg-white sm:grid-cols-2 lg:grid-cols-3 gap-8 relative z-[50]">
           {featuresDataset.map((feature) => (
             <div
               key={feature.id}
@@ -87,7 +88,7 @@ const Features = () => {
                 {feature.title}
               </h3>
               {/* Description */}
-              <p className="text-gray-600 max-h-40 h-28 text-sm lg:text-base">
+              <p className="text-gray-600 max-h-40 h-38 text-sm lg:text-base">
                 {feature.description}
               </p>
               {/* Secondary Image */}
@@ -101,13 +102,15 @@ const Features = () => {
             </div>
           ))}
         </div>
-
-        {/* Footer Section */}
-        <div className="relative">
-        <div className='absolute left-1/2 top-5 -translate-x-1/2 w-[80%] -z-[1]'>
+        <div className="hidden lg:block relative">
+        <div className='absolute -top-[12rem] left-1/2 -translate-x-1/2 w-[90%] z-[1]'>
   <img src={down} alt=""/>
 </div>
-          <div className="bg-white w-full lg:w-[90%] max-w-4xl p-6 lg:p-8 rounded-xl shadow-lg mx-auto relative mt-20">
+        </div>
+
+        {/* Footer Section */}
+   
+          <div className="z-[50] bg-white w-full lg:w-[90%] max-w-4xl p-6 lg:p-8 rounded-xl shadow-lg mx-auto relative mt-20">
             {/* Logo Section */}
             <div className="text-center mb-6">
               <img src={logo} alt="Dexter AI Logo" className="h-16 mx-auto mb-4" />

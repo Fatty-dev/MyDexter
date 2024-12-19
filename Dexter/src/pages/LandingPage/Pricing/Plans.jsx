@@ -25,13 +25,18 @@ const Plans = () => {
     setIsToggled((prev) => !prev);
   };
 
+  // Conditional Pricing
+  const [proPrice, setProPrice] = useState({ month: 29, year: 278.40 });
+  const [freePrice, setFreePrice] = useState({ month: 0.00, year: 0.00 });
+
+
   return (
     <div className="">
       {/* Header Section */}
       <div className="max-w-xl mx-auto px-4 lg:pt-8 pb-8 text-center">
         {/* Tagline */}
-        <div className="bg-indigo-100 inline-flex px-2 py-1 rounded-lg mb-4">
-          <p className="text-sm font-normal text-indigo-600 py-1 px-3">
+        <div className="bg-layer inline-flex px-2 py-1 rounded-lg mb-4">
+          <p className="text-sm font-normal text-primary py-1 px-3">
             Pricing Plans
           </p>
         </div>
@@ -99,8 +104,8 @@ const Plans = () => {
 
           {/* Pricing Section */}
           <div className="flex flex-col items-end">
-            <p className="text-2xl font-bold text-gray-900">$0.00</p>
-            <p className="text-gray-600  text-sm">/month</p>
+            <p className="text-2xl font-bold text-gray-900">${isToggled ? freePrice.year : freePrice.month}</p>
+            <p className="text-gray-600  text-sm">/{isToggled ? 'year' : 'month'}</p>
           </div>
           </div>
           {/* Description Section */}
@@ -128,9 +133,9 @@ const Plans = () => {
 
           {/* Pricing Section */}
           <div className="flex flex-col items-end">
-            <p className="text-2xl font-bold text-gray-900">$29.00</p>
-            <p className="text-gray-600  text-sm">/month</p>
-          </div>
+              <p className="text-2xl font-bold text-gray-900">${isToggled ? proPrice.year : proPrice.month}</p>
+              <p className="text-gray-600  text-sm">/{isToggled ? 'year' : 'month'}</p>
+            </div>
           </div>
           {/* Description Section */}
           <div className="">
