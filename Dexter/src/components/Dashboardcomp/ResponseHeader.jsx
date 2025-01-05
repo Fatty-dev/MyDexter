@@ -3,9 +3,11 @@ import { MdAccessTime } from "react-icons/md";
 import { FiX } from "react-icons/fi";
 import { CgMenuRight } from "react-icons/cg";
 import Sidebar from "./Sidebar";
+import ProModal from "../Common/Modals/ProModal";
 
 const ResponseHeader = ({ chatTitle, timestamp }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const formattedTime = new Date(timestamp).toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
@@ -29,10 +31,11 @@ const ResponseHeader = ({ chatTitle, timestamp }) => {
           </p>
 
           {/* Right Section - Button */}
-          <button className="bg-primary text-white rounded-full px-4 py-2 text-sm mr-0 md:mr-8">
+          <button className="bg-primary text-white rounded-full px-4 py-2 text-sm mr-0 md:mr-8"  onClick={() => setIsModalOpen(true)}>
             Try Pro for Free
           </button>
         </div>
+        {isModalOpen && <ProModal onClose={() => setIsModalOpen(false)} />}
 
         {/* Hamburger Menu */}
         <div className="md:hidden">

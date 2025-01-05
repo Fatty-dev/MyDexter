@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { FiUser } from "react-icons/fi";
-import profile_logo from "../assets/logo.svg";
-import ResponseHeader from "../components/Dashboardcomp/ResponseHeader";
-import InputField from "../components/Dashboardcomp/InputField";
-import { authApi,publicApi } from "../lib/config/axios-instance";
+import profile_logo from "../../../assets/logo.svg";
+import ResponseHeader from "../../../components/Dashboardcomp/ResponseHeader";
+import InputField from "../../../components/Dashboardcomp/InputField";
+import { authApi,publicApi } from "../../../lib/config/axios-instance";
 import toast from "react-hot-toast";
-import SkeletonLoader from "../components/Dashboardcomp/SkeletonLoader";
+import SkeletonLoader from "../../../components/Dashboardcomp/SkeletonLoader";
 
 const ChatBubblePage = () => {
   const location = useLocation();

@@ -15,3 +15,16 @@ const useEmailStore = create()(
 );
 
 export default useEmailStore;
+
+export const useUserSuscriptionTypeStore = create()(
+  persist(
+    (set) => ({
+      type: "free",
+      setType: (type) => set({ type }),
+    }),
+
+    {
+      name: "use-suscriptiontype",
+    }
+  )
+);

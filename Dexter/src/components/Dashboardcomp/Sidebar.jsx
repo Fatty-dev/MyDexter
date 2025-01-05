@@ -2,30 +2,36 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import logo from "../../assets/Main_Logo.svg";
 import blog from "../../assets/blog.svg";
+import overview from "../../assets/overview.svg";
+import strategies from "../../assets/Strategy.svg";
+
 import signin from "../../assets/signin.svg";
 import { BsPersonCircle } from "react-icons/bs";
 import ai from "../../assets/ai.svg";
 import analytics from "../../assets/analytics.svg";
 import collapse from "../../assets/collapse.svg";
-import useEmailStore from "../../lib/store/global.store";
-import { authApi } from "../../lib/config/axios-instance"
+import useEmailStore, {
+  useUserSuscriptionTypeStore,
+} from "../../lib/store/global.store";
+import { authApi } from "../../lib/config/axios-instance";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdOutlineContactSupport } from "react-icons/md";
 import { BsGear, BsBoxArrowRight, BsPersonLinesFill } from "react-icons/bs";
-
+import prologo from "../../assets/proLogo.svg";
 import toast from "react-hot-toast";
 
 const Sidebar = ({ isOpen }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { email } = useEmailStore();
+  const { type } = useUserSuscriptionTypeStore();
   const { chatId } = useParams();
 
   const isSignedUp = Boolean(localStorage.getItem("accessToken"));
 
   const [recentChats, setRecentChats] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showDropdown, setShowDropdown] = useState(false); // Dropdown state
+  const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
     const fetchChatHistory = async () => {
@@ -42,30 +48,37 @@ const Sidebar = ({ isOpen }) => {
         setLoading(false);
       }
     };
-  
+
     if (isSignedUp) {
       fetchChatHistory();
     } else {
-      setLoading(false); 
+      setLoading(false);
     }
   }, [isSignedUp]);
-  
 
   const toggleDropdown = () => setShowDropdown((prev) => !prev);
 
-
-  const navigationItems = isSignedUp
-    ? [
-        { id: 1, label: "Dexter AI", icon: ai, path: "/dashboard" },
-        { id: 2, label: "Analytics", icon: analytics, path: "/analytics" },
-        { id: 3, label: "Blog Post", icon: blog, path: "/blog-post" },
-      ]
-    : [
-        { id: 1, label: "Dexter AI", icon: ai, path: "/dashboard" },
-        { id: 2, label: "Analytics", icon: analytics, path: "/analytics" },
-        { id: 3, label: "Blog Post", icon: blog, path: "/blog-post" },
-        { id: 4, label: "Sign In", icon: signin, path: "/login" },
-      ];
+  const navigationItems =
+    type === "pro"
+      ? [
+          { id: 1, label: "Overview", icon: overview, path: "/dashboard/Overview" },
+          { id: 2, label: "Dexter AI", icon: ai, path: "/dashboard" },
+          { id: 3, label: "Analytics", icon: analytics, path: "/dashboard/analytics" },
+          { id: 4, label: "Blog Post", icon: blog, path: "/dashboard/blog-post" },
+          { id: 5, label: "Strategies", icon: strategies, path: "/dashboard/strategies" },
+        ]
+      : isSignedUp
+      ? [
+          { id: 1, label: "Dexter AI", icon: ai, path: "/dashboard" },
+          { id: 2, label: "Analytics", icon: analytics, path: "/dashboard/analytics" },
+          { id: 3, label: "Blog Post", icon: blog, path: "/dashboard/blog-post" },
+        ]
+      : [
+          { id: 1, label: "Dexter AI", icon: ai, path: "/dashboard" },
+          { id: 2, label: "Analytics", icon: analytics, path: "/dashboard/analytics" },
+          { id: 3, label: "Blog Post", icon: blog, path: "/dashboard/blog-post" },
+          { id: 4, label: "Sign In", icon: signin, path: "/login" },
+        ];
 
   return (
     <div
@@ -75,15 +88,14 @@ const Sidebar = ({ isOpen }) => {
     >
       {/* Sidebar Header */}
       <div className="px-6 pt-8 flex items-center justify-between">
-        <img src={logo} alt="Dexter AI Logo" className="w-auto" />
+        <img src={`${type === "pro" ? prologo : logo}`} alt="Dexter AI Logo" className="w-[11rem]" />
         <button className="md:hidden">
           <img src={collapse} alt="Collapse Sidebar" />
         </button>
       </div>
 
-
       {/* Navigation Links */}
-      <nav className="space-y-3 px-6 md:px-6 mt-6">
+      <nav className="space-y-1 px-6 md:px-6 mt-6">
         <p className="text-secondary text-xs">ASSISTANT</p>
         {navigationItems.map((item) => (
           <div
@@ -109,47 +121,48 @@ const Sidebar = ({ isOpen }) => {
 
       {!isSignedUp && (
         <div className="mt-6 border-t px-6">
-        <p className="text-secondary text-sm mt-4 mb-3">
-          Create a free account, or go Pro to unlock automated blog creation and domain analytics!
-        </p>
-        <button
-          className="px-4 py-2 text-primary border border-primary rounded-full w-full font-medium hover:bg-primary hover:text-white"
-         onClick={() => navigate("/signup")}
-        >
-          Sign Up
-        </button>
-      </div>
+          <p className="text-secondary text-sm mt-4 mb-3">
+            Create a free account, or go Pro to unlock automated blog creation
+            and domain analytics!
+          </p>
+          <button
+            className="px-4 py-2 text-primary border border-primary rounded-full w-full font-medium hover:bg-primary hover:text-white"
+            onClick={() => navigate("/signup")}
+          >
+            Sign Up
+          </button>
+        </div>
       )}
 
       {/* Recent Chats Section */}
-{isSignedUp && (
-  <div className="mt-6 border-t  px-6 md:px-4">
-    <p className="text-secondary my-4 text-sm font-semibold mb-2">
-      RECENT CHATS
-    </p>
-    {loading ? (
-      <p className="text-sm text-gray-500">Loading chats...</p>
-    ) : recentChats.length > 0 ? (
-      <ul className="space-y-2 overflow-y-auto h-[20rem] text-tetiary text-sm">
-        {recentChats.map((chat) => (
-          <div
-            key={chat._id}
-            className={`cursor-pointer flex items-center py-2 px-2 rounded-md ${
-              chat._id === chatId
-                ? "text-primary" // Active chat style
-                : "hover:text-primary hover:bg-hover"
-            }`}
-            onClick={() => navigate(`/dashboard/chat/${chat._id}`)} // Use chat._id here
-          >
-            <span className="truncate">{chat.title}</span>
-          </div>
-        ))}
-      </ul>
-    ) : (
-      <p className="text-sm text-gray-500">No recent chats available.</p>
-    )}
-  </div>
-)}
+      {isSignedUp && (
+        <div className="mt-6 border-t  px-6 md:px-4">
+          <p className="text-secondary my-4 text-sm font-semibold mb-2">
+            RECENT CHATS
+          </p>
+          {loading ? (
+            <p className="text-sm text-gray-500">Loading chats...</p>
+          ) : recentChats.length > 0 ? (
+            <ul className="space-y-2 overflow-y-auto h-[15rem] text-tetiary text-sm">
+              {recentChats.map((chat) => (
+                <div
+                  key={chat._id}
+                  className={`cursor-pointer flex items-center py-2 px-2 rounded-md ${
+                    chat._id === chatId
+                      ? "text-primary" // Active chat style
+                      : "hover:text-primary hover:bg-hover"
+                  }`}
+                  onClick={() => navigate(`/dashboard/chat/${chat._id}`)} // Use chat._id here
+                >
+                  <span className="truncate">{chat.title}</span>
+                </div>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-sm text-gray-500">No recent chats available.</p>
+          )}
+        </div>
+      )}
 
       {/* Conditional Footer Section */}
       {isSignedUp && (
@@ -165,40 +178,48 @@ const Sidebar = ({ isOpen }) => {
 
             {/* Dropdown Menu */}
             {showDropdown && (
-  <div className="absolute bottom-5 right-6 mt-2 bg-white shadow-lg rounded-md w-48 py-2 z-30">
-    <div
-      className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
-      onClick={() => navigate("/dashboard/settings")}
-    >
-      <IoSettingsOutline  className="mr-2 text-[#667085]"/>
-      <span className="text-[#344054] text-medium text-sm">Settings</span>
-    </div>
-    <div
-      className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
-      onClick={() => navigate("/plans")}
-    >
-      <BsPersonLinesFill className="mr-2 text-[#667085]" />
-      <span className="text-[#344054] text-medium text-sm">Plans</span>
-    </div>
-    <div
-      className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
-      onClick={() => navigate("/support")}
-    >
-      <MdOutlineContactSupport className="mr-2 text-[#667085]" />
-      <span className="text-[#344054] text-medium text-sm">Support</span>
-    </div>
-    <div
-      className="flex items-center border-t px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-500"
-      onClick={() => {
-        localStorage.removeItem("accessToken");
-        navigate("/login");
-      }}
-    >
-      <BsBoxArrowRight className="mr-2 text-[#667085]" />
-      <span className="text-[#344054] text-medium text-sm">Log out</span>
-    </div>
-  </div>
-)}
+              <div className="absolute bottom-5 right-6 mt-2 bg-white shadow-lg rounded-md w-48 py-2 z-30">
+                <div
+                  className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  onClick={() => navigate("/dashboard/settings")}
+                >
+                  <IoSettingsOutline className="mr-2 text-[#667085]" />
+                  <span className="text-[#344054] text-medium text-sm">
+                    Settings
+                  </span>
+                </div>
+                <div
+                  className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  onClick={() => navigate("/plans")}
+                >
+                  <BsPersonLinesFill className="mr-2 text-[#667085]" />
+                  <span className="text-[#344054] text-medium text-sm">
+                    Plans
+                  </span>
+                </div>
+                <div
+                  className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  onClick={() => navigate("/support")}
+                >
+                  <MdOutlineContactSupport className="mr-2 text-[#667085]" />
+                  <span className="text-[#344054] text-medium text-sm">
+                    Support
+                  </span>
+                </div>
+                <div
+                  className="flex items-center border-t px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-500"
+                  onClick={() => {
+                    localStorage.removeItem("accessToken");
+                    navigate("/login");
+                  }}
+                >
+                  <BsBoxArrowRight className="mr-2 text-[#667085]" />
+                  <span className="text-[#344054] text-medium text-sm">
+                    Log out
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

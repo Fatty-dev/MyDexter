@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { CgMenuRight } from "react-icons/cg";
-import Header from "../components/Dashboardcomp/Header";
-import InputField from "../components/Dashboardcomp/InputField";
-import PromptTags from "../components/Dashboardcomp/PromptTag";
-import Sidebar from "../components/Dashboardcomp/Sidebar";
+import Header from "../../../components/Dashboardcomp/Header";
+import InputField from "../../../components/Dashboardcomp/InputField";
+import PromptTags from "../../../components/Dashboardcomp/PromptTag";
+import Sidebar from "../../../components/Dashboardcomp/Sidebar";
 
 const Prompt = () => {
   const [isOpen, setIsOpen] = useState(false);
