@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { FaSearch, FaHandHolding, FaUser, FaCheck } from "react-icons/fa";
-import { FiEdit2} from "react-icons/fi";
+import { FiEdit2 } from "react-icons/fi";
 import { IoFilterSharp } from "react-icons/io5";
 import { AiTwotoneDislike, AiTwotoneLike } from "react-icons/ai";
 import { CiCircleQuestion } from "react-icons/ci";
-import { FaArrowDownLong } from "react-icons/fa6";
+import { FaArrowDownLong, FaArrowUpLong } from "react-icons/fa6";
 import DataTable from "../../../components/Common/Table/DataTable";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaMinus } from "react-icons/fa6";
+import postImage from "../../../assets/postImage.svg";
 
 const PostHistory = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +30,7 @@ const PostHistory = () => {
     },
     {
       label: "Bounce Rate",
-      value: "11.3k",
+      value: 11.3,
       max: 0,
       icon: <AiTwotoneDislike />,
       badgeColor: "stroke-red-500",
@@ -64,34 +65,54 @@ const PostHistory = () => {
   const postsData = [
     {
       id: 1,
-      name: "John Doe",
-      category: "Marketing",
-      date: "2021-09-12",
-      amount: "+$1200",
+      title: "The Ultimate Guide to Laundry: Tips, Tricks and Hacks",
+      keywords: ["Cleaning products", "Supplies"],
+      publishedDate: "2024-12-09",
+      rating: 60,
+      traffic: 5,
+      image: postImage,
       checked: true,
     },
     {
       id: 2,
-      name: "Jane Doe",
-      category: "Marketing",
-      date: "2021-09-12",
-      amount: "-$1200",
+      title: "The Ultimate Guide to Laundry: Tips, Tricks and Hacks",
+      keywords: [
+        "Cleaning products",
+        "Supplies",
+        "Laundry",
+        "Detergent",
+        "Fabric softener",
+      ],
+      publishedDate: "2025-01-01",
+      rating: 72,
+      traffic: 4,
+      image: postImage,
       checked: false,
     },
     {
       id: 3,
-      name: "John Doe",
-      category: "Marketing",
-      date: "2021-09-12",
-      amount: "+$1200",
+      title: "The Ultimate Guide to Laundry: Tips, Tricks and Hacks",
+      keywords: ["Cleaning products", "Supplies", "Fabric softener"],
+      publishedDate: "2024-05-12",
+      image: postImage,
+      rating: 78,
+      traffic: 6,
       checked: true,
     },
     {
       id: 4,
-      name: "Jane Doe",
-      category: "Marketing",
-      date: "2021-09-12",
-      amount: "-$1200",
+      title: "The Ultimate Guide to Laundry: Tips, Tricks and Hacks",
+      keywords: [
+        "Cleaning products",
+        "Supplies",
+        "Laundry",
+        "Detergent",
+        "Fabric softener",
+      ],
+      publishedDate: "2024-08-12",
+      image: postImage,
+      rating: 38,
+      traffic: 6,
       checked: false,
     },
   ];
@@ -115,64 +136,68 @@ const PostHistory = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-5 gap-4 text-sm  place-items-center text-center px-4 py-6 rounded-lg bg-[#f5f7f9]">
+      <div className="flex justify-evenly items-center gap-4 text-sm  place-items-center text-center  py-6 rounded-lg bg-[#f5f7f9]">
         {metrics.map((metric, index) => (
           <div
             key={index}
-            className="flex flex-col gap-1 items-center [&:not(:first-child)]:border-l border-l-[#d5d9e1] pl-4"
+            className="flex   gap-2 items-start [&:not(:first-child)]:border-l border-l-[#d5d9e1] pl-4"
           >
-            <div className="flex items-center  gap-3 ">
-              <div className="relative">
-                <svg className="w-16 h-16" viewBox="0 0 36 36">
-                  {/* Background Circle */}
-                  <circle
-                    className="text-gray-500"
-                    cx="18"
-                    cy="18"
-                    r="13"
-                    fill="none"
-                    strokeWidth="4"
-                    stroke="lightgray"
-                  />
-                  {/* Progress Circle */}
-                  <circle
-                    className={`${metric.badgeColor} transform -rotate-90 origin-center`}
-                    cx="18"
-                    cy="18"
-                    r="13"
-                    fill="none"
-                    strokeWidth="4"
-                    strokeDasharray="100"
-                    strokeDashoffset={metric.max - metric.value}
-                  />
-                </svg>
-                <div
-                  className={`${
-                    metric.label === "Bounce Rate"
-                      ? "bottom-[33%] left-[1.23rem]"
-                      : metric.label === "Organic Traffic"
-                      ? "bottom-[34%] left-[1.28rem] "
-                      : "bottom-[42%] left-6 "
-                  } text-[16px]  absolute text-[#98a8bf]  flex justify-center items-center`}
-                >
-                  {metric.icon}
+            <div className="relative">
+              <svg className="w-16 h-16" viewBox="0 0 36 36">
+                {/* Background Circle */}
+                <circle
+                  className="text-gray-500"
+                  cx="18"
+                  cy="18"
+                  r="13"
+                  fill="none"
+                  strokeWidth="4"
+                  stroke="lightgray"
+                />
+                {/* Progress Circle */}
+                <circle
+                  className={`${metric.badgeColor} transform -rotate-90 origin-center`}
+                  cx="18"
+                  cy="18"
+                  r="13"
+                  fill="none"
+                  strokeWidth="4"
+                  strokeDasharray="100"
+                  strokeDashoffset={metric.max - metric.value}
+                />
+              </svg>
+              <div
+                className={`${
+                  metric.label === "Bounce Rate"
+                    ? "bottom-[33%] left-[1.23rem]"
+                    : metric.label === "Organic Traffic"
+                    ? "bottom-[34%] left-[1.28rem] "
+                    : "bottom-[42%] left-6 "
+                } text-[16px]  absolute text-[#98a8bf]  flex justify-center items-center`}
+              >
+                {metric.icon}
+              </div>
+            </div>
+            <div className="flex items-center   gap-3 ">
+              <div className="flex flex-col justify-center items-center gap-2">
+                <div className="text-[#899bb6] self-start text-[12px]">
+                  <span className="font-semibold text-[#344054] text-[2rem]">
+                    {metric.value}
+                  </span>
+                  /<span>{metric.max}</span>
+                </div>
+
+                <div>
+                  <div className="text-[#98a8bf] flex items-center  gap-2">
+                    <p>{metric.label}</p>
+                    <CiCircleQuestion className="cursor-pointer text-[15px]" />
+                  </div>
+                  <p className="text-[#9795fa] relative right-3 mt-2 font-semibold text-[12px]">
+                    View {metric.label}
+                  </p>
                 </div>
               </div>
-
-              <div className="text-[#899bb6] text-[12px]">
-                <span className="font-semibold text-[#344054] text-[2rem]">
-                  {metric.value}
-                </span>
-                /<span>{metric.max}</span>
-              </div>
             </div>
-            <div className="text-[#98a8bf] flex items-center gap-2">
-              <p>{metric.label}</p>
-              <CiCircleQuestion className="cursor-pointer text-[15px]" />
-            </div>
-            <p className="text-[#9795fa] mt-2 font-semibold text-[12px]">
-              View {metric.label}
-            </p>
           </div>
         ))}
       </div>
@@ -186,54 +211,81 @@ const PostHistory = () => {
         // setCurrentPage={setCurrentPage}
         // currentPage={currentPage}
       >
-        <div className="bg-[#6d68fb] w-6 h-6 rounded-[5px] p-1 flex justify-center items-center text-white cursor-pointer absolute top-2 left-5 ">
-          <FaMinus  className="relative left-[0.3px]"/>
+        <div className="bg-[#6d68fb] w-5 h-5 rounded-[5px] p-1 flex justify-center items-center text-white cursor-pointer text-[9px] absolute top-2 left-2 ">
+          <FaMinus className="relative left-[0.3px]" />
         </div>
-        {postsData.map((post) => (
+        {postsData?.map((post) => (
           <tr key={post.id}>
-            <td className="px-5 bg-white border-b border-gray-200 py-5 text-sm ">
-              <div className="flex items-center">
-                <div className="flex items-center gap-4">
-                  <div
+            <td className="px-2 bg-white border-b border-gray-200 py-5 text-sm ">
+              <p className="flex items-center">
+                <span className="flex items-center gap-4">
+                  <span
                     className={`${
                       post.checked ? "bg-[#6d68fb]" : "bg-transparent border "
-                    } cursor-pointer text-[10px] flex justify-center items-center w-6 h-6 rounded-[5px] p-1`}
+                    } cursor-pointer text-[9px] flex justify-center items-center w-5 h-5 rounded-[5px] p-1`}
                   >
                     <FaCheck
                       className={`text-white ${
                         post.checked ? "block" : "hidden"
                       } `}
                     />
-                  </div>
+                  </span>
 
-                  <div className="bg-[#277c77] text-white text-[10px] flex justify-center items-center w-8 h-8 rounded-[50%] p-1">
-                    <FaUser />
-                  </div>
-                  <p className="font-bold text-gray-900 whitespace-no-wrap">
-                    {post.name}
+                  <p>
+                    <img
+                      src={post.image}
+                      alt="Post Image"
+                      className="aspect-square rounded-lg  object-cover "
+                    />
                   </p>
-                </div>
-              </div>
-            </td>
-            <td className="px-5 py-5 text-sm bg-white border-b border-b-gray-200">
-              <p className="text-gray-500 whitespace-no-wrap">
-                {post.category}
+                  <span className=" text-gray-900 whitespace-no-wrap text-[14px] w-[270px]">
+                    {post.title}
+                  </span>
+                </span>
               </p>
             </td>
-           
-            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+
+            <td className="px-2 py-12 bg-white flex  gap-2 border-b border-gray-200  text-sm ">
+              {post.keywords?.slice(0, 2).map((keyword, index) => (
+                <p
+                  key={index}
+                  className="font-bold text-[10px] rounded-full w-fit px-4 py-2 bg-[#f4f5f5] whitespace-no-wrap"
+                >
+                  <span>
+                    {keyword.slice(0, 15)}
+                    {keyword.length > 8 ? "..." : ""}
+                  </span>
+                </p>
+              ))}
+
+              <span
+                className={`${
+                  post.keywords.length > 2 ? "block" : "hidden"
+                } bg-[#f4f5f5] p-1 w-[35px]  flex justify-center items-center border rounded-full text-[10px]`}
+              >
+                + {post.keywords.length - 2}
+              </span>
+            </td>
+
+            <td className="py-5 px-2 text-sm bg-white border-b border-gray-200">
               <p
                 className={`${
-                  post.amount < 0 ? "text-black" : "text-[#277c77]"
-                } whitespace-no-wrap`}
+                  post.traffic < 5
+                    ? "text-[#ba352a] bg-[#fef3f2]  border-[#fedad7]"
+                    : "text-[#2d8d64] bg-[#ecfdf3] border-[#caf5dc] "
+                } whitespace-no-wrap flex text-[10px] font-bold  items-center border w-[43px] gap-1  justify-center rounded-full  py-2 px-3`}
               >
-                <span>{post.amount < 0 ? "-" : "+"}</span>$
-                {post.amount < 0 ? post.amount.slice(1) : post.amount}
+                {post.traffic < 5 ? (
+                  <FaArrowDownLong className="text-[#ba352a]" />
+                ) : (
+                  <FaArrowUpLong className="text-[#2d8d64]" />
+                )}
+                {post.traffic}%
               </p>
             </td>
             <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
               <p className="ml-1 text-gray-500 whitespace-no-wrap">
-                {new Date(post.date).toLocaleDateString("en-US", {
+                {new Date(post.publishedDate).toLocaleDateString("en-US", {
                   month: "short",
                   day: "numeric",
                   year: "numeric",
@@ -241,30 +293,36 @@ const PostHistory = () => {
               </p>
             </td>
             <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+              <p className="relative w-[120px] h-[7px] rounded-[10px] bg-[#e4e7ec]">
+                <span
+                  className={`absolute h-[7px] rounded-[10px]`}
+                  style={{
+                    width: `${post.rating}%`,
+                    backgroundColor: `${
+                      post.rating < 50
+                        ? "#ef3a29"
+                        : post.rating > 75
+                        ? "#17b26a"
+                        : "#ffad05"
+                    }`,
+                  }}
+                ></span>
+              </p>
+            </td>
+            <td className="py-5 pr-5 text-sm bg-white border-b border-gray-200">
               <p
                 className={`${
                   post.amount < 0 ? "text-black" : "text-[#277c77]"
                 } whitespace-no-wrap`}
               >
-                <span>{post.amount < 0 ? "-" : "+"}</span>$
-                {post.amount < 0 ? post.amount.slice(1) : post.amount}
+                <span>{post.rating}</span>
               </p>
             </td>
-            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-              <p
-                className={`${
-                  post.amount < 0 ? "text-black" : "text-[#277c77]"
-                } whitespace-no-wrap`}
-              >
-                <span>{post.amount < 0 ? "-" : "+"}</span>$
-                {post.amount < 0 ? post.amount.slice(1) : post.amount}
-              </p>
+            <td className="px-5 cursor-pointer py-5 text-sm bg-white border-b border-gray-200 text-[#a3aab3]">
+              <RiDeleteBin6Line className="text-[15px]" />
             </td>
-            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200 text-[#a3aab3] text-[17px]">
-              <RiDeleteBin6Line />
-            </td>
-            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200 text-[#a3aab3] text-[17px]">
-              <FiEdit2 />
+            <td className="px-5 cursor-pointer py-5 text-sm bg-white border-b border-gray-200 text-[#a3aab3]">
+              <FiEdit2 className="text-[15px]" />
             </td>
           </tr>
         ))}
