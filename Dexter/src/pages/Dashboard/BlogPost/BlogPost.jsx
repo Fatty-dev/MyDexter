@@ -6,8 +6,10 @@ import { RiHome6Line } from "react-icons/ri";
 import { MdClose } from "react-icons/md";
 import Guy from "../../../assets/Guy.svg";
 import PostHistory from "./PostHistory";
+import CreatePostModal from "../../../components/Common/Modals/CreatePostModal";
 
 const BlogPost = () => {
+  const [createPostModalOpen, setCreatePostModalOpen] = React.useState(false);
   return (
     <div className="w-[90%] mx-auto">
       <div className="flex items-center gap-2 mb-6">
@@ -43,7 +45,7 @@ const BlogPost = () => {
             Create Articles in Bulk
             <PiCopySimpleBold />
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 text-white rounded bg-primary">
+          <button className="flex items-center gap-2 px-4 py-2 text-white rounded bg-primary" onClick={() => setCreatePostModalOpen(true)}> 
             Start Your 1-Click Post
             <FaRegEdit />
           </button>
@@ -113,6 +115,13 @@ const BlogPost = () => {
 
       {/* Post History */}
     <PostHistory/>
+
+    {/* Modal */}
+    {
+      createPostModalOpen && (
+        <CreatePostModal setCreatePostModalOpen={setCreatePostModalOpen} />
+      )
+    }
       
     </div>
   );
