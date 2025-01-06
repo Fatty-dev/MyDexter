@@ -168,7 +168,7 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
               })}
               className={`${
                 errors.prompt ? " border-red-600" : "border-gray-300 "
-              } border text-[10px]  mb-3 rounded-md p-2 h-[50px] text-gray-600 outline-none  w-full mt-1 text-sm focus:border-gray-700`}
+              } border text-[10px]  mb-3 rounded-md pb-12 px-2 p-2  text-gray-600 outline-none  w-full mt-1 text-sm focus:border-gray-700`}
             />
             {errors.prompt && (
               <p className=" font-medium text-red-600 text-[8px]">

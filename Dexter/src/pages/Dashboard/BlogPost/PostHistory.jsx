@@ -1,121 +1,20 @@
 import React, { useState } from "react";
-import { FaSearch, FaHandHolding, FaUser, FaCheck } from "react-icons/fa";
+import { FaSearch,FaCheck } from "react-icons/fa";
 import { FiEdit2 } from "react-icons/fi";
 import { IoFilterSharp } from "react-icons/io5";
-import { AiTwotoneDislike, AiTwotoneLike } from "react-icons/ai";
 import { CiCircleQuestion } from "react-icons/ci";
 import { FaArrowDownLong, FaArrowUpLong } from "react-icons/fa6";
 import DataTable from "../../../components/Common/Table/DataTable";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaMinus } from "react-icons/fa6";
-import postImage from "../../../assets/postImage.svg";
+import { metrics, tableHeaderTitleList, postsData } from "../../../lib/utils/data";
+
+import { Link } from "react-router-dom";
 
 const PostHistory = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
-  const metrics = [
-    {
-      label: "Organic Traffic",
-      value: 250,
-      max: 285,
-      icon: <AiTwotoneLike />,
-      badgeColor: "stroke-green-500",
-    },
-    {
-      label: "Pages Per Session",
-      value: 50,
-      max: 100,
-      icon: <FaHandHolding />,
-      badgeColor: "stroke-yellow-500",
-    },
-    {
-      label: "Bounce Rate",
-      value: 11.3,
-      max: 0,
-      icon: <AiTwotoneDislike />,
-      badgeColor: "stroke-red-500",
-    },
-    {
-      label: "Average Page Position",
-      value: 58,
-      max: 100,
-      icon: <FaHandHolding />,
-      badgeColor: "stroke-yellow-500",
-    },
-    {
-      label: "Crawl Errors",
-      value: 50,
-      max: 100,
-      icon: <FaHandHolding />,
-      badgeColor: "stroke-yellow-500",
-    },
-  ];
 
-  const tableHeaderTitleList = [
-    { icon: <FaArrowDownLong />, title: "Post Title" },
-    { title: "Keywords" },
-    { icon: "", title: "" },
-    { title: "Published Date" },
-    { title: "Rating" },
-    { icon: "", title: "" },
-    { icon: "", title: "" },
-    { icon: "", title: "" },
-  ];
-
-  const postsData = [
-    {
-      id: 1,
-      title: "The Ultimate Guide to Laundry: Tips, Tricks and Hacks",
-      keywords: ["Cleaning products", "Supplies"],
-      publishedDate: "2024-12-09",
-      rating: 60,
-      traffic: 5,
-      image: postImage,
-      checked: true,
-    },
-    {
-      id: 2,
-      title: "The Ultimate Guide to Laundry: Tips, Tricks and Hacks",
-      keywords: [
-        "Cleaning products",
-        "Supplies",
-        "Laundry",
-        "Detergent",
-        "Fabric softener",
-      ],
-      publishedDate: "2025-01-01",
-      rating: 72,
-      traffic: 4,
-      image: postImage,
-      checked: false,
-    },
-    {
-      id: 3,
-      title: "The Ultimate Guide to Laundry: Tips, Tricks and Hacks",
-      keywords: ["Cleaning products", "Supplies", "Fabric softener"],
-      publishedDate: "2024-05-12",
-      image: postImage,
-      rating: 78,
-      traffic: 6,
-      checked: true,
-    },
-    {
-      id: 4,
-      title: "The Ultimate Guide to Laundry: Tips, Tricks and Hacks",
-      keywords: [
-        "Cleaning products",
-        "Supplies",
-        "Laundry",
-        "Detergent",
-        "Fabric softener",
-      ],
-      publishedDate: "2024-08-12",
-      image: postImage,
-      rating: 38,
-      traffic: 6,
-      checked: false,
-    },
-  ];
 
   return (
     <div className="p-4 bg-white rounded-lg shadow">
@@ -231,13 +130,13 @@ const PostHistory = () => {
                     />
                   </span>
 
-                  <p>
+                  <span>
                     <img
                       src={post.image}
                       alt="Post Image"
-                      className="aspect-square rounded-lg  object-cover "
+                      className=" object-cover "
                     />
-                  </p>
+                  </span>
                   <span className=" text-gray-900 whitespace-no-wrap text-[14px] w-[270px]">
                     {post.title}
                   </span>
@@ -310,19 +209,17 @@ const PostHistory = () => {
               </p>
             </td>
             <td className="py-5 pr-5 text-sm bg-white border-b border-gray-200">
-              <p
-                className={`${
-                  post.amount < 0 ? "text-black" : "text-[#277c77]"
-                } whitespace-no-wrap`}
-              >
+            
                 <span>{post.rating}</span>
-              </p>
+              
             </td>
             <td className="px-5 cursor-pointer py-5 text-sm bg-white border-b border-gray-200 text-[#a3aab3]">
               <RiDeleteBin6Line className="text-[15px]" />
             </td>
             <td className="px-5 cursor-pointer py-5 text-sm bg-white border-b border-gray-200 text-[#a3aab3]">
-              <FiEdit2 className="text-[15px]" />
+              <Link to={`/dashboard/blog-post/${post.id}`}>
+                <FiEdit2 className="text-[15px]" />
+              </Link>
             </td>
           </tr>
         ))}

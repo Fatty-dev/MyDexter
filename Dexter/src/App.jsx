@@ -19,6 +19,7 @@ import BlogPost from "./pages/Dashboard/BlogPost/BlogPost";
 import Overview from "./pages/Dashboard/Overview/Overview";
 import Strategies from "./pages/Dashboard/Strategies/Strategies";
 import Analytics from "./pages/Dashboard/Analytics/Analytics";
+import PostDetails from "./pages/Dashboard/BlogPost/PostDetails";
 
 const App = () => {
   return (
@@ -44,6 +45,8 @@ const App = () => {
           <Route path="chat/:chatId" element={<ChatBubble />} />
           <Route path="settings" element={<Settings />} />
           <Route path="blog-post" element={<BlogPost />} />
+          <Route path="blog-post/:postId" element={<PostDetails />} />
+          
           <Route path="overview" element={<Overview />} />
           <Route path="strategies" element={<Strategies/>} />
           <Route path="analytics" element={<Analytics/>} />
