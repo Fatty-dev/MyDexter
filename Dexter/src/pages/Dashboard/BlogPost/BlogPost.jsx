@@ -5,11 +5,14 @@ import { HiOutlineChevronRight } from "react-icons/hi";
 import { RiHome6Line } from "react-icons/ri";
 import { MdClose } from "react-icons/md";
 import Guy from "../../../assets/Guy.svg";
+import PostHistory from "./PostHistory";
+import CreatePostModal from "../../../components/Common/Modals/CreatePostModal";
 
 const BlogPost = () => {
+  const [createPostModalOpen, setCreatePostModalOpen] = React.useState(false);
   return (
     <div className="w-[90%] mx-auto">
-      <div className="mb-6 flex items-center gap-2">
+      <div className="flex items-center gap-2 mb-6">
         <RiHome6Line className="text-gray-500" />
         <h1 className="text-sm text-gray-500">Assistant</h1>
         <HiOutlineChevronRight className="text-gray-500" />
@@ -21,7 +24,7 @@ const BlogPost = () => {
         <h1 className="text-3xl font-semibold">Blog posts</h1>
       </div>
       <hr className="my-2" />
-      <div className="bg-primary flex items-center justify-between text-white px-4 py-2 rounded-lg my-4">
+      <div className="flex items-center justify-between px-4 py-2 my-4 text-white rounded-lg bg-primary">
         <p className="mt-1 text-sm font-medium">
           API connected successfully! You now have access to powerful blog creation tools.
         </p>
@@ -32,9 +35,9 @@ const BlogPost = () => {
       <div className="bg-[#344054] flex items-center justify-between p-4 text-white rounded-md mb-6">
         <div className="w-[50%]">
           <h2 className="text-xl font-bold">Create & Optimize Your Content with Dexter!</h2>
-          <p className="text-sm mt-1">
+          <p className="mt-1 text-sm">
             Create, edit, and schedule content effortlessly while tracking performance—all from a
-            single, intuitive dashboard. <span className="text-primary font-semibold">Learn more</span>
+            single, intuitive dashboard. <span className="font-semibold text-primary">Learn more</span>
           </p>
         </div>
         <div className="mt-4 flex gap-4 whitespace-nowrap w-[43%]">
@@ -42,7 +45,7 @@ const BlogPost = () => {
             Create Articles in Bulk
             <PiCopySimpleBold />
           </button>
-          <button className="bg-primary text-white px-4 py-2 rounded flex items-center gap-2">
+          <button className="flex items-center gap-2 px-4 py-2 text-white rounded bg-primary" onClick={() => setCreatePostModalOpen(true)}> 
             Start Your 1-Click Post
             <FaRegEdit />
           </button>
@@ -50,14 +53,14 @@ const BlogPost = () => {
       </div>
 
       {/* Blog Post Grid */}
-      <div className="bg-white rounded shadow p-4 mb-6">
+      <div className="p-4 mb-6 bg-white rounded-lg shadow">
         <div className="flex items-center justify-between">
           <h3 className="font-bold text-gray-700">Automate Your Blog Posts</h3>
-          <button className="border bg-transparent text-gray-700 px-4 py-2 rounded-lg">
+          <button className="px-4 py-2 text-gray-700 bg-transparent border rounded-lg">
             Auto Scheduler
           </button>
         </div>
-        <div className="group relative w-80 bg-white shadow-lg rounded-lg overflow-hidden border hover:shadow-xl transition-shadow duration-300">
+        <div className="relative overflow-hidden transition-shadow duration-300 bg-white border rounded-lg shadow-lg group w-80 hover:shadow-xl">
           {/* Card Header */}
           <div className="bg-[#E4E4F2] p-4">
             <h3 className="text-[black] font-semibold flex items-center justify-center gap-2">
@@ -68,10 +71,10 @@ const BlogPost = () => {
 
           {/* Card Content */}
           <div className="px-4 pt-4">
-            <h4 className="text-md font-bold text-gray-800">
+            <h4 className="font-bold text-gray-800 text-md">
               The Ultimate Guide to Laundry: Tips, Tricks, and Hacks
             </h4>
-            <p className="mt-1 text-gray-600 text-xs">
+            <p className="mt-1 text-xs text-gray-600">
               Laundry is a chore that many of us dread, but it doesn’t have to be a
               hassle. With the right tips and tricks, you can make laundry day a
               breeze.
@@ -79,26 +82,26 @@ const BlogPost = () => {
             <img
       src={Guy}
       alt="Blog"
-      className="mt-4 w-full h-32 object-cover "
+      className="object-cover w-full h-32 mt-4 "
     />
           </div>
 
           {/* Footer Metadata */}
           <div className="p-4 border-t">
-            <h5 className="text-gray-800 font-medium">
+            <h5 className="font-medium text-gray-800">
               The Ultimate Guide to Laundry: Tips, Tricks, and Hacks
             </h5>
-            <p className="text-gray-500 text-sm mt-1">Laundry Job, Cleaning, Clothing</p>
-            <div className="mt-2 text-sm flex items-center gap-2">
-              <div className="bg-yellow-100 text-yellow-600 px-2 py-1 rounded-full">
+            <p className="mt-1 text-sm text-gray-500">Laundry Job, Cleaning, Clothing</p>
+            <div className="flex items-center gap-2 mt-2 text-sm">
+              <div className="px-2 py-1 text-yellow-600 bg-yellow-100 rounded-full">
                 Ready for publishing
               </div>
             </div>
           </div>
 
           {/* Hover Buttons */}
-          <div className="absolute inset-0 bg-white bg-opacity-80 flex flex-col justify-end items-center p-4 gap-2 opacity-0 pointer-events-none transition-opacity duration-300 group-hover:opacity-100 group-hover:pointer-events-auto">
-            <button className="bg-primary w-full text-white px-4 py-2 rounded flex items-center gap-2 justify-center">
+          <div className="absolute inset-0 flex flex-col items-center justify-end gap-2 p-4 transition-opacity duration-300 bg-white opacity-0 pointer-events-none bg-opacity-80 group-hover:opacity-100 group-hover:pointer-events-auto">
+            <button className="flex items-center justify-center w-full gap-2 px-4 py-2 text-white rounded bg-primary">
               Start Your 1-Click Post
               <FaRegEdit />
             </button>
@@ -111,32 +114,15 @@ const BlogPost = () => {
       </div>
 
       {/* Post History */}
-      <div className="bg-white rounded shadow p-4">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="font-bold text-gray-700">Post History</h3>
-          <div className="flex items-center gap-2">
-            <input
-              type="text"
-              placeholder="Search for keyword, title, and/or metric."
-              className="border border-gray-300 rounded px-2 py-1 text-sm"
-            />
-          </div>
-        </div>
-        <div className="grid grid-cols-6 gap-4 text-center text-sm">
-          {["Social Engagement", "Pages Per Session", "Bounce Rate", "Scroll Depth Engagement", "Crawl Errors"].map(
-            (metric, index) => (
-              <div key={index} className="flex flex-col items-center">
-                <p className="font-bold text-gray-800">0.0</p>
-                <p className="text-gray-500">{metric}</p>
-              </div>
-            )
-          )}
-        </div>
-        <p className="text-gray-500 text-center mt-4">
-          All blog posts will appear here. Until then, continue reviewing, scheduling, and
-          publishing your available blog posts.
-        </p>
-      </div>
+    <PostHistory/>
+
+    {/* Modal */}
+    {
+      createPostModalOpen && (
+        <CreatePostModal setCreatePostModalOpen={setCreatePostModalOpen} />
+      )
+    }
+      
     </div>
   );
 };
