@@ -28,11 +28,11 @@ const MenuBar = ({ editor }) => {
   }
 
   return (
-      <div className=" w-full rounded-lg  py-5   bg-[#efefef]  border border-gray-300  flex  gap-5  flex-wrap">
+      <div className=" w-full rounded-lg absolute lg:top-[8.5%] left-[11%] md:top-[7.7%] right-0 py-5   bg-[#efefef]  border border-gray-300  flex  gap-5  flex-wrap">
         <button
         onClick={() => editor.chain().focus().undo().run()}
         disabled={!editor.can().chain().focus().undo().run()}
-        className={`editor-btn`}
+        className={`editor-btn ml-[7%]`}
       >
         <AiOutlineUndo />
       </button>
@@ -61,6 +61,15 @@ const MenuBar = ({ editor }) => {
         }`}
       >
         <AiOutlineItalic />
+      </button>
+      <button
+        onClick={() => editor.chain().focus().toggleBold().run()}
+        disabled={!editor.can().chain().focus().toggleBold().run()}
+        className={`editor-btn ${
+          editor.isActive("bold") && "active-editor-btn"
+        }`}
+      >
+        <AiOutlineBold />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleStrike().run()}

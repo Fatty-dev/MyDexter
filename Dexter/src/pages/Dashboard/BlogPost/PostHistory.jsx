@@ -17,7 +17,7 @@ const PostHistory = () => {
 
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow">
+    <div className="p-4 mb-12 bg-white rounded-lg shadow`">
       <div className="flex items-center justify-between mb-6 border-b border-b-[#98a8bf] pb-4 ">
         <h3 className="font-bold text-gray-700">Post History</h3>
         <div className="flex gap-4">
@@ -56,7 +56,8 @@ const PostHistory = () => {
                 />
                 {/* Progress Circle */}
                 <circle
-                  className={`${metric.badgeColor} transform -rotate-90 origin-center`}
+                  className={`${((metric.value.toFixed/ metric.max)* 100) < 50 ? "stroke-red-500" : 
+                  ((metric.value/ metric.max)* 100) < 75 ? "stroke-yellow-500" :  "stroke-green-500" } transform-rotate-90 origin-center`}
                   cx="18"
                   cy="18"
                   r="13"
@@ -113,14 +114,14 @@ const PostHistory = () => {
         // setCurrentPage={setCurrentPage}
         // currentPage={currentPage}
       >
-        <div className="bg-[#6d68fb] w-5 h-5 rounded-[5px] p-1 flex justify-center items-center text-white cursor-pointer text-[9px] absolute top-[0.9rem] left-2 ">
+        <div className="bg-[#6d68fb] w-5 h-5 rounded-[5px] p-1 flex justify-center items-center text-white cursor-pointer text-[9px] absolute top-[0.9rem] left-1 md:left-[0.2rem] md:top-[1rem] ">
           <FaMinus className="relative left-[0.3px]" />
         </div>
         {postsData?.map((post) => (
           <tr key={post.id}>
-            <td className="px-2 bg-white border-b border-gray-200 py-5 text-sm ">
+            <td className="px-2 py-5 text-sm bg-white border-b border-gray-200 md:px-1 ">
               <p className="flex items-center">
-                <span className="flex items-center gap-4">
+                <span className="flex items-center gap-4 md:gap-2">
                   <span
                     className={`${
                       post.checked ? "bg-[#6d68fb]" : "bg-transparent border "
@@ -137,10 +138,10 @@ const PostHistory = () => {
                     <img
                       src={post.image}
                       alt="Post Image"
-                      className=" object-cover "
+                      className="object-cover "
                     />
                   </span>
-                  <span className=" text-gray-900 whitespace-no-wrap text-[14px] w-[270px]">
+                  <span className=" text-gray-900 whitespace-no-wrap text-[14px] md:text-[10px] md:w-[150px] w-[270px]">
                     {post.title}
                   </span>
                 </span>
@@ -151,7 +152,7 @@ const PostHistory = () => {
               {post.keywords?.slice(0, 2).map((keyword, index) => (
                 <p
                   key={index}
-                  className="font-bold text-[10px] rounded-full w-fit px-4 py-2 bg-[#f4f5f5] whitespace-no-wrap"
+                  className="font-bold text-[10px] rounded-full w-fit md:px-6 px-4 py-2 md:py-1 bg-[#f4f5f5] whitespace-no-wrap"
                 >
                   <span>
                     {keyword.slice(0, 15)}
@@ -222,7 +223,7 @@ const PostHistory = () => {
             </td>
             <td className=" cursor-pointer  text-sm bg-white border-gray-200 text-[#a3aab3]">
               <Link to={`/dashboard/blog-post/${post.id}`}>
-                <FiEdit2 className="text-[15px]" />
+                <FiEdit2 className="text-[15px] md:text-[13px]" />
               </Link>
             </td>
             </div>

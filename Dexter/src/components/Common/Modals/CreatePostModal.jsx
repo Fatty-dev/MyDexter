@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IoMdClose } from "react-icons/io";
-import { useForm } from "react-hook-form";
+import { useForm, Controller} from "react-hook-form";
 import { FiEdit } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { popupVariant } from "../../../lib/utils";
@@ -21,6 +21,7 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
     register,
     handleSubmit,
     watch,
+    control,
     formState: { errors },
   } = useForm({});
   const values = watch(["title", "prompt"]);

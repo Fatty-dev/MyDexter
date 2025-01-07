@@ -9,16 +9,18 @@ export default {
       colors: {
         primary: " #6D68FB",
         secondary: "#7A8EAC",
-        tetiary:"#344054",
-        layer:"#F1F1FF",
-        hover:"#F9FAFB"
+        tetiary: "#344054",
+        layer: "#F1F1FF",
+        hover: "#F9FAFB",
       },
+
+     
       container: {
-        padding: '1rem', 
-        center:true,
+        padding: "1rem",
+        center: true,
       },
       container_none: {
-          padding: '0',
+        padding: "0",
       },
     },
   },

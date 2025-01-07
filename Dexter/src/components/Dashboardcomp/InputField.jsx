@@ -126,9 +126,9 @@ const InputField = ({ addMessage, updateUsage }) => {
   };
 
   return (
-    <div className="mt-6 flex justify-center px-4 sm:px-6 md:px-8">
+    <div className="flex justify-center px-4 mt-6 sm:px-6 md:px-8">
       <div className="flex items-center justify-between w-full md:w-[60%] lg:w-[80%] xl:w-[90%]  max-w-3xl mx-auto px-4 py-3 border bg-white border-gray-300 rounded-xl">
-        <div className="flex items-center gap-2 flex-grow">
+        <div className="flex items-center flex-grow gap-2">
           <PiMagicWand size={22} className="text-secondary" />
           <textarea
             ref={textareaRef}
@@ -142,7 +142,7 @@ const InputField = ({ addMessage, updateUsage }) => {
           />
         </div>
         <div className="flex items-center gap-2">
-          <p className="text-secondary text-xs">{input.length}/2000</p>
+          <p className="text-xs text-secondary">{input.length}/2000</p>
           {loading ? (
             <Loader/> // Show loader when sending
           ) : (
