@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { IoMdClose } from "react-icons/io";
-import { useForm } from "react-hook-form";
+import { useForm, Controller} from "react-hook-form";
 import { FiEdit } from "react-icons/fi";
 import CreatableSelect from "react-select/creatable";
+
 
 
 
@@ -13,6 +14,7 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
     register,
     handleSubmit,
     watch,
+    control,
     formState: { errors },
   } = useForm({});
 
@@ -66,14 +68,15 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
     indicatorSeparator: () => null, 
   };
  
-  // const handleCreate = (inputValue) => {
-  //   const newKeyword = { value: inputValue, label: inputValue };
-  //   setKeywords((prev) => [...prev, newKeyword]);
-  //   console.log('New option created:', newKeyword);
-  // };
+ 
 
+  // Submit create post form
   const onSubmit = (data) => {
-    console.log(data);
+    const formattedData = {
+      ...data,
+      keywords: data.keywords?.map((item) => item.value), // Extract values from react-select
+    };
+    console.log("Form Data:", formattedData);
     setCreatePostModalOpen(false);
   };
 // console.log(keywords)
@@ -92,7 +95,7 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
         </div>
         <hr />
         <form
-          className="flex flex-col gap-4 my-3  "
+          className="flex flex-col gap-4 my-3 "
           onSubmit={handleSubmit(onSubmit)}
         >
           <div>
@@ -126,16 +129,25 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
               } border text-[10px]   rounded-md p-2 text-gray-600 outline-none appearance-none w-full mt-1 focus:border-gray-700`}
             /> */}
 
+<Controller
+  name="keywords"
+  control={control}
+  defaultValue={null}
+  render={({ field }) => (
+
 <CreatableSelect
+{...field}
   isMulti
   options={keywords}
   onChange={handleChange}
   styles={customStyles}
   placeholder="Enter the main keyword(s)"
   components={customComponents} 
+  />
+  )}
 />
 
-           
+        
             <p className="text-[#96a6be] text-[10px] mt-2">
               Estimated Monthly Traffic:{" "}
               <span className="font-bold">4,500</span>
@@ -215,7 +227,7 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
             )}
           </div>
           <hr />
-          <div className="flex justify-between items-center">
+          <div className="flex items-center justify-between">
             <p className="text-[#96a6be] w-[150px]  font-normal text-[10px] ">
               Click &apos;Generate&apos; to create an editable post. Results may
               vary.

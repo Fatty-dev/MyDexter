@@ -17,7 +17,7 @@ const PostHistory = () => {
 
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow">
+    <div className="p-4 mb-12 bg-white rounded-lg shadow`">
       <div className="flex items-center justify-between mb-6 border-b border-b-[#98a8bf] pb-4 ">
         <h3 className="font-bold text-gray-700">Post History</h3>
         <div className="flex gap-4">
@@ -42,7 +42,7 @@ const PostHistory = () => {
             className="flex   gap-2 items-start [&:not(:first-child)]:border-l border-l-[#d5d9e1] pl-4"
           >
             <div className="relative">
-              <svg className="w-16 h-16" viewBox="0 0 36 36">
+              <svg className="w-16 h-16 " viewBox="0 0 36 36">
                 {/* Background Circle */}
                 <circle
                   className="text-gray-500"
@@ -55,7 +55,8 @@ const PostHistory = () => {
                 />
                 {/* Progress Circle */}
                 <circle
-                  className={`${metric.badgeColor} transform -rotate-90 origin-center`}
+                  className={`${((metric.value.toFixed/ metric.max)* 100) < 50 ? "stroke-red-500" : 
+                  ((metric.value/ metric.max)* 100) < 75 ? "stroke-yellow-500" :  "stroke-green-500" } transform-rotate-90 origin-center`}
                   cx="18"
                   cy="18"
                   r="13"
@@ -77,8 +78,8 @@ const PostHistory = () => {
                 {metric.icon}
               </div>
             </div>
-            <div className="flex items-center   gap-3 ">
-              <div className="flex flex-col justify-center items-center gap-2">
+            <div className="flex items-center gap-3 ">
+              <div className="flex flex-col items-center justify-center gap-2">
                 <div className="text-[#899bb6] self-start text-[12px]">
                   <span className="font-semibold text-[#344054] text-[2rem]">
                     {metric.value}
@@ -91,7 +92,7 @@ const PostHistory = () => {
                     <p>{metric.label}</p>
                     <CiCircleQuestion className="cursor-pointer text-[15px]" />
                   </div>
-                  <p className="text-[#9795fa] relative right-3 mt-2 font-semibold text-[12px]">
+                  <p className="text-[#9795fa] md:text-[8px] md:right-4  relative right-3 mt-2 font-semibold text-[12px]">
                     View {metric.label}
                   </p>
                 </div>
@@ -110,14 +111,14 @@ const PostHistory = () => {
         // setCurrentPage={setCurrentPage}
         // currentPage={currentPage}
       >
-        <div className="bg-[#6d68fb] w-5 h-5 rounded-[5px] p-1 flex justify-center items-center text-white cursor-pointer text-[9px] absolute top-[0.9rem] left-2 ">
+        <div className="bg-[#6d68fb] w-5 h-5 rounded-[5px] p-1 flex justify-center items-center text-white cursor-pointer text-[9px] absolute top-[0.9rem] left-1 md:left-[0.2rem] md:top-[1rem] ">
           <FaMinus className="relative left-[0.3px]" />
         </div>
         {postsData?.map((post) => (
           <tr key={post.id}>
-            <td className="px-2 bg-white border-b border-gray-200 py-5 text-sm ">
+            <td className="px-2 py-5 text-sm bg-white border-b border-gray-200 md:px-1 ">
               <p className="flex items-center">
-                <span className="flex items-center gap-4">
+                <span className="flex items-center gap-4 md:gap-2">
                   <span
                     className={`${
                       post.checked ? "bg-[#6d68fb]" : "bg-transparent border "
@@ -134,21 +135,21 @@ const PostHistory = () => {
                     <img
                       src={post.image}
                       alt="Post Image"
-                      className=" object-cover "
+                      className="object-cover "
                     />
                   </span>
-                  <span className=" text-gray-900 whitespace-no-wrap text-[14px] w-[270px]">
+                  <span className=" text-gray-900 whitespace-no-wrap text-[14px] md:text-[10px] md:w-[150px] w-[270px]">
                     {post.title}
                   </span>
                 </span>
               </p>
             </td>
 
-            <td className="px-2 py-12 bg-white flex  gap-2 border-b border-gray-200  text-sm ">
+            <td className="flex gap-2 px-2 py-12 text-sm bg-white border-b border-gray-200 md:gap-1 md:px-1 ">
               {post.keywords?.slice(0, 2).map((keyword, index) => (
                 <p
                   key={index}
-                  className="font-bold text-[10px] rounded-full w-fit px-4 py-2 bg-[#f4f5f5] whitespace-no-wrap"
+                  className="font-bold text-[10px] rounded-full w-fit md:px-6 px-4 py-2 md:py-1 bg-[#f4f5f5] whitespace-no-wrap"
                 >
                   <span>
                     {keyword.slice(0, 15)}
@@ -160,19 +161,19 @@ const PostHistory = () => {
               <span
                 className={`${
                   post.keywords.length > 2 ? "block" : "hidden"
-                } bg-[#f4f5f5] p-1 w-[35px]  flex justify-center items-center border rounded-full text-[10px]`}
+                } bg-[#f4f5f5] p-1 w-[35px] md:w-[30px]  flex justify-center items-center border rounded-full text-[10px]`}
               >
                 + {post.keywords.length - 2}
               </span>
             </td>
 
-            <td className="py-5 px-2 text-sm bg-white border-b border-gray-200">
+            <td className="px-2 py-5 bg-white border-b border-gray-200 text-s0m md:px-1">
               <p
                 className={`${
                   post.traffic < 5
                     ? "text-[#ba352a] bg-[#fef3f2]  border-[#fedad7]"
                     : "text-[#2d8d64] bg-[#ecfdf3] border-[#caf5dc] "
-                } whitespace-no-wrap flex text-[10px] font-bold  items-center border w-[43px] gap-1  justify-center rounded-full  py-2 px-3`}
+                } whitespace-no-wrap flex text-[10px] font-bold  items-center border w-[43px] gap-1  justify-center rounded-full  py-2 px-3 md:px-1`}
               >
                 {post.traffic < 5 ? (
                   <FaArrowDownLong className="text-[#ba352a]" />
@@ -191,8 +192,8 @@ const PostHistory = () => {
                 })}
               </p>
             </td>
-            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-              <p className="relative w-[120px] h-[7px] rounded-[10px] bg-[#e4e7ec]">
+            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200 md:px-1">
+              <p className="relative md:w-[100px] w-[120px] h-[7px] rounded-[10px] bg-[#e4e7ec]">
                 <span
                   className={`absolute h-[7px] rounded-[10px]`}
                   style={{
@@ -208,17 +209,17 @@ const PostHistory = () => {
                 ></span>
               </p>
             </td>
-            <td className="py-5 pr-5 text-sm bg-white border-b border-gray-200">
+            <td className="py-5 pr-5 text-sm bg-white border-b border-gray-200 md:pr-2">
             
                 <span>{post.rating}</span>
               
             </td>
-            <td className="px-5 cursor-pointer py-5 text-sm bg-white border-b border-gray-200 text-[#a3aab3]">
-              <RiDeleteBin6Line className="text-[15px]" />
+            <td className="px-5 md:px-3 cursor-pointer py-5 text-sm bg-white border-b border-gray-200 text-[#a3aab3]">
+              <RiDeleteBin6Line className="text-[15px] md:text-[13px]" />
             </td>
-            <td className="px-5 cursor-pointer py-5 text-sm bg-white border-b border-gray-200 text-[#a3aab3]">
+            <td className="px-5 cursor-pointer py-5   bg-white border-b border-gray-200 text-[#a3aab3] md:px-0">
               <Link to={`/dashboard/blog-post/${post.id}`}>
-                <FiEdit2 className="text-[15px]" />
+                <FiEdit2 className="text-[15px] md:text-[13px]" />
               </Link>
             </td>
           </tr>

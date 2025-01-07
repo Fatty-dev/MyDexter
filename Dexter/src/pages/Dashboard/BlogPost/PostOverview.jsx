@@ -54,10 +54,10 @@ const PostOverview = () => {
   ];
 
   return (
-    <div className="absolute  right-0 top-[7.8%] p-5 w-[20%] h-fit bottom-0 bg-white shadow-lg border border-gray-300">
+    <div className="absolute  right-0 lg:top-[8.5%] md:top-[8.5%] p-5 w-[20%] h-fit bottom-0 bg-white shadow-lg border border-gray-300">
       {/* Schedule */}
-      <div className="flex justify-between items-center my-3">
-        <div className="flex gap-2 items-center">
+      <div className="flex items-center justify-between my-3">
+        <div className="flex items-center gap-2">
           <h1 className="font-semibold">Schedule this post</h1>
           <CiCircleQuestion className="text-[15px] cursor-pointer text-gray-500" />
         </div>
@@ -72,20 +72,20 @@ const PostOverview = () => {
       <p className="bg-[#f9fafb] text-[#9a86f6] p-3 my-4 shadow-md rounded-lg">
         Publish immediately
       </p>
-      <div className="flex gap-2 items-center p-2">
+      <div className="flex items-center gap-2 p-2">
         <input type="checkbox" />
         <label>Enable bulk posting</label>
       </div>
 
       {/* SEO Analysis */}
 
-      <div className="flex gap-2 items-center p-2 my-3">
+      <div className="flex items-center gap-2 p-2 my-3">
         <h1 className="font-semibold">SEO Content Analysis</h1>
         <CiCircleQuestion className="cursor-pointer text-[15px] cursor-pointer text-gray-500" />
       </div>
 
       <div className="bg-[#f9fafb] rounded-lg p-4 shadow-md">
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           <p className="text-[#525e70]">
             Overall SEO score <span className="text-gray-400">(5/5)</span>{" "}
           </p>
@@ -116,12 +116,12 @@ const PostOverview = () => {
       </div>
 
       {/* Meta Data */}
-      <div className="flex justify-between items-center p-2 mt-4 mb-2">
-        <div className="flex gap-2 items-center">
+      <div className="flex items-center justify-between p-2 mt-4 mb-2">
+        <div className="flex items-center gap-2">
           <h1 className="font-semibold">Meta Data</h1>
           <CiCircleQuestion className="text-[15px] cursor-pointer text-gray-500" />
         </div>
-        <FaAngleDown className="cursor-pointer text-gray-500" />
+        <FaAngleDown className="text-gray-500 cursor-pointer" />
       </div>
 
       <p className="text-[8px] text-gray-500 px-2 mb-3 relative bottom-2">
@@ -149,7 +149,7 @@ const PostOverview = () => {
               onClick={() => {
                 setSettingsOpen(false);
               }}
-              className="cursor-pointer flex items-center gap-3  text-gray-500 p-2 hover:bg-gray-100 rounded-lg w-full"
+              className="flex items-center w-full gap-3 p-2 text-gray-500 rounded-lg cursor-pointer hover:bg-gray-100"
             >
               <span className="text-[14px] cursor-pointer">{item.icon}</span>
               <span>{item.name}</span>

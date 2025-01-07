@@ -64,8 +64,8 @@ const PostDetails = () => {
  
 
   return (
-    <div className="w-full overflow-y-scroll mx-auto">
-      <div className="flex justify-between items-center px-16">
+    <div className="w-full mx-auto overflow-y-scroll">
+      <div className="flex items-center justify-between px-16">
         <div className="flex items-center gap-2 mb-4">
           <FaArrowLeft
             className="text-[12px] cursor-pointer text-gray-500"
@@ -101,10 +101,10 @@ const PostDetails = () => {
           onDataChange={(data) => setBody(data)}
         />
 
-        <div  className="w-full mx-auto p-4" ><img src={sampleImage} alt="Post Image"   /></div>
+        <div  className="w-full p-4 mx-auto" ><img src={sampleImage} alt="Post Image"   /></div>
 
-        <InputField addMessage={addMessage} updateUsage={updateUsage} />
-        <span className="text-sm text-gray-500 text-center flex justify-center pb-2 pt-2">
+        <InputField addMessage={addMessage} updateUsage={updateUsage}  />
+        <span className="flex justify-center pt-2 pb-2 text-sm text-center text-gray-500">
           Enter a prompt to rewrite your article, section, subheadline, or
           image—Dexter will handle the rest.
         </span>
