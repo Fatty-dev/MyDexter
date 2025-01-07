@@ -33,7 +33,7 @@ const Editor = ({ onDataChange, content, editable }) => {
   });
 
   return (
-    <div className="w-full relative">
+    <div className="">
       {editable && <MenuBar editor={editor} />}
       <EditorContent editor={editor} />
     </div>

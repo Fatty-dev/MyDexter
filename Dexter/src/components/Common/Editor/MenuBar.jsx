@@ -28,7 +28,7 @@ const MenuBar = ({ editor }) => {
   }
 
   return (
-    <div className=" rounded-lg p-5  bg-[#efefef] border border-gray-300 z-10 flex gap-5  flex-wrap">
+      <div className=" rounded-lg p-20  py-5 w-screen absolute top-[8.1%] left-[12%] bg-[#efefef]  border border-gray-300  flex  gap-5  flex-wrap">
         <button
         onClick={() => editor.chain().focus().undo().run()}
         disabled={!editor.can().chain().focus().undo().run()}
