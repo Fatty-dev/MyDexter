@@ -6,6 +6,8 @@ import Editor from "../../../components/Common/Editor/Editor";
 import { MdArrowOutward } from "react-icons/md";
 import sampleImage from "../../../assets/sampleImage.svg"
 import PostOverview from "./PostOverview"
+import { MdOutlineEdit } from "react-icons/md";
+import { FiSend } from "react-icons/fi";
 
 const PostDetails = () => {
   const { postId } = useParams();
@@ -48,6 +50,20 @@ const PostDetails = () => {
        
         <img src={sampleImage} alt="Post Image"  className=" w-screen p-4" />
         {/* <p>{post.content}</p>{" "} */}
+
+        <form className="my-3">
+          <div className="border border-gray-400 p-2 rounded-[7px] w-full shadow-lg ">
+            <input type="text" className="border-none outline-none bg-transparent w-full"/>
+            <div className="flex justify-between items-center gap-3 relative bottom-6">
+              <MdOutlineEdit className="text-gray-500 text-[20px]"/>
+              <div className="flex items-center  gap-3">
+                <span>0/2000</span>
+                <FiSend className="text-gray-500 cursor-pointer text-[15px]"/>
+              </div>
+            </div>
+          </div>
+        </form>
+        <span className="text-sm text-gray-500 text-center flex justify-center mb-3">Enter a prompt to rewrite your article, section, subheadline, or image—Dexter will handle the rest.</span>
       </div>
 <PostOverview/>
     </div>
