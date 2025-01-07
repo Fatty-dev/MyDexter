@@ -2,128 +2,135 @@ import React, { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useForm } from "react-hook-form";
 import { FiEdit } from "react-icons/fi";
-import CreatableSelect from "react-select/creatable";
+import { motion } from "framer-motion";
+import { popupVariant } from "../../../lib/utils";
+import { authApi } from "../../../lib/config/axios-instance";
+import toast from "react-hot-toast";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+
+const variant = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+};
 
 const CreatePostModal = ({ setCreatePostModalOpen }) => {
   const [keywords, setKeywords] = useState([]);
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm({});
+  const values = watch(["title", "prompt"]);
 
-  const values = watch(["keywords", "title", "prompt"]);
+  const handleAddKeyword = (e) => {
+    const value = e.target.value.trim();
 
-  //   const promiseOptions = async (inputValue) => {
-  //     const keywords = await getAllCategories();
-  //     return filterKeywords(inputValue, keywords);
-  //   };
-
-  const onSubmit = (data) => {
-    console.log(data);
-    setCreatePostModalOpen(false);
+    if (e.key === "Enter" && value) {
+      setKeywords((prev) => [...prev, value]);
+      e.target.value = "";
+    }
   };
-// console.log(keywords)
+
+  const handleRemoveKeyword = (index) => {
+    setKeywords((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const onSubmit = async (data) => {
+    setLoading(true);
+    try {
+      const response = await authApi.post("/blog/generate-single-article", {
+        mainKeyword: keywords.join(", "),
+        title: data.title,
+        aiPrompt: data.prompt,
+      });
+
+      toast.success("Post created successfully!");
+      const postId = response?.data?.postId; // Replace with actual response key for post ID.
+      if (postId) {
+        window.location.href = `/dashboard/blog-post/${postId}`;
+      }
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message ||
+        "Failed to create post. Please try again.";
+      toast.error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="backdrop-blur-sm overflow-scroll shadow-md flex justify-center items-center fixed inset-0 z-[50] bg-black bg-opacity-10 scrollbar-hide">
-      <div className="bg-white  lg:w-[400px] w-[350px] h-fit p-4 rounded-md   bottom-[80px] relative top-1">
+    <motion.div
+      {...variant}
+      className="flex justify-center items-center fixed inset-0 z-[50] bg-black bg-opacity-50"
+    >
+      <motion.div
+        {...popupVariant}
+        className="bg-white md:w-[60%] lg:w-[45%] w-[90%] p-6 rounded-lg shadow-lg relative"
+      >
+        {/* Header Section */}
         <div className="mb-4">
-          <h1 className="font-[600]  text-[14px]">Start your post</h1>
+          <h1 className="font-semibold text-lg text-gray-800">
+            Start Your Post
+          </h1>
           <IoMdClose
-            className=" cursor-pointer w-[10px]  absolute top-3 right-5"
+            className="cursor-pointer w-6 h-6 text-gray-600 absolute top-4 right-4"
             onClick={() => setCreatePostModalOpen(false)}
           />
-          <span className="text-[10px] text-[#a8b1be]">
-            Fill in your details to create an AI-powered log post effortlessly.
-          </span>
+          <p className="text-sm text-gray-500 mt-2">
+            Fill in your details to create an AI-powered blog post effortlessly.
+          </p>
         </div>
-        <hr />
-        <form
-          className="flex flex-col gap-4 my-3  "
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <div>
-            <label
-              htmlFor="keywords"
-              className="font-[600] flex justify-between  text-[10px] text-gray-400"
-            >
-              <span>Main keywords(s)</span>
-              <span
-                className={` font-normal ${
-                  values[0]?.length > 80 ? "text-red-600" : "text-[#96a6be]"
-                }`}
-              >
-                {values[0]?.length > 0 ? values[0].length : 0}/80
-              </span>
-            </label>
 
+        <hr className="mb-4" />
+
+        {/* Form Section */}
+        <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
+          {/* Keywords Input */}
+          <div>
+            <label className="font-medium text-sm text-gray-600">
+              Main Keywords
+            </label>
+            <div className="flex flex-wrap gap-2 mt-2">
+              {keywords.map((keyword, index) => (
+                <div
+                  key={index}
+                  className="flex items-center bg-gray-200 text-sm px-2  py-1 rounded-md"
+                >
+                  <span>{keyword}</span>
+                  <IoMdClose
+                    className="ml-2 cursor-pointer text-gray-600"
+                    onClick={() => handleRemoveKeyword(index)}
+                  />
+                </div>
+              ))}
+            </div>
             <input
               type="text"
-              id="keywords"
-              placeholder="Enter the main keyword(s)"
-              {...register("keywords", {
-                required: "Keyword is required",
-                maxLength: {
-                  value: 80,
-                  message: "Keywords should not exceed 80 characters.",
-                },
-              })}
-              className={`${
-                errors.keywords ? " border-red-600" : "border-gray-300 "
-              } border text-[10px]   rounded-md p-2 text-gray-600 outline-none appearance-none w-full mt-1 focus:border-gray-700`}
+              placeholder="Type a keyword and press Enter"
+              onKeyDown={handleAddKeyword}
+              className="border mt-2 p-3 rounded-md w-full text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300"
             />
-
-            {/* <CreatableSelect
-              //   loadOptions={promiseOptions}
-              defaultValue={keywords?.map((keyword) => ({
-                value: keyword,
-                label: keyword,
-              }))}
-              isMulti
-              onChange={(newValue) =>
-                setKeywords(newValue.map((item) => item.value))
-              }
-              {...register("keywords", {
-                required: "Keyword is required",
-                maxLength: {
-                  value: 80,
-                  message: "Keywords should not exceed 80 characters.",
-                },
-              })}
-                placeholder="Enter the main keyword(s)"
-                className={` ${
-                    errors.max ? " border-red-600" : " "
-                    }  text-[10px]   rounded-md p-1 text-gray-600 outline-none appearance-none w-full mt-1 focus:border-gray
-                    -700`}
-
-            /> */}
-            <p className="text-[#96a6be] text-[10px] mt-2">
-              Estimated Monthly Traffic:{" "}
-              <span className="font-bold">4,500</span>
-            </p>
-            {errors.keywords && (
-              <p className=" font-medium text-red-600 text-[8px]">
-                {errors.keywords.message}
-              </p>
-            )}
           </div>
 
+          {/* Title Input */}
           <div>
-            <label className="font-[600] flex justify-between text-[10px] text-gray-400">
+            <label className="flex justify-between font-medium text-sm text-gray-600">
               <span>Title</span>
               <span
-                className={` font-normal ${
-                  values[1]?.length > 100 ? "text-red-600" : "text-[#96a6be]"
+                className={`text-xs ${
+                  values[0]?.length > 100 ? "text-red-600" : "text-gray-400"
                 }`}
               >
-                {values[1]?.length > 0 ? values[1].length : 0}/100
+                {values[0]?.length || 0}/100
               </span>
             </label>
             <input
               type="text"
               placeholder="Enter post title"
-              
               {...register("title", {
                 required: "Title is required.",
                 maxLength: {
@@ -131,68 +138,66 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
                   message: "Title should not exceed 100 characters.",
                 },
               })}
-              className={`${
-                errors.title ? " border-red-600" : "border-gray-300 "
-              } border text-[10px]   rounded-md p-2 text-gray-600 outline-none appearance-none w-full mt-1 focus:border-gray-700`}
+              className={`border mt-2 p-3 rounded-md w-full text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300 ${
+                errors.title ? "border-red-600" : "border-gray-300"
+              }`}
             />
             {errors.title && (
-              <p className=" font-medium text-red-600 text-[8px]">
+              <p className="text-xs text-red-600 mt-1">
                 {errors.title.message}
               </p>
             )}
           </div>
-          <div>
-            <label className="font-[600]  text-[10px] text-gray-400 flex justify-between ">
-              <span>AI prompt (optional)</span>
 
-              <span
-                className={` font-normal ${
-                  values[2]?.length > 300 ? "text-red-600" : "text-[#96a6be]"
-                }`}
-              >
-                {values[2]?.length > 0 ? values[2].length : 0}/300
-              </span>
+          {/* Prompt Input */}
+          <div>
+            <label className="font-medium text-sm text-gray-600">
+              AI Prompt (Optional)
             </label>
-            <p className="text-[10px] text-[#96a6be]">
-              Provide Dexter with custom instructions to personalize your post.
-            </p>
-            <input
-              type="text"
-              placeholder="Add custom instructions to tailor your post with Dexter."
+            <textarea
+              placeholder="Add custom instructions to tailor your post."
               {...register("prompt", {
-                required: false,
                 maxLength: {
                   value: 300,
                   message: "Prompt should not exceed 300 characters.",
                 },
               })}
-              className={`${
-                errors.prompt ? " border-red-600" : "border-gray-300 "
-              } border text-[10px]  mb-3 rounded-md pb-12 px-2 p-2  text-gray-600 outline-none  w-full mt-1 text-sm focus:border-gray-700`}
-            />
+              className={`border mt-2 p-3 rounded-md w-full text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300 h-24 resize-none ${
+                errors.prompt ? "border-red-600" : "border-gray-300"
+              }`}
+            ></textarea>
             {errors.prompt && (
-              <p className=" font-medium text-red-600 text-[8px]">
+              <p className="text-xs text-red-600 mt-1">
                 {errors.prompt.message}
               </p>
             )}
           </div>
-          <hr />
-          <div className="flex justify-between items-center">
-            <p className="text-[#96a6be] w-[150px]  font-normal text-[10px] ">
-              Click &apos;Generate&apos; to create an editable post. Results may
-              vary.
+
+          <hr className="mt-4" />
+
+          {/* Footer Section */}
+          <div className="flex justify-between items-center mt-4">
+            <p className="text-sm text-gray-500 w-[50%]">
+              Click 'Generate' to create an editable post. Results may vary.
             </p>
             <button
-              className="disabled:bg-opacity-50 flex gap-2 items-center hover:bg-opacity-50 text-white ease-in-out duration-500 w-fit p-2 font-[500] bg-[#6d68fb] mt-3 rounded-lg text-center text-[12px] cursor-pointer"
-              disabled={errors.keywords || errors.title || errors.prompt}
+              type="submit"
+              className="flex items-center gap-2 px-4 py-2 rounded-md text-white bg-primary hover:bg-indigo-500 transition disabled:bg-gray-400 text-sm font-medium"
+              disabled={loading}
             >
-              <span>Generate Your Blog Post</span>
-              <FiEdit className="text-white" />
+              {loading ? (
+                <AiOutlineLoading3Quarters className="animate-spin w-5 h-5" />
+              ) : (
+                <>
+                  <span>Generate Your Blog Post</span>
+                  <FiEdit className="w-5 h-5" />
+                </>
+              )}
             </button>
           </div>
         </form>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

@@ -60,7 +60,7 @@ const PostDetails = () => {
           onDataChange={(data) => setBody(data)}
         />
 
-        <div  className="w-[90%] mx-auto p-4 h-[20%]" ><img src={sampleImage} alt="Post Image"   /></div>
+        <div className="w-[90%] mx-auto p-4 h-[20%]" ><img src={sampleImage} alt="Post Image"   /></div>
 
         <InputField addMessage={addMessage} updateUsage={updateUsage} />
         <span className="text-sm text-gray-500 text-center flex justify-center pb-2 pt-2">

@@ -14,10 +14,7 @@ const DataTable = ({
           <div className="  overflow-x-auto sm:-mx-8 sm:px-8">
             <div className="inline-block min-w-full overflow-hidden rounded-lg">
               <div className="flex flex-row justify-between w-full ">
-                <div className="w-full  bg-white ">
-                  <div className="relative "></div>
-                </div>
-                <table className="min-w-full leading-normal relative">
+                <table className="w-full overflow-x-auto leading-normal relative">
                   <thead>
                     <tr>
                       {tableHeaderTitleList.map((post, index) => (

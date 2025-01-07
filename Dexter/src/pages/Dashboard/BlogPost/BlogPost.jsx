@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { FaRegEdit } from "react-icons/fa";
 import { PiCopySimpleBold } from "react-icons/pi";
 import { HiOutlineChevronRight } from "react-icons/hi";
@@ -9,7 +10,13 @@ import PostHistory from "./PostHistory";
 import CreatePostModal from "../../../components/Common/Modals/CreatePostModal";
 
 const BlogPost = () => {
+  const navigate = useNavigate();
   const [createPostModalOpen, setCreatePostModalOpen] = React.useState(false);
+
+
+  const handleBulkArticle = () => {
+    navigate("/dashboard/bulk-article");
+  }
   return (
     <div className="w-[90%] mx-auto">
       <div className="flex items-center gap-2 mb-6">
@@ -41,7 +48,7 @@ const BlogPost = () => {
           </p>
         </div>
         <div className="mt-4 flex gap-4 whitespace-nowrap w-[43%]">
-          <button className="bg-white flex items-center gap-2 text-[#475467] px-4 py-2 rounded">
+          <button className="bg-white flex items-center gap-2 text-[#475467] px-4 py-2 rounded" onClick={handleBulkArticle}>
             Create Articles in Bulk
             <PiCopySimpleBold />
           </button>
