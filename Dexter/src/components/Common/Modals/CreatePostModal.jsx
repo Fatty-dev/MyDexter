@@ -48,10 +48,7 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
       });
 
       toast.success("Post created successfully!");
-      const postId = response?.data?.postId; // Replace with actual response key for post ID.
-      if (postId) {
-        window.location.href = `/dashboard/blog-post/${postId}`;
-      }
+  
     } catch (error) {
       const errorMessage =
         error.response?.data?.message ||
