@@ -4,6 +4,9 @@ import { useForm } from "react-hook-form";
 import { FiEdit } from "react-icons/fi";
 import CreatableSelect from "react-select/creatable";
 
+
+
+
 const CreatePostModal = ({ setCreatePostModalOpen }) => {
   const [keywords, setKeywords] = useState([]);
   const {
@@ -15,10 +18,59 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
 
   const values = watch(["keywords", "title", "prompt"]);
 
-  //   const promiseOptions = async (inputValue) => {
-  //     const keywords = await getAllCategories();
-  //     return filterKeywords(inputValue, keywords);
-  //   };
+  // const promiseOptions = async (inputValue) => {
+  //   const categoriesData = await getAllCategories();
+  //   return filterCategories(inputValue, categoriesData?.data);
+  // };
+
+  const handleChange = (selectedOption, inputValue) => {
+    console.log('Selected option:', selectedOption);
+    const newKeyword = { value: inputValue, label: inputValue };
+    setKeywords((prev) => [...prev, newKeyword]);
+  };
+
+  const customStyles = {
+    control: (base) => ({
+      ...base,
+      border: '2px solid gray',
+      minHeight: "18px",
+      borderRadius: '5px',
+      padding: '4px',
+      backgroundColor: '#fafafa',
+    }),
+    placeholder: (base) => ({
+      ...base,
+      // color: '#4b5563',
+      fontSize: '10px', 
+      backgroundColor: "transparent"
+    }),
+    input: (base) => ({
+      ...base,
+      color: 'black',
+  
+      padding: 0,            
+      margin: 0,
+
+    }),
+    valueContainer: (base) => ({
+      ...base,
+      padding: '0 8px',      
+    }),
+   
+  
+  };
+
+  const customComponents = {
+    DropdownIndicator: () => null, 
+    ClearIndicator: () => null,   
+    indicatorSeparator: () => null, 
+  };
+ 
+  // const handleCreate = (inputValue) => {
+  //   const newKeyword = { value: inputValue, label: inputValue };
+  //   setKeywords((prev) => [...prev, newKeyword]);
+  //   console.log('New option created:', newKeyword);
+  // };
 
   const onSubmit = (data) => {
     console.log(data);
@@ -58,7 +110,7 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
               </span>
             </label>
 
-            <input
+            {/* <input
               type="text"
               id="keywords"
               placeholder="Enter the main keyword(s)"
@@ -72,32 +124,18 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
               className={`${
                 errors.keywords ? " border-red-600" : "border-gray-300 "
               } border text-[10px]   rounded-md p-2 text-gray-600 outline-none appearance-none w-full mt-1 focus:border-gray-700`}
-            />
-
-            {/* <CreatableSelect
-              //   loadOptions={promiseOptions}
-              defaultValue={keywords?.map((keyword) => ({
-                value: keyword,
-                label: keyword,
-              }))}
-              isMulti
-              onChange={(newValue) =>
-                setKeywords(newValue.map((item) => item.value))
-              }
-              {...register("keywords", {
-                required: "Keyword is required",
-                maxLength: {
-                  value: 80,
-                  message: "Keywords should not exceed 80 characters.",
-                },
-              })}
-                placeholder="Enter the main keyword(s)"
-                className={` ${
-                    errors.max ? " border-red-600" : " "
-                    }  text-[10px]   rounded-md p-1 text-gray-600 outline-none appearance-none w-full mt-1 focus:border-gray
-                    -700`}
-
             /> */}
+
+<CreatableSelect
+  isMulti
+  options={keywords}
+  onChange={handleChange}
+  styles={customStyles}
+  placeholder="Enter the main keyword(s)"
+  components={customComponents} 
+/>
+
+           
             <p className="text-[#96a6be] text-[10px] mt-2">
               Estimated Monthly Traffic:{" "}
               <span className="font-bold">4,500</span>

@@ -52,7 +52,7 @@ const PostDetails = () => {
         </div>
       </div>
 
-      <div className="   p-16 w-[80%] bg-white">
+      <div className=" p-16 w-[80%] bg-white">
         <Editor
           content={post.content}
           editable={true}
