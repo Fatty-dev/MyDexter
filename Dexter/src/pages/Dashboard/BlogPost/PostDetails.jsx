@@ -52,14 +52,15 @@ const PostDetails = () => {
         </div>
       </div>
 
-      <div className="   p-16 w-[80%] bg-white">
+      <div className="">
+      <div className="w-full bg-white">
         <Editor
           content={post.content}
           editable={true}
           onDataChange={(data) => setBody(data)}
         />
 
-        <div  className=" w-full p-4 h-[20%]" ><img src={sampleImage} alt="Post Image"   /></div>
+        <div  className="w-[90%] mx-auto p-4 h-[20%]" ><img src={sampleImage} alt="Post Image"   /></div>
 
         <InputField addMessage={addMessage} updateUsage={updateUsage} />
         <span className="text-sm text-gray-500 text-center flex justify-center pb-2 pt-2">
@@ -67,7 +68,10 @@ const PostDetails = () => {
           image—Dexter will handle the rest.
         </span>
       </div>
+      </div>
+      <div className="w-[30%]">
       <PostOverview />
+      </div>
     </div>
   );
 };
