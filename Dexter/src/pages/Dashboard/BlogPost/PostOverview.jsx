@@ -54,7 +54,7 @@ const PostOverview = () => {
   ];
 
   return (
-    <div className="absolute  right-0 top-[8.1%] p-5 w-[20%] h-fit bottom-0 bg-white shadow-lg border border-gray-300">
+    <div className="absolute  right-0 top-[7.8%] p-5 w-[20%] h-fit bottom-0 bg-white shadow-lg border border-gray-300">
       {/* Schedule */}
       <div className="flex justify-between items-center my-3">
         <div className="flex gap-2 items-center">
