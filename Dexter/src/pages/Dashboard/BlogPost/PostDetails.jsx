@@ -1,56 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { postsData } from "../../../lib/utils/data";
 import { FaArrowLeft } from "react-icons/fa";
 import Editor from "../../../components/Common/Editor/Editor";
 import { MdArrowOutward } from "react-icons/md";
 import sampleImage from "../../../assets/sampleImage.svg";
 import PostOverview from "./PostOverview";
 import InputField from "../../../components/Dashboardcomp/InputField";
-// import { EditorContent, useEditor } from "@tiptap/react";
-// import { extensions } from "../../../constants/TipTapExtensions";
+import { authApi } from "../../../lib/config/axios-instance";
+import { postsData } from "../../../lib/utils/data";
 
 const PostDetails = () => {
-
-  const editable = true
-
+  const editable = true;
   const { postId } = useParams();
   const [body, setBody] = useState(null);
   const [messages, setMessages] = useState([]);
   const [dailyUsage, setDailyUsage] = useState(0);
   const [dailyLimit, setDailyLimit] = useState(0);
-  
-  const post = postsData.find((post) => post.id === Number(postId));
 
-  // const onDataChange = (data) => {setBody(data)}
-  // const content = post.content
+  const getDetails = async () => {
+    try {
+      const { data } = await authApi.get(`blog/single?blogPostId=${postId}`);
+      if (data) {
+        const postData = data.data;
+        console.log(data.data.content)
 
-  //  const editor = useEditor({
-  //     editable,
-  //     extensions: extensions,
-  //     // [StarterKit.configure({
-  
-  //     // }), Heading.configure({
-  //     //   HTMLAttributes: {
-  //     //     class: "text-xl font-bold",
-  //     //     levels: [2]
-  //     //   }
-  //     // })]
-  
-  //     content: content,
-  //     editorProps: {
-  //       attributes: {
-  //         class:
-  //           "  mt-7 outline-gray-400 p-5 ",
-  //       },
-  //     },
-  //     onUpdate: ({ editor }) => {
-  //       const html = editor.getHTML();
-  //       onDataChange(html);
-  //     },
-     
-  //   });
-  
+        setBody(postData.content);
+        setDailyUsage(postData.performance.organicTraffic);
+        setDailyLimit(postData.performance.pagesPerSession);
+
+        console.log("Post Metadata: ", postData.metadata);
+        console.log("SEO Analysis: ", postData.seoAnalysis);
+      } else {
+        console.error("Failed to fetch the blog post:", data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching blog post:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    getDetails();
+  }, []);
 
   const addMessage = (newMessage) => {
     setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -60,8 +50,6 @@ const PostDetails = () => {
     setDailyUsage(usage);
     setDailyLimit(limit);
   };
-
- 
 
   return (
     <div className="w-full mx-auto overflow-y-scroll">
@@ -81,7 +69,7 @@ const PostDetails = () => {
             </button>
           </div>
           <div>
-            <button className="text-white flex gap-2 items center bg-[#6d68fb] p-2 w-[100px]  justify-center rounded-md">
+            <button className="text-white flex gap-2 items-center bg-[#6d68fb] p-2 w-[100px]  justify-center rounded-md">
               Proceed
               <MdArrowOutward className="text-white text-[15px]" />
             </button>
@@ -89,30 +77,25 @@ const PostDetails = () => {
         </div>
       </div>
 
-
-      <div className=" p-16 w-[80%] bg-white">
-
-      
-      <div className="w-full bg-white">
-
-        <Editor
-          content={post.content}
+      <div className="p-16 w-[80%] bg-white">
+        {body && <Editor
+          content={body}
           editable={true}
           onDataChange={(data) => setBody(data)}
-        />
+        />}
 
-        <div  className="w-full p-4 mx-auto" ><img src={sampleImage} alt="Post Image"   /></div>
+        <div className="w-full p-4 mx-auto">
+          <img src={sampleImage} alt="Post Image" />
+        </div>
 
-        <InputField addMessage={addMessage} updateUsage={updateUsage}  />
+        <InputField addMessage={addMessage} updateUsage={updateUsage} />
         <span className="flex justify-center pt-2 pb-2 text-sm text-center text-gray-500">
           Enter a prompt to rewrite your article, section, subheadline, or
           image—Dexter will handle the rest.
         </span>
       </div>
-      </div>
-      {/* <EditorContent editor={editor} />   */}
       <div className="w-[30%]">
-      <PostOverview />
+        <PostOverview />
       </div>
     </div>
   );

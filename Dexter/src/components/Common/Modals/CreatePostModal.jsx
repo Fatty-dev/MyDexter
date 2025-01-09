@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { IoMdClose } from "react-icons/io";
-import { useForm, Controller} from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { FiEdit } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { popupVariant } from "../../../lib/utils";
 import { authApi } from "../../../lib/config/axios-instance";
 import toast from "react-hot-toast";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 const variant = {
   initial: { opacity: 0 },
@@ -26,6 +27,8 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
   } = useForm({});
   const values = watch(["title", "prompt"]);
 
+  const navigate = useNavigate();
+
   const handleAddKeyword = (e) => {
     const value = e.target.value.trim();
 
@@ -42,14 +45,17 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      const response = await authApi.post("/blog/generate-single-article", {
-        mainKeyword: keywords.join(", "),
-        title: data.title,
-        aiPrompt: data.prompt,
-      });
+      // const response = await authApi.post("/blog/generate-single-article", {
+      //   mainKeyword: keywords.join(", "),
+      //   title: data.title,
+      //   aiPrompt: data.prompt,
+      // });
 
-      toast.success("Post created successfully!");
-  
+      // toast.success("Post created successfully!");
+
+      navigate(
+        `/dashboard/blog-loading?keywords=${keywords}&title=${data.title}&prompt=${data.prompt}`
+      );
     } catch (error) {
       const errorMessage =
         error.response?.data?.message ||

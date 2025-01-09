@@ -7,21 +7,24 @@ import { extensions } from "../../../constants/TipTapExtensions";
 const Editor = ({ onDataChange, content, editable }) => {
   const editor = useEditor({
     editable,
-    extensions:  [extensions, StarterKit.configure({
+    extensions: [
+      extensions,
+      StarterKit.configure({}),
+      Heading.configure({
+        HTMLAttributes: {
+          class: "text-xl font-bold",
+          levels: [2],
+        },
+      }),
+    ],
 
-    }), Heading.configure({
-      HTMLAttributes: {
-        class: "text-xl font-bold",
-        levels: [2]
-      }
-    })],
-
-    content: content,
+    content,
     editorProps: {
       attributes: {
         class: "  mt-7 outline-gray-400 p-5 ",
       },
     },
+
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
       onDataChange(html);

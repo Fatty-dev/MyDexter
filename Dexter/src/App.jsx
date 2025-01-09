@@ -21,6 +21,7 @@ import Strategies from "./pages/Dashboard/Strategies/Strategies";
 import Analytics from "./pages/Dashboard/Analytics/Analytics";
 import PostDetails from "./pages/Dashboard/BlogPost/PostDetails";
 import BulkArticle from "./pages/Dashboard/BlogPost/BulkArticle/BulkArticle";
+import BlogLoading from "./pages/Dashboard/BlogPost/BlogLoading";
 
 const App = () => {
   return (
@@ -50,6 +51,7 @@ const App = () => {
           <Route path="blog-post/:postId" element={<PostDetails />} />
         
           <Route path="bulk-article" element={<BulkArticle />} />
+          <Route path="blog-loading" element={<BlogLoading />} />
           
           <Route path="overview" element={<Overview />} />
           <Route path="strategies" element={<Strategies/>} />
