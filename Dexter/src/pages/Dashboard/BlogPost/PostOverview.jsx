@@ -3,7 +3,7 @@ import { CiCircleQuestion } from "react-icons/ci";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { FaCheck } from "react-icons/fa";
 import { FaAngleDown } from "react-icons/fa6";
-import { GiSettingsKnobs } from "react-icons/gi";
+import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import { GrPowerCycle } from "react-icons/gr";
 import { FaRegSave } from "react-icons/fa";
 import { IoMdCopy } from "react-icons/io";
@@ -37,7 +37,7 @@ const PostOverview = () => {
   const settings = [
     {
       name: "Post settings",
-      icon: <GiSettingsKnobs />,
+      icon: <HiOutlineMenuAlt1 />,
     },
     {
       name: "Re-write",

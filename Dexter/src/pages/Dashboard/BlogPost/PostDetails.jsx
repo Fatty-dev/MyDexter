@@ -7,10 +7,10 @@ import sampleImage from "../../../assets/sampleImage.svg";
 import PostOverview from "./PostOverview";
 import InputField from "../../../components/Dashboardcomp/InputField";
 import { authApi } from "../../../lib/config/axios-instance";
-import { postsData } from "../../../lib/utils/data";
+import { postsData } from "../../../lib/data";
 
 const PostDetails = () => {
-  const editable = true;
+
   const { postId } = useParams();
   const [body, setBody] = useState(null);
   const [messages, setMessages] = useState([]);

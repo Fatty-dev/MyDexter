@@ -38,7 +38,7 @@ const ProModal = ({ onClose }) => {
   return (
     <motion.div
       {...variant}
-      className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50"
     >
       <motion.div
         {...popupVariant}
@@ -52,7 +52,7 @@ const ProModal = ({ onClose }) => {
         </div>
 
         {/* Header Section */}
-        <div className="px-6 flex justify-center items-center">
+        <div className="flex items-center justify-center px-6">
           <div className="flex items-center w-[12rem] space-x-2">
             <img src={ProLogo} alt="Pro Logo" />
           </div>
@@ -60,29 +60,29 @@ const ProModal = ({ onClose }) => {
 
         {/* Content Section */}
         <div className="px-6 py-4 text-center">
-          <h3 className="text-2xl font-semibold mb-2">
+          <h3 className="mb-2 text-2xl font-semibold">
             Sign Up to Pro for Smarter SEO and Faster Results
           </h3>
-          <p className="text-gray-600 mb-6">
+          <p className="mb-6 text-gray-600">
             Upgrade to MyDexter Pro for advanced SEO tools that automate tasks,
             deliver insights, and optimize your site. Save time, boost
             visibility, and grow your business with ease.
           </p>
 
           {/* Plans Section */}
-          <div className="flex flex-col md:flex-row justify-between gap-6 px-6 py-4">
+          <div className="flex flex-col justify-between gap-6 px-6 py-4 md:flex-row">
             {/* Free Plan */}
-            <div className="border rounded-lg p-4 flex-1 flex flex-col">
-              <div className="flex items-center bg-layer px-4 py-3 border rounded-lg justify-between">
+            <div className="flex flex-col flex-1 p-4 border rounded-lg">
+              <div className="flex items-center justify-between px-4 py-3 border rounded-lg bg-layer">
                 <div className="flex flex-col items-start">
                   <h3 className="text-xl font-semibold text-primary">Free</h3>
-                  <p className="text-gray-600 font-normal text-sm">Forever</p>
+                  <p className="text-sm font-normal text-gray-600">Forever</p>
                 </div>
               </div>
               <p className="text-[#7A8EAC] text-start text-sm my-4">
                 What is included?
               </p>
-              <ul className="text-left space-y-2 mb-6 flex-grow">
+              <ul className="flex-grow mb-6 space-y-2 text-left">
                 {freePlanFeatures.map((feature, index) => (
                   <li key={index} className="flex items-center space-x-2">
                     <PiStarFourFill className="text-[#475467]" />
@@ -96,13 +96,13 @@ const ProModal = ({ onClose }) => {
             </div>
 
             {/* Pro Plan */}
-            <div className="border rounded-lg p-4 flex-1 flex flex-col">
-              <div className="flex items-center bg-layer px-4 py-3 border rounded-lg justify-between">
+            <div className="flex flex-col flex-1 p-4 border rounded-lg">
+              <div className="flex items-center justify-between px-4 py-3 border rounded-lg bg-layer">
                 <div className="flex flex-col items-start">
                   <h3 className="text-2xl font-semibold text-primary">
                     Professional
                   </h3>
-                  <p className="text-gray-600 font-normal text-sm">
+                  <p className="text-sm font-normal text-gray-600">
                     Start Free – No Card Needed
                   </p>
                 </div>
@@ -110,13 +110,13 @@ const ProModal = ({ onClose }) => {
                 {/* Pricing Section */}
                 <div className="flex flex-col items-end">
                   <p className="text-2xl font-semibold text-gray-900">$29</p>
-                  <p className="text-gray-600 text-sm">/month</p>
+                  <p className="text-sm text-gray-600">/month</p>
                 </div>
               </div>
               <p className="text-[#7A8EAC] text-start text-sm my-4">
                 What is included?
               </p>
-              <ul className="text-left space-y-2 mb-6 flex-grow">
+              <ul className="flex-grow mb-6 space-y-2 text-left">
                 {proPlanFeatures.map((feature, index) => (
                   <li key={index} className="flex items-center space-x-2">
                     <PiStarFourFill className="text-[#475467]" />
@@ -125,7 +125,7 @@ const ProModal = ({ onClose }) => {
                 ))}
               </ul>
               <button
-                className="mt-auto w-full py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary"
+                className="w-full py-2 mt-auto font-semibold text-white rounded-lg bg-primary hover:bg-primary"
                 onClick={OpenCheckoutHandler}
               >
                 Try Pro Free for 7 Days
