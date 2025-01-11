@@ -3,7 +3,7 @@ import ProLogo from "../../../assets/proLogo.svg";
 import { RiCloseLine } from "react-icons/ri";
 import { PiStarFourFill } from "react-icons/pi";
 import { motion } from "framer-motion";
-import { popupVariant } from "../../../lib/utils";
+// import { popupVariant } from "../../../lib/utils";
 import CheckoutModal from "./CheckoutModal";
 
 const variant = {
@@ -41,7 +41,7 @@ const ProModal = ({ onClose }) => {
       className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50"
     >
       <motion.div
-        {...popupVariant}
+        // {...popupVariant}
         className={`bg-white rounded-lg shadow-lg w-[90%] max-w-3xl ${openCheckout ? "hidden" : ""}`}
       >
         {/* Close Button */}
