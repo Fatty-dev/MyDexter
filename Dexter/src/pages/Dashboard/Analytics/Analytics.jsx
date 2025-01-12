@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { HiOutlineChevronRight } from "react-icons/hi";
 import { MdClose } from "react-icons/md";
 import { RiHome6Line } from "react-icons/ri";
