@@ -19,11 +19,11 @@ const Overview = () => {
       <div className="flex lg:gap-12 max-md:gap-4 md:gap-4 max-md:flex-col md:flex-col lg:flex-row">
         <div className="lg:w-[60%] max-md:w-full md:w-full">
           <div className="flex flex-col gap-3 pt-4">
-            <h1 className="lg:text-5xl text-3xl font-semibold">
+            <h1 className="text-3xl font-semibold ">
               Welcome to your assistant setup
             </h1>
-            <div className="flex  justify-between max-md:gap-4 max-md:flex-col">
-              <p className="text-[#7b7b83]  text-[14px]">
+            <div className="flex justify-between max-md:gap-4 max-md:flex-col">
+              <p className="text-[#7b7b83]  text-[13px]">
                 Let&apos;s get your assistant ready in just a few steps.
               </p>
             </div>

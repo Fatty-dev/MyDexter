@@ -17,24 +17,24 @@ const Explore = () => {
     },
   ];
   return (
-    <div className="mt-4 lg:w-[40%] max-md:w-full md:w-full flex flex-col gap-4">
+    <div className="lg:pt-4 md:pt-4 lg:w-[40%] max-md:w-full md:w-full flex flex-col gap-4">
       <p className="text-[#575d68] text-[12px]">
         <span className="font-bold">Ready to explore?</span> Take the tour and
         see how it all works.
       </p>
-      <img src={vid} alt="mockup" />
+      <img src={vid} alt="mockup" className="md:h-[250px] lg:h-[250px] object-cover"/>
 
-      <div>
+      <div className="lg:mt-4 md:mt-4">
         <p className="text-[#4f596b] font-bold mt-4">Related Topics</p>
 
-        <div className="flex flex-col gap-2 mt-6">
+        <div className="flex flex-col gap-4 mt-6">
           {topics.map((topic, index) => (
-            <div key={index} className=" border-t border-t-gray-300 p-3 last-of-type:border-b border-b-gray-300 ">
+            <div key={index} className="p-4 border-t border-t-gray-300 last-of-type:border-b border-b-gray-300">
               <div className="">
-                <div className="flex flex-col gap-3 ">
+                <div className="flex flex-col gap-2 ">
                   <p className="text-[#4f596b] font-bold">{topic.title}</p>
-                  <div className="flex justify-between items-start">
-                    <p className="text-[#8e9fb8] text-[10px] w-[85%]">{topic.desc}</p>
+                  <div className="flex items-start justify-between">
+                    <p className="text-[#8e9fb8] text-[10px] lg:w-[85%]  md:w-[85%]">{topic.desc}</p>
                     <GoArrowRight className="text-[16px]  text-[#8e9fb8] cursor-pointer" />
                   </div>
                 </div>

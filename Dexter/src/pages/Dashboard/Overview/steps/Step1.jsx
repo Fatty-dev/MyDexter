@@ -10,8 +10,8 @@ const Step1 = () => {
     const [domain, setDomain] = useState(null)
     const [openDomainModal, setOpenDomainModal] = useState(false)
   return (
-    <div className="bg-white rounded-lg shadow-lg  border border-gray-300 p-4">
-      <div className="flex items-start  gap-4 ">
+    <div className="p-4 bg-white border border-gray-300 rounded-lg shadow-lg">
+      <div className="flex items-start gap-4 ">
         <div className="bg-[#d1f0e1]   flex justify-center items-center rounded-full p-2 text-[#1cb46d]">
           <FaRegCheckCircle className="text-[16px]" />
         </div>
@@ -23,14 +23,14 @@ const Step1 = () => {
                 </h4>
                 <CiCircleQuestion className="cursor-pointer text-[15px] mt-1 text-gray-400" />
               </div>
-              <p className="text-[#8e9fb8]  text-[10px] font-semibold">
+              <p className="text-[#8e9fb8] mt-2 text-[10px] font-semibold">
             Enter your domain for your assistant to retrieve website metrics and
             SEO insights.
           </p>
           </div>
         
 
-          <div className="bg-white w-[70%] max-md:w-full md:w-[70%] border border-gray-300 p-4 rounded-lg flex justify-between items-center">
+          <div className="bg-white w-[80%] max-md:w-full md:w-[80%] border border-gray-300 p-4 rounded-lg flex justify-between items-center">
             <div className="flex items-center gap-2">
               <BsGlobe className="text-[#525c6d]" size={12} />
               <p className="text-[#525c6d]">www.domainsample.com</p>

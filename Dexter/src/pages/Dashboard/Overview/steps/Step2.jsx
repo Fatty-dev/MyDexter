@@ -28,8 +28,8 @@ const Step2 = () => {
     },
   ];
   return (
-    <div className="bg-white rounded-lg shadow-lg  border border-gray-300 p-4">
-      <div className="flex items-start  gap-4 ">
+    <div className="p-4 bg-white border border-gray-300 rounded-lg shadow-lg">
+      <div className="flex items-start gap-4 ">
         <div className="bg-[#e2e1fe]   flex justify-center items-center rounded-lg p-2 text-[#694bf3]">
           <FaArrowRightLong className="text-[16px]" />
         </div>
@@ -41,7 +41,7 @@ const Step2 = () => {
               </h4>
               <CiCircleQuestion className="cursor-pointer text-[15px] mt-1 text-gray-400" />
             </div>
-            <p className="text-[#8e9fb8]  text-[10px] font-semibold">
+            <p className="text-[#8e9fb8]  text-[10px] font-semibold mt-2">
               Automate your posts with AI by integrating My Dexter in your
               website.
             </p>
@@ -51,11 +51,11 @@ const Step2 = () => {
         </div>
         
       </div>
-      <div className="flex flex-col gap-2 ml-12 mt-3">
+      <div className="flex flex-col gap-2 mt-3 ml-12">
           {integrations.map((integrations, index) => (
                 <div
                   key={index}
-                  className="bg-white w-[70%] relative max-md:w-full md:w-[70%] border border-gray-300 p-3 rounded-lg flex justify-between items-center"
+                  className="bg-white w-[80%] relative max-md:w-full md:w-[80%] border border-gray-300 p-3 rounded-lg flex justify-between items-center"
                 >
                   <div className="flex items-start gap-2">
                     <img src={integrations.img} alt={integrations.name} />
