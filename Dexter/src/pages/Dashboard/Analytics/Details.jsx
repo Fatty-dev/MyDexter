@@ -14,7 +14,7 @@ export const Details = ({ showDetails, setShowDetails }) => {
 
   return (
     <div className=" fixed inset-0 z-[50] bg-black bg-opacity-60">
-      <div className="w-[23%] transition-all duration-300 absolute top-0 bottom-0 right-0  max-md:w-full max-md:top-12   bg-white p-4 overflow-y-scroll">
+      <div className="lg:w-[23%] transition-all  duration-300 absolute top-0 bottom-0 right-0  max-md:w-full max-md:top-12 md:w-[50%]  bg-white p-4 overflow-y-scroll">
         <div className="flex items-center justify-between text-2xl pb-4 border-b border-b-gray-300 text-[#2e3646] font-bold">
           <p>Details</p>
           <IoMdClose
@@ -29,7 +29,7 @@ export const Details = ({ showDetails, setShowDetails }) => {
             className="relative left-8 bottom-16 text-white  text-[20px]"
             spanColor="text-[#8c94a0] font-semibold text-[11px]"
           />
-          <div className="flex items-center gap-2 -mt-4 text-white opacity-80">
+          <div className="flex items-center gap-2  text-white opacity-80">
             <IoIosInformationCircleOutline size={20} />
             <p>Good, but room for improvement</p>
           </div>
@@ -88,8 +88,8 @@ export const Details = ({ showDetails, setShowDetails }) => {
               </div>
               ))}
         </div>
-        <div className="fixed bottom-0 right-0 p-8 z-[1000] w-[23%] max-md:w-full  bg-white ">
-            <button className="text-white flex gap-2 items-center w-full bg-[#6d68fb] max-md:justify-center text-[12px] p-2     rounded-md">
+        <div className="fixed bottom-0 right-0 p-8 z-[1000] lg:w-[23%] md:w-[50%] max-md:w-full  bg-white ">
+            <button className="text-white flex gap-2 items-center w-full bg-[#6d68fb] max-md:justify-center md:justify-center text-[12px] p-2     rounded-md">
               <span className="">Generate SEO Optimization Strategy</span>
               <PiMagicWand className="text-white text-[15px]" />
             </button>

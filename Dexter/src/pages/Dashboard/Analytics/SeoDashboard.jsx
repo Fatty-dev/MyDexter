@@ -24,9 +24,9 @@ const SeoDashboard = () => {
         My SEO Dashboard
       </h1>
 
-      <div className="flex items-start gap-16 max-md:gap-4 max-md:flex-col">
+      <div className="flex lg:flex-row lg:items-start max-md:items-center lg:gap-16 max-md:gap-4 md:items-center md:gap-4 max-md:flex-col md:flex-col">
         {/* Visibility Score */}
-        <div className="flex justify-between ml-8 max-md:ml-0 ">
+        <div className="flex justify-between lg:ml-8 max-md:ml-0 md:ml-0  ">
           <div className="">
             <Metrics
               metric={visibilityScore}

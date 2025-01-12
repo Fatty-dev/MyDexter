@@ -1,48 +1,50 @@
 import postImage from "../assets/postImage.svg";
-import { FaHandHolding } from "react-icons/fa";
 import { FaArrowDownLong } from "react-icons/fa6";
-import { AiTwotoneLike, AiTwotoneDislike } from "react-icons/ai";
 import { AiFillWarning } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 import { MdInfo, MdOutlineError } from "react-icons/md";
-import { ImHappy2, ImNeutral2 } from "react-icons/im";
-import { GrOptimize } from "react-icons/gr";
-import { PiHandTap } from "react-icons/pi";
+import happyIcon from "@/assets/happy.svg"
+import neutralIcon from "@/assets/neutral.svg"
+import optimize from "@/assets/optimize.svg"
+import tap from "@/assets/tap.svg"
+import like from "@/assets/like.svg"
+import dislike from "@/assets/dislike.svg"
+import hand from "@/assets/hand.svg"
 
 export const metrics = [
   {
     label: "Organic Traffic",
     value: 250,
     max: 285,
-    icon: <AiTwotoneLike />,
+    icon: <img src={like} alt="like" width = {12} className="flex justify-center items-center relative right-[0.1rem]" />,
     badgeColor: "stroke-green-500",
   },
   {
     label: "Pages Per Session",
     value: 50,
     max: 100,
-    icon: <FaHandHolding />,
+    icon: <img src={hand} alt="hand" width = {16} className="flex justify-center items-center relative right-[0.1rem] " />,
     badgeColor: "stroke-yellow-500",
   },
   {
     label: "Bounce Rate",
     value: 11.3,
     max: 0,
-    icon: <AiTwotoneDislike />,
+    icon: <img src={dislike} alt="dislike" width = {12} className="flex justify-center items-center relative right-[0.2rem]" />,
     badgeColor: "stroke-red-500",
   },
   {
     label: "Average Page Position",
     value: 58,
     max: 100,
-    icon: <FaHandHolding />,
+    icon: <img src={hand} alt="hand" width = {16} className="flex justify-center items-center relative right-[0.1rem] " />,
     badgeColor: "stroke-yellow-500",
   },
   {
     label: "Crawl Errors",
     value: 50,
     max: 100,
-    icon: <FaHandHolding />,
+    icon: <img src={hand} alt="hand" width = {16} className="flex justify-center items-center relative right-[0.1rem] " />,
     badgeColor: "stroke-yellow-500",
   },
 ];
@@ -154,7 +156,7 @@ export const engagementInsights = [
 export const optimizationMetrics = [
   {
     label: "Total Keywords",
-    icon: <AiTwotoneLike />,
+    icon: <img src={like} alt="like" width = {12} className="flex justify-center items-center absolute  " />,
     value: 11300,
     max: 22500,
     radius: 8,
@@ -179,7 +181,7 @@ export const optimizationMetrics = [
   },
   {
     label: "Meta Tag Status",
-    icon: <FaHandHolding />,
+    icon: <img src={hand} alt="hand" width = {16} className="flex justify-center items-center absolute -bottom-[1.2rem] " />,
     value: 50,
     max: 100,
     radius: 8,
@@ -207,7 +209,7 @@ export const optimizationMetrics = [
 
   {
     label: "Top Pages",
-    icon: <AiTwotoneDislike />,
+   icon: <img src={dislike} alt="dislike" width = {12} className="flex justify-center items-center absolute " />,
     value: 11300,
     max: 22500,
     radius: 8,
@@ -236,7 +238,7 @@ export const optimizationMetrics = [
 export const engagementMetrics = [
   {
     label: "Page Visits",
-    icon: <ImHappy2 />,
+    icon: <img src={happyIcon} alt="happy" width = {16} className="flex justify-center items-center absolute -bottom-[1.24rem] -left-[0.2rem]" />,
     value: 5300,
     max: 22500,
     radius: 8,
@@ -262,7 +264,7 @@ export const engagementMetrics = [
   },
   {
     label: "Avg. Visit Duration",
-    icon: <ImNeutral2 />,
+    icon: <img src={neutralIcon} alt="neutral" width = {16} className="flex justify-center items-center absolute -bottom-[1.2rem] -left-[0.15rem]" />,
     value: 1.2,
     max: "s",
     radius: 8,
@@ -289,7 +291,7 @@ export const engagementMetrics = [
 
   {
     label: "Bounce Rate",
-    icon: <ImNeutral2 />,
+    icon: <img src={neutralIcon} alt="neutral" width = {16} className="flex justify-center items-center absolute -bottom-[1.2rem] -left-[0.15rem]" />,
     value: 41,
     max: 100,
     radius: 8,
@@ -318,7 +320,7 @@ export const engagementMetrics = [
 export const scores = [
   {
     label: "Domain Optimization Score",
-    icon: <GrOptimize />,
+    icon:  <img src={optimize} alt="optimize" width = {28} className="flex justify-center items-center absolute -bottom-[1.8rem] -left-[0.2rem]" />,
     value: 87,
     max: 100,
     radius: 8,
@@ -328,7 +330,7 @@ export const scores = [
   },
   {
     label: "Website Engagement Score",
-    icon: <PiHandTap />,
+    icon:  <img src={tap} alt="tap" width = {20} className="flex justify-center items-center absolute -bottom-[2.1rem] -left-1.8" />,
     value: 41,
     max: 100,
     radius: 8,

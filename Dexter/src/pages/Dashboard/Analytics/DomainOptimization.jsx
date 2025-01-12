@@ -12,7 +12,7 @@ const DomainOptimization = ({ setShowDetails }) => {
   const [showInsights, setShowInsights] = useState(false);
 
   return (
-    <div className="relative w-1/2 p-4 mb-4 bg-white border rounded-lg h-fit max-md:w-full">
+    <div className="relative w-1/2 p-4 mb-4 bg-white lg:w-1/2 border rounded-lg h-fit max-md:w-full md:w-full">
       <div className="flex items-center justify-between">
         <p className="font-semibold">Domain Optimization</p>
         <CiMenuKebab
@@ -24,7 +24,7 @@ const DomainOptimization = ({ setShowDetails }) => {
         {optimizationMetrics.map((metric, index) => (
           <div
             key={index}
-            className="[&:not(:first-child)]:border-l border-l-[#d5d9e1] [&:not(:first-child)]:pl-4 max-md:[&:not(:first-child)]:border-none max-md:[&:not(:first-child)]:pl-0 "
+            className="[&:not(:first-child)]:border-l border-l-[#d5d9e1] [&:not(:first-child)]:pl-4 max-md:[&:not(:first-child)]:border-none max-md:[&:not(:first-child)]:pl-0  "
           >
             <Metrics
               metric={metric}
@@ -34,7 +34,7 @@ const DomainOptimization = ({ setShowDetails }) => {
                   : "bottom-[24px]"
               } `}
               marginTop="mt-4"
-              spanColor="text-[#7a8eac]"
+              spanColor="text-[#7a8eac] text-[8px]"
             />
             <p className="text-[#9795fa] ml-10 -mt-1 font-semibold text-[10px] ">
               View {metric.toView}

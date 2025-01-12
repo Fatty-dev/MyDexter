@@ -59,7 +59,7 @@ const Analytics = () => {
 
       <SeoDashboard/>
 
-      <div className="flex gap-4 mt-4 max-md:flex-col">
+      <div className="flex gap-4 mt-4 max-md:flex-col md:flex-col lg:flex-row">
         <DomainOptimization setShowDetails = {setShowDetails}/>
         <WebsiteEngagement setShowDetails = {setShowDetails}/>
       </div>
