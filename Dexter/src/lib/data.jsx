@@ -3,48 +3,84 @@ import { FaArrowDownLong } from "react-icons/fa6";
 import { AiFillWarning } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 import { MdInfo, MdOutlineError } from "react-icons/md";
-import happyIcon from "@/assets/happy.svg"
-import neutralIcon from "@/assets/neutral.svg"
-import optimize from "@/assets/optimize.svg"
-import tap from "@/assets/tap.svg"
-import like from "@/assets/like.svg"
-import dislike from "@/assets/dislike.svg"
-import hand from "@/assets/hand.svg"
+import happyIcon from "@/assets/happy.svg";
+import neutralIcon from "@/assets/neutral.svg";
+import optimize from "@/assets/optimize.svg";
+import tap from "@/assets/tap.svg";
+import like from "@/assets/like.svg";
+import dislike from "@/assets/dislike.svg";
+import hand from "@/assets/hand.svg";
+import { CiCircleQuestion } from "react-icons/ci";
 
 export const metrics = [
   {
     label: "Organic Traffic",
     value: 250,
     max: 285,
-    icon: <img src={like} alt="like" width = {12} className="flex justify-center items-center relative right-[0.1rem]" />,
+    icon: (
+      <img
+        src={like}
+        alt="like"
+        width={12}
+        className="flex justify-center items-center relative right-[0.1rem]"
+      />
+    ),
     badgeColor: "stroke-green-500",
   },
   {
     label: "Pages Per Session",
     value: 50,
     max: 100,
-    icon: <img src={hand} alt="hand" width = {16} className="flex justify-center items-center relative right-[0.1rem] " />,
+    icon: (
+      <img
+        src={hand}
+        alt="hand"
+        width={16}
+        className="flex justify-center items-center relative right-[0.1rem] "
+      />
+    ),
     badgeColor: "stroke-yellow-500",
   },
   {
     label: "Bounce Rate",
     value: 11.3,
     max: 0,
-    icon: <img src={dislike} alt="dislike" width = {12} className="flex justify-center items-center relative right-[0.2rem]" />,
+    icon: (
+      <img
+        src={dislike}
+        alt="dislike"
+        width={12}
+        className="flex justify-center items-center relative right-[0.2rem]"
+      />
+    ),
     badgeColor: "stroke-red-500",
   },
   {
     label: "Average Page Position",
     value: 58,
     max: 100,
-    icon: <img src={hand} alt="hand" width = {16} className="flex justify-center items-center relative right-[0.1rem] " />,
+    icon: (
+      <img
+        src={hand}
+        alt="hand"
+        width={16}
+        className="flex justify-center items-center relative right-[0.1rem] "
+      />
+    ),
     badgeColor: "stroke-yellow-500",
   },
   {
     label: "Crawl Errors",
     value: 50,
     max: 100,
-    icon: <img src={hand} alt="hand" width = {16} className="flex justify-center items-center relative right-[0.1rem] " />,
+    icon: (
+      <img
+        src={hand}
+        alt="hand"
+        width={16}
+        className="flex justify-center items-center relative right-[0.1rem] "
+      />
+    ),
     badgeColor: "stroke-yellow-500",
   },
 ];
@@ -156,7 +192,14 @@ export const engagementInsights = [
 export const optimizationMetrics = [
   {
     label: "Total Keywords",
-    icon: <img src={like} alt="like" width = {12} className="flex justify-center items-center absolute  " />,
+    icon: (
+      <img
+        src={like}
+        alt="like"
+        width={12}
+        className="flex justify-center items-center absolute  "
+      />
+    ),
     value: 11300,
     max: 22500,
     radius: 8,
@@ -167,7 +210,7 @@ export const optimizationMetrics = [
     strokeColor: "#e4e7eb",
     ringFill: "white",
     desc: (
-        <p className="text-[#6d7584]">
+      <p className="text-[#6d7584]">
         our site ranks for <b>350 keywords</b>. This is a solid start, but
         expanding your keyword reach can attract more organic traffic.
       </p>
@@ -181,7 +224,14 @@ export const optimizationMetrics = [
   },
   {
     label: "Meta Tag Status",
-    icon: <img src={hand} alt="hand" width = {16} className="flex justify-center items-center absolute -bottom-[1.2rem] " />,
+    icon: (
+      <img
+        src={hand}
+        alt="hand"
+        width={16}
+        className="flex justify-center items-center absolute -bottom-[1.2rem] "
+      />
+    ),
     value: 50,
     max: 100,
     radius: 8,
@@ -209,7 +259,14 @@ export const optimizationMetrics = [
 
   {
     label: "Top Pages",
-   icon: <img src={dislike} alt="dislike" width = {12} className="flex justify-center items-center absolute " />,
+    icon: (
+      <img
+        src={dislike}
+        alt="dislike"
+        width={12}
+        className="flex justify-center items-center absolute "
+      />
+    ),
     value: 11300,
     max: 22500,
     radius: 8,
@@ -227,9 +284,9 @@ export const optimizationMetrics = [
     ),
     action: (
       <span className="text-[11px] text-[#787f91] ">
-       Focus on enhancing your top-performing pages by adding engaging
-        visuals, updating content for relevance, and linking to underperforming
-        pages to distribute traffic and improve overall engagement.
+        Focus on enhancing your top-performing pages by adding engaging visuals,
+        updating content for relevance, and linking to underperforming pages to
+        distribute traffic and improve overall engagement.
       </span>
     ),
   },
@@ -238,7 +295,14 @@ export const optimizationMetrics = [
 export const engagementMetrics = [
   {
     label: "Page Visits",
-    icon: <img src={happyIcon} alt="happy" width = {16} className="flex justify-center items-center absolute -bottom-[1.24rem] -left-[0.2rem]" />,
+    icon: (
+      <img
+        src={happyIcon}
+        alt="happy"
+        width={16}
+        className="flex justify-center items-center absolute -bottom-[1.24rem] -left-[0.2rem]"
+      />
+    ),
     value: 5300,
     max: 22500,
     radius: 8,
@@ -256,15 +320,22 @@ export const engagementMetrics = [
     ),
     action: (
       <span className="text-[11px] text-[#787f91] ">
-         Focus on enhancing your top-performing pages by adding engaging
-        visuals, updating content for relevance, and linking to underperforming
-        pages to distribute traffic and improve overall engagement.
+        Focus on enhancing your top-performing pages by adding engaging visuals,
+        updating content for relevance, and linking to underperforming pages to
+        distribute traffic and improve overall engagement.
       </span>
     ),
   },
   {
     label: "Avg. Visit Duration",
-    icon: <img src={neutralIcon} alt="neutral" width = {16} className="flex justify-center items-center absolute -bottom-[1.2rem] -left-[0.15rem]" />,
+    icon: (
+      <img
+        src={neutralIcon}
+        alt="neutral"
+        width={16}
+        className="flex justify-center items-center absolute -bottom-[1.2rem] -left-[0.15rem]"
+      />
+    ),
     value: 1.2,
     max: "s",
     radius: 8,
@@ -282,16 +353,23 @@ export const engagementMetrics = [
     ),
     action: (
       <span span className="text-[11px] text-[#787f91] ">
-        Focus on enhancing your top-performing pages by adding engaging
-        visuals, updating content for relevance, and linking to underperforming
-        pages to distribute traffic and improve overall engagement.
+        Focus on enhancing your top-performing pages by adding engaging visuals,
+        updating content for relevance, and linking to underperforming pages to
+        distribute traffic and improve overall engagement.
       </span>
     ),
   },
 
   {
     label: "Bounce Rate",
-    icon: <img src={neutralIcon} alt="neutral" width = {16} className="flex justify-center items-center absolute -bottom-[1.2rem] -left-[0.15rem]" />,
+    icon: (
+      <img
+        src={neutralIcon}
+        alt="neutral"
+        width={16}
+        className="flex justify-center items-center absolute -bottom-[1.2rem] -left-[0.15rem]"
+      />
+    ),
     value: 41,
     max: 100,
     radius: 8,
@@ -309,18 +387,25 @@ export const engagementMetrics = [
     ),
     action: (
       <span span className="text-[11px] text-[#787f91] ">
-        Focus on enhancing your top-performing pages by adding engaging
-        visuals, updating content for relevance, and linking to underperforming
-        pages to distribute traffic and improve overall engagement.
+        Focus on enhancing your top-performing pages by adding engaging visuals,
+        updating content for relevance, and linking to underperforming pages to
+        distribute traffic and improve overall engagement.
       </span>
-    )
+    ),
   },
 ];
 
 export const scores = [
   {
     label: "Domain Optimization Score",
-    icon:  <img src={optimize} alt="optimize" width = {28} className="flex justify-center items-center absolute -bottom-[1.8rem] -left-[0.2rem]" />,
+    icon: (
+      <img
+        src={optimize}
+        alt="optimize"
+        width={28}
+        className="flex justify-center items-center absolute -bottom-[1.8rem] -left-[0.2rem]"
+      />
+    ),
     value: 87,
     max: 100,
     radius: 8,
@@ -330,7 +415,14 @@ export const scores = [
   },
   {
     label: "Website Engagement Score",
-    icon:  <img src={tap} alt="tap" width = {20} className="flex justify-center items-center absolute -bottom-[2.1rem] -left-1.8" />,
+    icon: (
+      <img
+        src={tap}
+        alt="tap"
+        width={20}
+        className="flex justify-center items-center absolute -bottom-[2.1rem] -left-1.8"
+      />
+    ),
     value: 41,
     max: 100,
     radius: 8,
@@ -338,4 +430,24 @@ export const scores = [
     textColor: "text-white",
     ringSize: "size-24",
   },
+];
+
+// Post Settings
+
+export const menuList = [
+  { name: "Core settings", id: 0 },
+  {
+    name: "Detail to include",
+    id: 1,
+    icon: <CiCircleQuestion className="cursor-pointer text-[15px]" />,
+  },
+  { name: "Media hub", id: 2 },
+  { name: "SEO", id: 3 },
+  { name: "Structure", id: 4 },
+  { name: "Internal linking", id: 5 },
+  { name: "External linking", id: 6 },
+  { name: "Connect to web", id: 7 },
+  { name: "Outline editor", id: 8 },
+  { name: "Document", id: 9 },
+  { name: "Publication", id: 10 },
 ];

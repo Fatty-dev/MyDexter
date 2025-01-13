@@ -28,7 +28,7 @@ const BlogPost = () => {
       
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-semibold">Blog posts</h1>
+          <h1 className="text-3xl font-semibold text-[#131c2e] tracking-wide">Blog posts</h1>
       </div>
       <hr className="my-2" />
       <div className="flex items-center justify-between px-4 py-2 my-4 text-white rounded-lg bg-primary">

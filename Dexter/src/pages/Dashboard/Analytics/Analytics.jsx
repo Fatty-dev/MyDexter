@@ -26,7 +26,7 @@ const Analytics = () => {
 
       {/* Header */}
       <div className="flex flex-col gap-1">
-        <h1 className="text-3xl font-semibold">Analytics</h1>
+        <h1 className="text-3xl font-semibold text-[#131c2e] tracking-wide">Analytics</h1>
         <div className="flex items-center justify-between max-md:gap-4 max-md:flex-col">
         <p className="text-[#7b7b83]  text-[14px]">Track key metrics, uncover opportunities, and optimize your SEO strategy with ease.</p>
       

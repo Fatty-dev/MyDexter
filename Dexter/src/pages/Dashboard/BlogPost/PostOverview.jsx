@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { CiCircleQuestion } from "react-icons/ci";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { FaCheck } from "react-icons/fa";
@@ -7,9 +7,12 @@ import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import { GrPowerCycle } from "react-icons/gr";
 import { FaRegSave } from "react-icons/fa";
 import { IoMdCopy } from "react-icons/io";
+import { Link, useParams } from "react-router-dom";
 
 const PostOverview = () => {
   const [settingsOpen, setSettingsOpen] = useState(false);
+
+  const {postId} = useParams()
 
   const metaTags = [
     "Meta Title",
@@ -81,7 +84,7 @@ const PostOverview = () => {
 
       <div className="flex items-center gap-2 p-2 my-3">
         <h1 className="font-semibold">SEO Content Analysis</h1>
-        <CiCircleQuestion className="cursor-pointer text-[15px] cursor-pointer text-gray-500" />
+        <CiCircleQuestion className=" text-[15px] cursor-pointer text-gray-500" />
       </div>
 
       <div className="bg-[#f9fafb] rounded-lg p-4 shadow-md">
@@ -142,7 +145,7 @@ const PostOverview = () => {
       </div>
 
       {settingsOpen && (
-        <div className="bg-white absolute right-12 top-12 shadow-md p-4 flex items-center gap-2 w-[150px] flex-col">
+        <Link to = {`/dashboard/blog-post/${postId}/settings`} className="bg-white absolute right-12 top-12 shadow-md p-4 flex items-center gap-2 w-[150px] flex-col">
           {settings.map((item, index) => (
             <div
               key={index}
@@ -155,7 +158,7 @@ const PostOverview = () => {
               <span>{item.name}</span>
             </div>
           ))}
-        </div>
+        </Link>
       )}
     </div>
   );

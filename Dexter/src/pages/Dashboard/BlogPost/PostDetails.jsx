@@ -59,17 +59,17 @@ const PostDetails = () => {
             className="text-[12px] cursor-pointer text-gray-500"
             onClick={() => window.history.back()}
           />
-          <span>Back</span>
+          <span className="text-[#6c7685] font-semibold">Back</span>
         </div>
 
         <div className="flex items-center gap-4 pb-3">
           <div>
-            <button className="bg-white p-2 shadow-lg border border-gray-1 w-[70px]  rounded-md">
+            <button className="bg-white p-2 shadow-lg border border-gray-300 w-[70px] text-[#697383] font-semibold rounded-md">
               Cancel
             </button>
           </div>
           <div>
-            <button className="text-white flex gap-2 items-center bg-[#6d68fb] p-2 w-[100px]  justify-center rounded-md">
+            <button className="text-white flex gap-2 items-center bg-[#6d68fb] p-2 w-[100px] font-semibold  border  border-gray-300 justify-center rounded-md">
               Proceed
               <MdArrowOutward className="text-white text-[15px]" />
             </button>
