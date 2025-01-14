@@ -61,7 +61,9 @@ const DetailsToInclude = () => {
                                   ? "bg-[#e7e6fe]"
                                   : "bg-none"
                               }`}
-                              onClick={() => setActiveSample("sample 2")}
+                              onClick={() => {setActiveSample("sample 2");
+                              
+                              }}
                             >
                               Sample 2
                             </span>

@@ -24,9 +24,9 @@ const CoreSettings = () => {
                     <option value="" disabled>
                       Select an option
                     </option>
-                    <option value="option1">English US</option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
+                    <option value="English US">English US</option>
+                    <option value="option 2">Option 2</option>
+                    <option value="option 3">Option 3</option>
                   </select>
                 )}
               />
@@ -43,9 +43,9 @@ const CoreSettings = () => {
                   <option value="" disabled>
                     Select an option
                   </option>
-                  <option value="option1">Friendly</option>
-                  <option value="option2">Option 2</option>
-                  <option value="option3">Option 3</option>
+                  <option value="Friendly">Friendly</option>
+                  <option value="option 2">Option 2</option>
+                  <option value="option 3">Option 3</option>
                 </select>
               )}
             />
@@ -64,9 +64,9 @@ const CoreSettings = () => {
                   <option value="" disabled>
                     Select an option
                   </option>
-                  <option value="option1">None</option>
-                  <option value="option2">Option 2</option>
-                  <option value="option3">Option 3</option>
+                  <option value="None">None</option>
+                  <option value="option 2">Option 2</option>
+                  <option value="option 3">Option 3</option>
                 </select>
               )}
             />
@@ -85,9 +85,9 @@ const CoreSettings = () => {
                   <option value="" disabled>
                     Select an option
                   </option>
-                  <option value="option1">None</option>
-                  <option value="option2">Option 2</option>
-                  <option value="option3">Option 3</option>
+                  <option value="None">None</option>
+                  <option value="option 2">Option 2</option>
+                  <option value="option 3">Option 3</option>
                 </select>
               )}
             />
@@ -107,16 +107,16 @@ const CoreSettings = () => {
                       <option value="" disabled>
                         Select an option
                       </option>
-                      <option value="option1">Medium</option>
-                      <option value="option2">Large</option>
-                      <option value="option3">Small</option>
-                      <option value="option3">Normal</option>
+                      <option value="Medium">Medium</option>
+                      <option value="Large">Large</option>
+                      <option value="Small">Small</option>
+                      <option value="Normal">Normal</option>
                     </select>
                   )}
                 />
               </div>
-              <div className="bg-[#e7e6fe] p-2 rounded-lg text-[10px] mt-8 text-[#51576a]  lg:w-[40%] md:w-1/2">
-                <p>2400-3600 words, 9-12 H2 headings</p>
+              <div className="bg-[#e7e6fe] md:px-0 md:py-2 max-md:p-2 lg:p-2 w-fit rounded-lg text-[8px] text-center mt-8 text-[#51576a]  lg:w-[40%] md:w-1/2 ">
+                <p className="">2400-3600 words, 9-12 H2 headings</p>
               </div>
             </div>
            
@@ -135,13 +135,13 @@ const CoreSettings = () => {
                       <option value="" disabled>
                         Select an option  
                       </option>
-                      <option value="option1">
+                      <option value="Anthropic Claude 3 Haiku Popular">
                         Anthropic Claude 3 Haiku popular
                         
                       </option>
-                      <option value="option2">option 2</option>
-                      <option value="option3">option 3</option>
-                      <option value="option3">option 4</option>
+                      <option value="option 2">option 2</option>
+                      <option value="option 3">option 3</option>
+                      <option value="option 4">option 4</option>
                      
                     </select>
                   )}
@@ -150,7 +150,7 @@ const CoreSettings = () => {
            
             
             <div className="flex">
-              <div className=" lg:w-1/2 md:w-full flex flex-col gap-5">
+              <div className=" lg:w-1/2 md:w-full max-md:w-full flex flex-col gap-5">
                 <div className=" flex items-center gap-2">
                   <p className="text-#545a67] text-[12px]">
                     Via your API keys
@@ -171,7 +171,7 @@ const CoreSettings = () => {
                   </div>
                 </div>
               </div>
-              <div  className=" lg:w-1/2 md:w-full  flex flex-col gap-5">
+              <div  className=" lg:w-1/2 md:w-full max-md:w-full  flex flex-col gap-5">
                 <div className="flex items-center gap-2">
                   <p>
                     Total cost
@@ -196,12 +196,12 @@ const CoreSettings = () => {
                       <option value="" disabled>
                         Select an option
                       </option>
-                      <option value="option1">
+                      <option value="8th & 9th grade easily understood popular">
                         8th & 9th grade easily understood popular
                       </option>
-                      <option value="option2">option 2</option>
-                      <option value="option3">option 3</option>
-                      <option value="option3">option 4</option>
+                      <option value="option 2">option 2</option>
+                      <option value="option 3">option 3</option>
+                      <option value="option 3">option 4</option>
                     </select>
                   )}
                 />

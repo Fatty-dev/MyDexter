@@ -18,7 +18,7 @@ import Publication from "./menus/Publication";
 import { useFormContext } from "react-hook-form";
 
 const PostSettings = () => {
-  const [selectedSetting, setSelectedSetting] = useState(1);
+  const [selectedSetting, setSelectedSetting] = useState(0);
 
   const { handleSubmit, watch } = useFormContext();
 
@@ -82,7 +82,7 @@ const PostSettings = () => {
       </div>
 
       <hr />
-      <div className="text-[#3a4151] pt-3 lg:flex md:flex lg:gap-12 md:gap-24 ">
+      <div className="text-[#3a4151] pt-3 lg:flex md:flex lg:gap-12 md:gap-8 ">
         <SettingsMenu
           selectedSetting={selectedSetting}
           setSelectedSetting={setSelectedSetting}
