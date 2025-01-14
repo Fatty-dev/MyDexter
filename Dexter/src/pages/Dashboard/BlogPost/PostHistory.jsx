@@ -35,9 +35,9 @@ const PostHistory = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-evenly items-center gap-4 text-sm  place-items-center text-center  py-6 rounded-lg bg-[#f5f7f9]">
+      <div className="flex justify-evenly items-center  text-sm  place-items-center text-center  py-6 rounded-lg bg-[#f5f7f9]">
         {metrics.map((metric, index) => (
-          <div  key={index} className="flex flex-col items-start ">
+          <div  key={index} className="flex flex-col items-start   [&:not(:first-child)]:border-l border-l-[#d5d9e1] [&:not(:first-child)]:pl-8 max-md:[&:not(:first-child)]:border-none max-md:[&:not(:first-child)]:pl-0 ">
           <div
            
             className="flex items-start gap-2 "

@@ -1,10 +1,14 @@
+import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 
 
 const MediaHub = () => {
-  const { control } = useFormContext();
+  const { control, watch} = useFormContext();
+
+  const includeKeyword = watch('include-keyword', true);
+  const strictPlacement = watch('strict-placement', true);
 
   return (
     <div className="lg:mt-2 md:mt-2 max-md:mt-10 md:mb-8 max-md:mb-8 bg-white border border-gray-300 h-fit shadow-md rounded-lg p-4 lg:w-[84%] md:w-[84%] max-md:w-full ">
@@ -149,10 +153,10 @@ const MediaHub = () => {
               <div className="flex flex-col gap-3  relative w-1/2">
                 <label
                   htmlFor="additional-info"
-                  className="text-#545a67] md:gap-1 lg:gap-3 max-md:gap-1 flex items-center text-[12px] gap-2"
+                  className="text-#545a67] md:gap-1 lg:gap-3 max-md:gap-6 flex items-center text-[12px]  gap-2"
                 >
-                  {" "}
-                  Additional information{" "}
+                  <p className="max-md:w-[40px]"> Additional information</p>
+                 
                   <IoMdInformationCircleOutline size={16} />
                 </label>
                 <Controller
@@ -232,12 +236,13 @@ const MediaHub = () => {
           <Controller
             name="include-keyword"
             control={control}
-            defaultValue="true"
+            defaultValue={true}
+
             render={({ field }) => (
-              <input type="checkbox" name="include-keyword" id="include-keyword" {...field} />
+              <input type="checkbox" checked = {field.value} name="include-keyword" id="include-keyword" {...field} />
             )}
           />
-          <label htmlFor="include-keyword" className="text-#545a67] lw-[80%] text-[12px] max-md:w-full">
+          <label htmlFor="include-keyword" className="text-#545a67] lg:w-[75%] text-[12px] max-md:w-full">
             
             Include the main keyword in the first image as Alt-text. Relevant
             keywords will be picked up and added to the rest of the images.
@@ -337,12 +342,12 @@ const MediaHub = () => {
           <Controller
             name="strict-placement"
             control={control}
-            defaultValue="true"
+            defaultValue={true}
             render={({ field }) => (
-              <input type="checkbox"  name="strict-placement" id="strict-placement" {...field} />
+              <input type="checkbox" checked = {field.value} name="strict-placement" id="strict-placement" {...field} />
             )}
           />
-          <label htmlFor="strict-placement" className="text-#545a67] w-[80%] text-[12px] max-md:w-full">
+          <label htmlFor="strict-placement" className="text-#545a67] lg:w-[75%] text-[12px] max-md:w-full">
             
             All media element will be placed strictly under the headings. I disabled , the AI will decide and find the best placement.
           </label>

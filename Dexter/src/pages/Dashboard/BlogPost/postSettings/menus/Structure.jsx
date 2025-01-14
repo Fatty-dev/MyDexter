@@ -33,7 +33,7 @@ const Structure = () => {
                 return (
                   <div>
                     <div className="flex gap-6 justify-end mb-2">
-                      <div className="flex gap-4 mb-1">
+                      <div className="flex gap-2 mb-1">
                         <span
                           className={`text-[#9592fc] text-[11px] w-fit p-1 text-center font-[500] border border-[#9592fc] cursor-pointer  rounded-md ${
                             activeTab === "Question"
