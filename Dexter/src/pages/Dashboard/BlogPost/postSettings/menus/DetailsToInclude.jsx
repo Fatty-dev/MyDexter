@@ -4,7 +4,7 @@ import { Controller, useFormState } from "react-hook-form";
 const DetailsToInclude = () => {
   const { control } = useFormState();
 
-  const [activeSample, setActiveSample] = useState("sample 1");
+  const [activeSample, setActiveSample] = useState("sample1");
 
   return (
     <div className="lg:mt-2 md:mt-2 max-md:mt-10 bg-white border border-gray-300 h-fit shadow-md rounded-lg p-4 lg:w-[84%] md:w-[84%] max-md:w-full ">
@@ -47,21 +47,21 @@ const DetailsToInclude = () => {
                           <div className="flex gap-4 mb-1">
                             <span
                               className={`text-[#9592fc] text-[11px] font-[500] cursor-pointer p-2 rounded-md ${
-                                activeSample === "sample 1"
+                                activeSample === "sample1"
                                   ? "bg-[#e7e6fe]"
                                   : "bg-none"
                               }`}
-                              onClick={() => setActiveSample("sample 1")}
+                              onClick={() => setActiveSample("sample1")}
                             >
                               Sample 1
                             </span>
                             <span
                               className={`text-[#9592fc] text-[11px] font-[500] cursor-pointer p-2 rounded-md ${
-                                activeSample === "sample 2"
+                                activeSample === "sample2"
                                   ? "bg-[#e7e6fe]"
                                   : "bg-none"
                               }`}
-                              onClick={() => {setActiveSample("sample 2");
+                              onClick={() => {setActiveSample("sample2");
                               
                               }}
                             >
@@ -69,11 +69,11 @@ const DetailsToInclude = () => {
                             </span>
                             <span
                               className={`text-[#9592fc] text-[11px] font-[500] cursor-pointer p-2 rounded-md ${
-                                activeSample === "sample 3"
+                                activeSample === "sample3"
                                   ? "bg-[#e7e6fe]"
                                   : "bg-none"
                               }`}
-                              onClick={() => setActiveSample("sample 3")}
+                              onClick={() => setActiveSample("sample3")}
                             >
                               Sample 3
                             </span>

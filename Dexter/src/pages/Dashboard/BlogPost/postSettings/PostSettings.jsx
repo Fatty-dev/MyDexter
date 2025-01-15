@@ -23,27 +23,25 @@ const PostSettings = () => {
   const { handleSubmit, watch } = useFormContext();
 
   const onSubmit = (data) => {
-    console.log('Form Data:', data);
+    console.log("Form Data:", data);
   };
 
   const formData = watch(); // Watch the current form state
 
   const components = {
     0: <CoreSettings />,
-    1: <DetailsToInclude/>,
-    2: <MediaHub/>,
-    3: <Seo/>,
-    4: <Structure/>,
-    5: <InternalLinking/>,
-    6: <ExternalLinking/>,
-    7: <ConnectToWeb/>,
-    8: <OutlineEditor/>,
-    9: <Document/>,
-    10: <Publication/>
+    1: <DetailsToInclude />,
+    2: <MediaHub />,
+    3: <Seo />,
+    4: <Structure />,
+    5: <InternalLinking />,
+    6: <ExternalLinking />,
+    7: <ConnectToWeb />,
+    8: <OutlineEditor formData={formData} />,
+    9: <Document />,
+    10: <Publication />,
+  };
 
-  }
-
-  
   return (
     <div className="w-[90%] mx-auto relative">
       {" "}
@@ -72,22 +70,21 @@ const PostSettings = () => {
           </div>
           <div>
             <button
-            onClick={handleSubmit(onSubmit)}
-           
-             className="text-white font-semibold flex gap-2 items-center bg-[#6d68fb] p-3 w-[60px] justify-center rounded-lg border  border-gray-300">
+              onClick={handleSubmit(onSubmit)}
+              className="text-white font-semibold flex gap-2 items-center bg-[#6d68fb] p-3 w-[60px] justify-center rounded-lg border  border-gray-300"
+            >
               Save
             </button>
           </div>
         </div>
       </div>
-
       <hr />
       <div className="text-[#3a4151] pt-3 lg:flex md:flex lg:gap-12 md:gap-8 ">
         <SettingsMenu
           selectedSetting={selectedSetting}
           setSelectedSetting={setSelectedSetting}
         />
-       {components[selectedSetting]}
+        {components[selectedSetting]}
       </div>
     </div>
   );

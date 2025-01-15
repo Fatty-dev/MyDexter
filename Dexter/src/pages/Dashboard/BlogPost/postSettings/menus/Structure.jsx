@@ -268,19 +268,19 @@ const Structure = () => {
               </div>
           <div className="flex flex-col gap-3">
                 <label
-                  htmlFor=" key-takeaway"
+                  htmlFor="keyTakeaway"
                   className="text-#545a67] flex items-center text-[12px] gap-2"
                 >
                   Key takeaway
                 </label>
                 <Controller
-                  name="key-takeaway"
+                  name="keyTakeaway"
                   control={control}
                   defaultValue="Yes"
                   render={({ field }) => (
                     <select
                       {...field}
-                      id="key-takeaway"
+                      id="keyTakeaway"
                       className="w-full outline-none focus:border-2 focus:border-gray-500 border border-gray-300 text-gray-400 rounded-lg p-2"
                     >
                       <option value="" disabled>
@@ -346,19 +346,19 @@ const Structure = () => {
               </div>
           <div className="flex flex-col gap-3">
                 <label
-                  htmlFor="bullet-point"
+                  htmlFor="bulletPoint"
                   className="text-#545a67] flex items-center text-[12px] gap-2"
                 >
                   Bullet point
                 </label>
                 <Controller
-                  name="bullet-point"
+                  name="bulletPoint"
                   control={control}
                   defaultValue="Yes"
                   render={({ field }) => (
                     <select
                       {...field}
-                      id="bullet-point"
+                      id="bulletPoint"
                       className="w-full outline-none focus:border-2 focus:border-gray-500 border border-gray-300 text-gray-400 rounded-lg p-2"
                     >
                       <option value="" disabled>

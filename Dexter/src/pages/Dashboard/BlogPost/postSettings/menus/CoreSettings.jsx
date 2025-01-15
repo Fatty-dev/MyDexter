@@ -51,16 +51,16 @@ const CoreSettings = () => {
             />
           </div>
           <div className="flex flex-col gap-3">
-            <label htmlFor="point of view" className="text-#545a67] flex items-center text-[12px] gap-2">
+            <label htmlFor="pointOfView" className="text-#545a67] flex items-center text-[12px] gap-2">
               {" "}
               Point of view <IoMdInformationCircleOutline size = {16}/>
             </label>
             <Controller
-              name="point of view"
+              name="pointOfView"
               control={control}
               defaultValue="None"
               render={({ field }) => (
-                <select {...field} id="point of view" className="w-full outline-none focus:border-2 focus:border-gray-500 border border-gray-300 text-gray-400 rounded-lg p-2">
+                <select {...field} id="pointOfView" className="w-full outline-none focus:border-2 focus:border-gray-500 border border-gray-300 text-gray-400 rounded-lg p-2">
                   <option value="" disabled>
                     Select an option
                   </option>
@@ -97,13 +97,13 @@ const CoreSettings = () => {
           <div className="lg:w-[60%] md:w-full space-y-6">
             <div className="flex gap-3 items-center">
               <div className="flex flex-col gap-3 lg:w-[60%] md:w-1/2">
-                <label htmlFor="article-size" className="text-#545a67] flex items-center text-[12px] gap-2"> Article size</label>
+                <label htmlFor="articleSize" className="text-#545a67] flex items-center text-[12px] gap-2"> Article size</label>
                 <Controller
-                  name="article-size"
+                  name="articleSize"
                   control={control}
                   defaultValue="Medium"
                   render={({ field }) => (
-                    <select {...field} id="article-size" className="text-gray-400  outline-none focus:border-2 focus:border-gray-500 border border-gray-300 rounded-lg p-2">
+                    <select {...field} id="articleSize" className="text-gray-400  outline-none focus:border-2 focus:border-gray-500 border border-gray-300 rounded-lg p-2">
                       <option value="" disabled>
                         Select an option
                       </option>
@@ -122,16 +122,16 @@ const CoreSettings = () => {
            
 
               <div className="flex flex-col gap-3">
-                <label htmlFor="ai-model" className="text-#545a67] flex items-center text-[12px] gap-2">
+                <label htmlFor="aiModel" className="text-#545a67] flex items-center text-[12px] gap-2">
                   {" "}
                   Ai model <IoMdInformationCircleOutline size = {16} />
                 </label>
                 <Controller
-                  name="ai-model"
+                  name="aiModel"
                   control={control}
                   defaultValue="Anthropic Claude 3 Haiku Popular"
                   render={({ field }) => (
-                    <select {...field} id="ai-model" className="w-full  outline-none focus:border-2  text-gray-400 focus:border-gray-500 border border-gray-300 rounded-lg p-2">
+                    <select {...field} id="aiModel" className="w-full  outline-none focus:border-2  text-gray-400 focus:border-gray-500 border border-gray-300 rounded-lg p-2">
                       <option value="" disabled>
                         Select an option  
                       </option>

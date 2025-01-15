@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import { useFormContext } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { IoMdInformationCircleOutline } from "react-icons/io";
@@ -7,8 +7,8 @@ import { IoMdInformationCircleOutline } from "react-icons/io";
 const MediaHub = () => {
   const { control, watch} = useFormContext();
 
-  const includeKeyword = watch('include-keyword', true);
-  const strictPlacement = watch('strict-placement', true);
+  const includeKeyword = watch('includeKeyword', true);
+  const strictPlacement = watch('strictPlacement', true);
 
   return (
     <div className="lg:mt-2 md:mt-2 max-md:mt-10 md:mb-8 max-md:mb-8 bg-white border border-gray-300 h-fit shadow-md rounded-lg p-4 lg:w-[84%] md:w-[84%] max-md:w-full ">
@@ -19,19 +19,19 @@ const MediaHub = () => {
             <div className="flex gap-6">
               <div className="flex flex-col gap-3 w-1/2">
                 <label
-                  htmlFor="ai-images"
+                  htmlFor="aiImages"
                   className="text-#545a67] flex items-center text-[12px] gap-2 md:text-[12px]"
                 >
                   AI images
                 </label>
                 <Controller
-                  name="ai-images"
+                  name="aiImages"
                   control={control}
                   defaultValue="Yes"
                   render={({ field }) => (
                     <select
                       {...field}
-                      id="ai-images"
+                      id="aiImages"
                       className="w-full outline-none focus:border-2 focus:border-gray-500 border border-gray-300 text-gray-400 rounded-lg p-2"
                     >
                       <option value="" disabled>
@@ -46,20 +46,20 @@ const MediaHub = () => {
 
               <div className="flex flex-col gap-3 w-1/2">
                 <label
-                  htmlFor="number-of-images"
+                  htmlFor="numberOfImages"
                   className="text-#545a67] flex items-center text-[12px] gap-2"
                 >
                   {" "}
                   Number of images
                 </label>
                 <Controller
-                  name="number-of-images"
+                  name="numberOfImages"
                   control={control}
                   defaultValue="Yes"// Initial value
                   render={({ field }) => (
                     <select
                       {...field}
-                      id="number-of-images"
+                      id="numberOfImages"
                       className="w-full text-gray-400 outline-none focus:border-2 focus:border-gray-500 border border-gray-300 rounded-lg p-2"
                     >
                       <option value="" disabled>
@@ -80,20 +80,20 @@ const MediaHub = () => {
             <div className="flex gap-6">
               <div className="flex flex-col gap-3 w-1/2 relative">
                 <label
-                  htmlFor="image-style"
+                  htmlFor="imageStyle"
                   className="text-#545a67] flex items-center text-[12px] gap-2"
                 >
                   Image style
                 </label>
                 <Controller
-                  name="image-style"
+                  name="imageStyle"
                   control={control}
                   defaultValue="None"
                   render={({ field, fieldState }) => (
                     <div>
                       <select
                         {...field}
-                        id="image-style"
+                        id="imageStyleimage-style"
                         className="w-full outline-none focus:border-2 focus:border-gray-500 border border-gray-300 text-gray-400 rounded-lg p-2"
                       >
                         <option value="" disabled>
@@ -121,20 +121,20 @@ const MediaHub = () => {
 
               <div className="flex flex-col gap-3 w-1/2">
                 <label
-                  htmlFor="image-sizes"
+                  htmlFor="imageSizes"
                   className="text-#545a67] flex items-center text-[12px] gap-2"
                 >
                   {" "}
                   Image sizes
                 </label>
                 <Controller
-                  name="image-sizes"
+                  name="imageSizes"
                   control={control}
                   defaultValue="1344x768(16:9)"
                   render={({ field }) => (
                     <select
                       {...field}
-                      id="image-sizes"
+                      id="imageSizes"
                       className="w-full text-gray-400 outline-none focus:border-2 focus:border-gray-500 border border-gray-300 rounded-lg p-2"
                     >
                       <option value="" disabled>
@@ -152,7 +152,7 @@ const MediaHub = () => {
         <div className="flex gap-6">
               <div className="flex flex-col gap-3  relative w-1/2">
                 <label
-                  htmlFor="additional-info"
+                  htmlFor="additionalInfo"
                   className="text-#545a67] md:gap-1 lg:gap-3 max-md:gap-6 flex items-center text-[12px]  gap-2"
                 >
                   <p className="max-md:w-[40px]"> Additional information</p>
@@ -160,7 +160,7 @@ const MediaHub = () => {
                   <IoMdInformationCircleOutline size={16} />
                 </label>
                 <Controller
-                  name="additional-info"
+                  name="additionalInfo"
                   control={control}
                   defaultValue=""
                   rules={{
@@ -173,7 +173,7 @@ const MediaHub = () => {
                     <div>
                       <input
                         {...field}
-                        id="additional-info"
+                        id="additionalInfo"
                         className="w-full outline-none focus:border-2 focus:border-gray-500 border border-gray-300 text-gray-400 rounded-lg p-2"
                         type="text"
                         placeholder="Enter details or creative directions"
@@ -187,7 +187,7 @@ const MediaHub = () => {
               </div>
               <div className="flex flex-col gap-3 relative w-1/2">
                 <label
-                  htmlFor="brand-name"
+                  htmlFor="brandName"
                   className="text-#545a67] md:gap-1 max-md:gap-1 lg:gap-3  flex items-center text-[12px] gap-2"
                 >
                   {" "}
@@ -195,7 +195,7 @@ const MediaHub = () => {
                   <IoMdInformationCircleOutline size={16} />
                 </label>
                 <Controller
-                  name="brand-name"
+                  name="brandName"
                   control={control}
                   defaultValue=""
                   rules={{
@@ -208,7 +208,7 @@ const MediaHub = () => {
                     <div>
                       <input
                         {...field}
-                        id="brand-name"
+                        id="brandName"
                         className="w-full outline-none focus:border-2 focus:border-gray-500 border border-gray-300 text-gray-400 rounded-lg p-2"
                         type="text"
                         placeholder="Enter your brand name"
@@ -234,15 +234,15 @@ const MediaHub = () => {
             </div>
         <div className="flex items-start gap-2 w-[90%] text-sm">
           <Controller
-            name="include-keyword"
+            name="includeKeyword"
             control={control}
             defaultValue={true}
 
             render={({ field }) => (
-              <input type="checkbox" checked = {field.value} name="include-keyword" id="include-keyword" {...field} />
+              <input type="checkbox" checked = {field.value} name="includeKeyword" id="includeKeyword" {...field} />
             )}
           />
-          <label htmlFor="include-keyword" className="text-#545a67] lg:w-[75%] text-[12px] max-md:w-full">
+          <label htmlFor="includeKeyword" className="text-#545a67] lg:w-[75%] text-[12px] max-md:w-full">
             
             Include the main keyword in the first image as Alt-text. Relevant
             keywords will be picked up and added to the rest of the images.
@@ -280,20 +280,20 @@ const MediaHub = () => {
 
               <div className="flex flex-col  gap-3 lg:w-1/2 max-md:w-full md:w-full">
                 <label
-                  htmlFor="number-of-videos"
+                  htmlFor="numberOfVideos"
                   className="text-#545a67] flex items-center text-[12px] gap-2"
                 >
                  
                   Number of videos
                 </label>
                 <Controller
-                  name="number-of-videos"
+                  name="numberOfVideos"
                   control={control}
                   defaultValue="Yes" // Initial value
                   render={({ field }) => (
                     <select
                       {...field}
-                      id="number-of-videos"
+                      id="numberOfVideos"
                       className="w-full text-gray-400 outline-none focus:border-2 focus:border-gray-500 border border-gray-300 rounded-lg p-2"
                     >
                       <option value="" disabled>
@@ -340,14 +340,14 @@ const MediaHub = () => {
             
             <div className="flex items-start gap-2 w-[90%] text-sm">
           <Controller
-            name="strict-placement"
+            name="strictPlacement"
             control={control}
             defaultValue={true}
             render={({ field }) => (
-              <input type="checkbox" checked = {field.value} name="strict-placement" id="strict-placement" {...field} />
+              <input type="checkbox" checked = {field.value} name="strictPlacement" id="strictPlacement" {...field} />
             )}
           />
-          <label htmlFor="strict-placement" className="text-#545a67] lg:w-[75%] text-[12px] max-md:w-full">
+          <label htmlFor="strictPlacement" className="text-#545a67] lg:w-[75%] text-[12px] max-md:w-full">
             
             All media element will be placed strictly under the headings. I disabled , the AI will decide and find the best placement.
           </label>

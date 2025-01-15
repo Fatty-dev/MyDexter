@@ -7,17 +7,17 @@ const ExternalLinking = () => {
       <form className="flex gap-6 items-start">
         <div className=" w-[25%]">
           <div className="flex flex-col gap-3">
-            <label htmlFor="link-type" className="text-#545a67]  text-[11px]">
+            <label htmlFor="linkType" className="text-#545a67]  text-[11px]">
               Link type
             </label>
             <Controller
-              name="link-type"
+              name="linkType"
               control={control}
               defaultValue="None"
               render={({ field }) => (
                 <select
                   {...field}
-                  id="link-type"
+                  id="linkType"
                   className="w-full max-md:text-[9px] text-gray-400 outline-none focus:border-2 focus:border-gray-500 border border-gray-300 rounded-lg p-2 text-[11px]"
                 >
                   <option value="" disabled>
