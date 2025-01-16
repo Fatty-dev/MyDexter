@@ -1,7 +1,10 @@
 import { Controller, useFormState } from "react-hook-form";
 import backpack from "@/assets/backpack.svg";
+import { FaCheck } from "react-icons/fa";
+import { useState } from "react";
 
 const OutlineEditor = ({ formData }) => {
+  const [isChecked, setIsChecked] = useState(false);
   const lists = [
     {
       name: "Magic bag button",
@@ -20,6 +23,7 @@ const OutlineEditor = ({ formData }) => {
       desc: "The OUTLINE generation is powered by the GPT-4 128K Turbo model!",
     },
   ];
+
   const { control } = useFormState();
   return (
     <div className="lg:mt-2 md:mt-2 max-md:mt-10 md:mb-8 max-md:mb-8 flex flex-col gap-4 bg-white border border-gray-300 h-fit shadow-md rounded-lg p-4 lg:w-[84%] md:w-[84%] max-md:w-full ">
@@ -38,7 +42,7 @@ const OutlineEditor = ({ formData }) => {
               className="md:text-[11px] lg:text-[12px]  flex gap-1 lg:flex-row max-md:flex-col max-md:items-start md:flex-col md:items-start"
             >
               <div className="flex items-center gap-1">
-                <div className="w-1 h-1 bg-black mr-1"></div>
+                <div className="w-1 h-1 mr-1 bg-black"></div>
                 <h1 className="text-[#293142] font-semibold w-full">
                   {item.name}
                   <span>:</span>
@@ -54,17 +58,30 @@ const OutlineEditor = ({ formData }) => {
           <form>
             <div className="flex items-start gap-2 text-[#8681fc] text-sm">
               <Controller
-                name="enable-editor"
+                name="enableEditor"
                 control={control}
                 defaultValue={false}
                 render={({ field }) => (
-                  <input
-                    type="checkbox"
-                    checked={field.value}
-                    name="enableEditor"
-                    id="enableEditor"
-                    {...field}
-                  />
+                  <div>
+                    <span
+                      {...field}
+                      onClick={() => {
+                        setIsChecked(!isChecked);
+                        field.onChange(!field.value);
+                      }}
+                      className={`${
+                        isChecked
+                          ? "bg-[#8f8bfc]"
+                          : "bg-transparent border border-[#8f8bfc] "
+                      } cursor-pointer text-[9px] flex justify-center items-center w-5 h-5 rounded-[5px] p-1`}
+                    >
+                      <FaCheck
+                        className={`text-white ${
+                          isChecked ? "block" : "hidden"
+                        } `}
+                      />
+                    </span>
+                  </div>
                 )}
               />
               <label htmlFor="enableEditor" className="text-[12px] ">
@@ -79,10 +96,7 @@ const OutlineEditor = ({ formData }) => {
         <div className="flex lg:items-center max-md:gap-4 md:gap-4 lg:justify-between md:flex-col lg:flex-row max-md:flex-col">
           <div className="flex gap-8 mt-4 text-sm md:justify-between max-md:justify-between">
             <div className="text-[#8d8d95] flex flex-col gap-1">
-              <p>
-                Main keyword: None
-               
-              </p>
+              <p>Main keyword: None</p>
               {/* {formData.keywords?.length === 0
                   ? "None"
                   : formData.keywords

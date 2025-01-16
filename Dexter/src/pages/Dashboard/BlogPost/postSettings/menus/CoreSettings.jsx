@@ -2,6 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import USFlag from "@/assets/US.svg"
 
 const CoreSettings = () => {
   const { control } = useFormContext();
@@ -15,21 +16,27 @@ const CoreSettings = () => {
           <div className="lg:w-[40%] space-y-6">
             <div className="flex flex-col gap-3">
               <label htmlFor="language" className="text-#545a67] flex items-center text-[12px] gap-2">Language</label>
-              <Controller
-                name="language"
-                control={control}
-                defaultValue="English US" // Initial value
-                render={({ field }) => (
-                  <select {...field} id="language" className="w-full p-2 text-gray-400 border border-gray-300 rounded-lg outline-none focus:border-2 focus:border-gray-500">
-                    <option value="" disabled>
-                      Select an option
-                    </option>
-                    <option value="English US">English US</option>
-                    <option value="option 2">Option 2</option>
-                    <option value="option 3">Option 3</option>
-                  </select>
-                )}
-              />
+             
+                <Controller
+                  name="language"
+                  control={control}
+                  defaultValue="English US"
+                  render={({ field }) => (
+                    <div className="flex items-center w-full p-2 text-gray-400 border border-gray-300 rounded-lg ">
+                                          <img src={USFlag} alt="US flag" width = {20}  />
+
+                    <select {...field} id="language" className="w-full border-none outline-none bg-transaparent ">
+                      <option value="" disabled>
+                        Select an option
+                      </option>
+                      <option value="English US">English US</option>
+                      <option value="option 2">Option 2</option>
+                      <option value="option 3">Option 3</option>
+                    </select>
+                     </div>
+                  )}
+                />
+             
             </div>
           
           <div className="flex flex-col gap-3">
@@ -37,7 +44,7 @@ const CoreSettings = () => {
             <Controller
               name="tone"
               control={control}
-              defaultValue="Friendly" // Initial value
+              defaultValue="Friendly" 
               render={({ field }) => (
                 <select {...field} id="tone" className="w-full p-2 text-gray-400 border border-gray-300 rounded-lg outline-none focus:border-2 focus:border-gray-500">
                   <option value="" disabled>
@@ -96,7 +103,7 @@ const CoreSettings = () => {
           {/* Second part */}
           <div className="lg:w-[60%] md:w-full space-y-6">
             <div className="flex items-center gap-3">
-              <div className="flex flex-col gap-3 lg:w-[60%] md:w-1/2">
+              <div className="flex flex-col gap-3 lg:w-[60%] md:w-1/2 max-md:w-1/2">
                 <label htmlFor="articleSize" className="text-#545a67] flex items-center text-[12px] gap-2"> Article size</label>
                 <Controller
                   name="articleSize"
@@ -115,7 +122,7 @@ const CoreSettings = () => {
                   )}
                 />
               </div>
-              <div className="bg-[#e7e6fe] md:px-0 md:py-2 max-md:p-2 lg:p-2 w-fit rounded-lg text-[8px] text-center mt-8 text-[#51576a]  lg:w-[40%] md:w-1/2 ">
+              <div className="bg-[#e7e6fe] md:px-0 md:py-2 max-md:p-2 lg:p-2 w-fit rounded-lg text-[8px] max-md:w-1/2 text-center mt-8 text-[#51576a]  lg:w-[40%] md:w-1/2 ">
                 <p className="">2400-3600 words, 9-12 H2 headings</p>
               </div>
             </div>
@@ -131,12 +138,13 @@ const CoreSettings = () => {
                   control={control}
                   defaultValue="Anthropic Claude 3 Haiku Popular"
                   render={({ field }) => (
-                    <select {...field} id="aiModel" className="w-full p-2 text-gray-400 border border-gray-300 rounded-lg outline-none focus:border-2 focus:border-gray-500">
+                    <div className="relative w-full p-2 text-gray-400 border border-gray-300 rounded-lg">
+                    <select {...field} id="aiModel" className="w-full border-none outline-none bg-transaparent ">
                       <option value="" disabled>
                         Select an option  
                       </option>
-                      <option value="Anthropic Claude 3 Haiku Popular">
-                        Anthropic Claude 3 Haiku popular
+                      <option value="Anthropic Claude 3 Haiku">
+                        Anthropic Claude 3 Haiku
                         
                       </option>
                       <option value="option 2">option 2</option>
@@ -144,13 +152,15 @@ const CoreSettings = () => {
                       <option value="option 4">option 4</option>
                      
                     </select>
+                    <span className={`absolute left-[12.8rem] text-[#6d68fb] ${field.value === "Anthropic Claude 3 Haiku" ? "visible" : "invisible"}`} >Popular</span>
+                    </div>
                   )}
                 />
               </div>
            
             
             <div className="flex">
-              <div className="flex flex-col gap-5  lg:w-1/2 md:w-full max-md:w-full">
+              <div className="flex flex-col gap-5 lg:w-1/2 md:w-full max-md:w-full">
                 <div className="flex items-center gap-2 ">
                   <p className="text-#545a67] text-[12px]">
                     Via your API keys
@@ -171,7 +181,7 @@ const CoreSettings = () => {
                   </div>
                 </div>
               </div>
-              <div  className="flex flex-col gap-5  lg:w-1/2 md:w-full max-md:w-full">
+              <div  className="flex flex-col gap-5 lg:w-1/2 md:w-full max-md:w-full">
                 <div className="flex items-center gap-2">
                   <p>
                     Total cost
@@ -190,19 +200,22 @@ const CoreSettings = () => {
                 <Controller
                   name="humanize"
                   control={control}
-                  defaultValue="8th & 9th grade eaily understood Popular"
+                  defaultValue="8th & 9th grade eaily understood"
                   render={({ field }) => (
-                    <select {...field} id="humanize" className="w-full p-2 text-gray-400 border border-gray-300 rounded-lg outline-none focus:border-2 focus:border-gray-500">
+                    <div className="relative w-full p-2 text-gray-400 border border-gray-300 rounded-lg">
+                    <select {...field} id="humanize" className="w-full border-none outline-none bg-transaparent ">
                       <option value="" disabled>
                         Select an option
                       </option>
-                      <option value="8th & 9th grade easily understood popular">
-                        8th & 9th grade easily understood popular
+                      <option value="8th & 9th grade easily understood">
+                        8th & 9th grade easily understood 
                       </option>
                       <option value="option 2">option 2</option>
                       <option value="option 3">option 3</option>
                       <option value="option 3">option 4</option>
                     </select>
+                      <span className={`absolute left-[16.5rem] text-[#6d68fb] ${field.value === "8th & 9th grade easily understood" ? "visible" : "invisible"}`} >Popular</span>
+                      </div>
                   )}
                 />
               </div>
