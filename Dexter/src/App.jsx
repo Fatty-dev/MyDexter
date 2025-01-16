@@ -22,9 +22,13 @@ import Analytics from "./pages/Dashboard/Analytics/Analytics";
 import PostDetails from "./pages/Dashboard/BlogPost/PostDetails";
 import BulkArticle from "./pages/Dashboard/BlogPost/BulkArticle/BulkArticle";
 import BlogLoading from "./pages/Dashboard/BlogPost/BlogLoading";
+import PostSettings from "./pages/Dashboard/BlogPost/postSettings/PostSettings";
+import { FormProvider, useForm } from "react-hook-form";
 
 const App = () => {
+  const methods = useForm(); 
   return (
+    <FormProvider {...methods}>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingpageLayout />}>
@@ -49,17 +53,18 @@ const App = () => {
 
           <Route path="blog-post" element={<BlogPost />} />
           <Route path="blog-post/:postId" element={<PostDetails />} />
-        
+          <Route path="blog-post/:postId/settings" element={<PostSettings />} />
+
           <Route path="bulk-article" element={<BulkArticle />} />
           <Route path="blog-loading" element={<BlogLoading />} />
-          
-          <Route path="overview" element={<Overview />} />
-          <Route path="strategies" element={<Strategies/>} />
-          <Route path="analytics" element={<Analytics/>} />
 
+          <Route path="overview" element={<Overview />} />
+          <Route path="strategies" element={<Strategies />} />
+          <Route path="analytics" element={<Analytics />} />
         </Route>
       </Routes>
     </BrowserRouter>
+    </FormProvider>
   );
 };
 

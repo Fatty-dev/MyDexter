@@ -23,15 +23,15 @@ const Hero = () => {
 
         {/* Heading */}
         <h1 className="text-[3rem] sm:text-[3.5rem] md:text-[4rem] lg:text-[4.5rem] font-semibold text-gray-900 mb-4">
-          <span className="text-primary">Maximize Sales</span> with Dexter's
+          <span className="text-primary">Maximize Sales</span> with Dexter&apos;s
           <br className="hidden md:block" /> AI-Powered SEO Software Tools
         </h1>
 
         {/* Subtitle */}
         <p className="text-gray-600 w-full sm:w-[90%] md:w-[80%] lg:w-[70%] mx-auto text-lg mb-6">
-          Optimize your SEO strategy with Dexter's advanced AI-driven tools. Our
+          Optimize your SEO strategy with  Dexter&apos;s advanced AI-driven tools. Our
           automated content creation, blog post generation, SEO analytics, and
-          personalized recommendations help improve your site's visibility and
+          personalized recommendations help improve your site&apos;s visibility and
           drive more traffic.
         </p>
 

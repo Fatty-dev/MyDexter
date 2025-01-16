@@ -20,5 +20,5 @@ export const popupVariant = {
         mass: 0.5,
       },
     },
-  };
+  }
   

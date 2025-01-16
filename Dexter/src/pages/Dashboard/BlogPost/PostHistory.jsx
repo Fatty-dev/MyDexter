@@ -7,7 +7,7 @@ import { FaArrowDownLong, FaArrowUpLong } from "react-icons/fa6";
 import DataTable from "../../../components/Common/Table/DataTable";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaMinus } from "react-icons/fa6";
-import { metrics, tableHeaderTitleList, postsData } from "../../../lib/utils/data";
+import { metrics, tableHeaderTitleList, postsData } from "../../../lib/data";
 
 import { Link } from "react-router-dom";
 
@@ -35,12 +35,12 @@ const PostHistory = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-evenly items-center gap-4 text-sm  place-items-center text-center  py-6 rounded-lg bg-[#f5f7f9]">
+      <div className="flex justify-evenly items-center  text-sm  place-items-center text-center  py-6 rounded-lg bg-[#f5f7f9]">
         {metrics.map((metric, index) => (
-          <div className="flex flex-col items-start [&:not(:first-child)]:border-l border-l-[#d5d9e1]">
+          <div  key={index} className="flex flex-col items-start   [&:not(:first-child)]:border-l border-l-[#d5d9e1] [&:not(:first-child)]:pl-8 max-md:[&:not(:first-child)]:border-none max-md:[&:not(:first-child)]:pl-0 ">
           <div
-            key={index}
-            className="flex  gap-2 items-start  "
+           
+            className="flex items-start gap-2 "
           >
             <div className="relative">
               <svg className="size-12" viewBox="0 0 36 36">
@@ -56,7 +56,7 @@ const PostHistory = () => {
                 />
                 {/* Progress Circle */}
                 <circle
-                  className={`${((metric.value.toFixed/ metric.max)* 100) < 50 ? "stroke-red-500" : 
+                  className={`${((metric.value/ metric.max)* 100) < 50 ? "stroke-red-500" : 
                   ((metric.value/ metric.max)* 100) < 75 ? "stroke-yellow-500" :  "stroke-green-500" } transform-rotate-90 origin-center`}
                   cx="18"
                   cy="18"
@@ -114,7 +114,7 @@ const PostHistory = () => {
         // setCurrentPage={setCurrentPage}
         // currentPage={currentPage}
       >
-        <div className="bg-[#6d68fb] w-5 h-5 rounded-[5px] p-1 flex justify-center items-center text-white cursor-pointer text-[9px] absolute top-[0.9rem] left-1 md:left-[0.2rem] md:top-[1rem] ">
+        <div className="bg-[#6d68fb] w-5 h-5 rounded-[5px] p-1 flex justify-center items-center text-white cursor-pointer text-[9px] absolute lg:top-[0.9rem] lg:left-1 md:left-[0.2rem] md:top-[1rem] ">
           <FaMinus className="relative left-[0.3px]" />
         </div>
         {postsData?.map((post) => (
@@ -148,7 +148,7 @@ const PostHistory = () => {
               </p>
             </td>
 
-            <td className="px-2 py-12 bg-white flex whitespace-nowrap gap-2 border-b border-gray-200  text-sm ">
+            <td className="flex gap-2 px-2 py-12 text-sm bg-white border-b border-gray-200 whitespace-nowrap ">
               {post.keywords?.slice(0, 2).map((keyword, index) => (
                 <p
                   key={index}
@@ -170,7 +170,7 @@ const PostHistory = () => {
               </span>
             </td>
 
-            <td className="  text-sm bg-white border-b border-gray-200">
+            <td className="text-sm bg-white border-b border-gray-200 ">
               <p
                 className={`${
                   post.traffic < 5
@@ -186,7 +186,7 @@ const PostHistory = () => {
                 {post.traffic}%
               </p>
             </td>
-            <td className=" text-sm bg-white border-b  border-gray-200">
+            <td className="text-sm bg-white border-b border-gray-200 ">
               <p className="ml-1 text-gray-500 whitespace-no-wrap">
                 {new Date(post.publishedDate).toLocaleDateString("en-US", {
                   month: "short",
@@ -212,12 +212,12 @@ const PostHistory = () => {
                 ></span>
               </p>
             </td>
-            <td className=" text-sm bg-white  border-gray-200">
+            <td className="text-sm bg-white border-gray-200 ">
             
                 <span>{post.rating}</span>
               
             </td>
-            <div className="flex items-center gap-3 ml-4 py-6">
+            <div className="flex items-center gap-3 py-6 ml-4">
             <td className=" cursor-pointer text-sm bg-white  border-gray-200 text-[#a3aab3]">
               <RiDeleteBin6Line className="text-[15px]" />
             </td>
