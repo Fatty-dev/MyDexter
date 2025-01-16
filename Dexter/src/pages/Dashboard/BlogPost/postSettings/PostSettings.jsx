@@ -53,7 +53,7 @@ const PostSettings = () => {
       </div>
       <div className="flex items-center gap-2 mb-4">
         <FaArrowLeft
-          className="text-[12px] cursor-pointer text-gray-500"
+          className="text-sm cursor-pointer text-gray-500"
           onClick={() => window.history.back()}
         />
         <span className="text-[#6c7685] font-semibold">Back</span>

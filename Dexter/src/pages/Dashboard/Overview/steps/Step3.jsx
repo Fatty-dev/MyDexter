@@ -26,7 +26,7 @@ const Step3 = () => {
       </div>
 
       <div className="ml-[3.3rem]">
-        <button className="text-white flex gap-2 items-center  bg-[#6d68fb] max-md:justify-center md:justify-center text-[12px] p-3 mt-4  lg:w-[80%] md:w-[80%]  max-md:w-full  rounded-md">
+        <button className="text-white flex gap-2 items-center  bg-[#6d68fb] max-md:justify-center md:justify-center text-sm p-3 mt-4  lg:w-[80%] md:w-[80%]  max-md:w-full  rounded-md">
           <span className="">Generate SEO Optimization Strategy</span>
           <PiMagicWand className="text-white text-[15px]" />
         </button>

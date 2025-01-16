@@ -28,15 +28,11 @@ className="[&:not(:first-child)]:border-l border-l-[#d5d9e1] [&:not(:first-child
           >
             <Metrics
               metric={metric}
-              className={`relative left-4 text-[#98a8bf]   text-[13px] ${
-                metric.label === "Meta Tag Status"
-                  ? "bottom-[28px]"
-                  : "bottom-[24px]"
-              } `}
+            
               marginTop="mt-4"
               spanColor="text-[#7a8eac] text-[8px]"
             />
-            <p className="text-[#9795fa] ml-10 -mt-1 font-semibold text-[10px] ">
+            <p className="text-[#9795fa] ml-10  font-semibold text-[10px] ">
               View {metric.toView}
             </p>
           </div>
@@ -107,5 +103,6 @@ className="[&:not(:first-child)]:border-l border-l-[#d5d9e1] [&:not(:first-child
     </div>
   );
 };
+
 
 export default DomainOptimization;

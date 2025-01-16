@@ -30,8 +30,9 @@ const SeoDashboard = () => {
           <div className="">
             <Metrics
               metric={visibilityScore}
-              className="relative left-[2.5rem] text-white bottom-[4.6rem] text-[25px]"
-               marginTop = "mt-0"
+              className=" text-white  text-[25px]"
+               marginTop = "mb-8"
+              
             />
 
             <div className="flex flex-col -mt-8 text-white max-md:-mt-6 ">
@@ -54,18 +55,19 @@ const SeoDashboard = () => {
           <div className="relative mt-12 ml-6 max-md:ml-6">
             <div className="w-[30px] h-[0.2rem] bg-gray-500"></div>
             <div className="w-[0.15rem] h-[85px] bg-gray-500"></div>
-            <div className="w-[30px] h-[0.15rem] absolute right-10 top-[30%] bg-gray-500"></div>
+            <div className="w-[30px] h-[0.15rem] absolute right-[30px] top-[45px] bg-gray-500"></div>
             <div className="w-[30px] h-[0.15rem]  bg-gray-500"></div>
           </div>
 
           {/* Scores */}
-          <div className="flex flex-col ml-2">
+          <div className="flex flex-col justify-between ml-2">
             {scores.map((score, index) => (
               <Metrics
                 metric={score}
                 key={index}
-                className="relative left-[2.1rem] text-white bottom-[4rem] text-[20px]"
+                className="text-white "
                 marginTop = "mt-0"
+                 spanColor = "text-[#98a8bf]"
               />
             ))}
           </div>

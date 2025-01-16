@@ -26,9 +26,9 @@ const OutlineEditor = ({ formData }) => {
 
   const { control } = useFormState();
   return (
-    <div className="lg:mt-2 md:mt-2 max-md:mt-10 md:mb-8 max-md:mb-8 flex flex-col gap-4 bg-white border border-gray-300 h-fit shadow-md rounded-lg p-4 lg:w-[84%] md:w-[84%] max-md:w-full ">
+    <div className="lg:mt-2 md:mt-2 max-md:mt-16 md:mb-8 max-md:mb-8 flex flex-col gap-4 bg-white border border-gray-300 h-fit shadow-md rounded-lg p-4 lg:w-[84%] md:w-[84%] max-md:w-full ">
       <div>
-        <p className="text-#545a67] text-[12px]">
+        <p className="text-#545a67] text-sm">
           Enable the OUTLINE editor for your article to gain the ability to add
           a personalized OUTLINE to your upcoming article, enhancing their
           structure and relevance
@@ -39,7 +39,7 @@ const OutlineEditor = ({ formData }) => {
           {lists.map((item, index) => (
             <li
               key={index}
-              className="md:text-[11px] lg:text-[12px]  flex gap-1 lg:flex-row max-md:flex-col max-md:items-start md:flex-col md:items-start"
+              className="md:text-[11px] lg:text-sm  flex gap-1 lg:flex-row max-md:flex-col max-md:items-start md:flex-col md:items-start"
             >
               <div className="flex items-center gap-1">
                 <div className="w-1 h-1 mr-1 bg-black"></div>
@@ -84,12 +84,12 @@ const OutlineEditor = ({ formData }) => {
                   </div>
                 )}
               />
-              <label htmlFor="enableEditor" className="text-[12px] ">
+              <label htmlFor="enableEditor" className="text-sm ">
                 Enable the outline editor
               </label>
             </div>
           </form>
-          <div className="text-[12px] text-gray-500 ">
+          <div className="text-sm text-gray-500 ">
             <span>0</span>/<span>500</span>
           </div>
         </div>
@@ -114,7 +114,7 @@ const OutlineEditor = ({ formData }) => {
             </div>
           </div>
           <button
-            disabled
+            disabled = {!isChecked}
             className="text-white flex gap-2 items-center max-md:self-end md:self-end bg-[#6d68fb] text-[10px] p-[0.4rem] mt-2 disabled:bg-opacity-50   w-[120px]  justify-center rounded-full"
           >
             <img src={backpack} alt="backpack" width={20} />

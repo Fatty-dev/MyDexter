@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { CiCircleQuestion } from "react-icons/ci";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { FaCheck } from "react-icons/fa";
@@ -12,7 +12,7 @@ import { Link, useParams } from "react-router-dom";
 const PostOverview = () => {
   const [settingsOpen, setSettingsOpen] = useState(false);
 
-  const {postId} = useParams()
+  const { postId } = useParams();
 
   const metaTags = [
     "Meta Title",
@@ -110,7 +110,7 @@ const PostOverview = () => {
         {metaTags.map((tag, index) => (
           <div
             key={index}
-            className="bg-[#f9fafb] text-[#6ccea1] text-[12px] p-3 rounded-lg flex justify-between items-center"
+            className="bg-[#f9fafb] text-[#6ccea1] text-sm p-3 rounded-lg flex justify-between items-center"
           >
             <span>{tag}</span>
             <FaCheck />
@@ -145,7 +145,10 @@ const PostOverview = () => {
       </div>
 
       {settingsOpen && (
-        <Link to = {`/dashboard/blog-post/${postId}/settings`} className="bg-white absolute right-12 top-12 shadow-md p-4 flex items-center gap-2 w-[150px] flex-col">
+        <Link
+          to={`/dashboard/blog-post/${postId}/settings`}
+          className="bg-white absolute right-12 top-12 shadow-md p-4 flex items-center gap-2 w-[150px] flex-col"
+        >
           {settings.map((item, index) => (
             <div
               key={index}

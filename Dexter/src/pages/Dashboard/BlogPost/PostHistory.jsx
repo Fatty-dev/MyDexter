@@ -35,7 +35,7 @@ const PostHistory = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-evenly items-center  text-sm  place-items-center text-center  py-6 rounded-lg bg-[#f5f7f9]">
+      <div className="grid lg:grid-cols-5 max-md:grid-cols-3 md:grid-cols-3 pl-8 gap-4 py-6 rounded-lg bg-[#f5f7f9]">
         {metrics.map((metric, index) => (
           <div  key={index} className="flex flex-col items-start   [&:not(:first-child)]:border-l border-l-[#d5d9e1] [&:not(:first-child)]:pl-8 max-md:[&:not(:first-child)]:border-none max-md:[&:not(:first-child)]:pl-0 ">
           <div
@@ -67,15 +67,7 @@ const PostHistory = () => {
                   strokeDashoffset={metric.max - metric.value}
                 />
               </svg>
-              <div
-                className={`${
-                  metric.label === "Bounce Rate"
-                    ? "bottom-[33%] left-[1.23rem]"
-                    : metric.label === "Organic Traffic"
-                    ? "bottom-[34%] left-[1.2rem] "
-                    : "bottom-[42%] left-4 "
-                } text-[16px]  absolute text-[#98a8bf]  flex justify-center items-center`}
-              >
+              <div className="absolute inset-0 left-0 flex items-center justify-center w-full h-full ">
                 {metric.icon}
               </div>
             </div>
@@ -114,12 +106,12 @@ const PostHistory = () => {
         // setCurrentPage={setCurrentPage}
         // currentPage={currentPage}
       >
-        <div className="bg-[#6d68fb] w-5 h-5 rounded-[5px] p-1 flex justify-center items-center text-white cursor-pointer text-[9px] absolute lg:top-[0.9rem] lg:left-1 md:left-[0.2rem] md:top-[1rem] ">
+        <div className="bg-[#6d68fb] w-5 h-5 rounded-[5px] p-1 flex justify-center items-center text-white cursor-pointer text-[9px] absolute lg:top-[0.9rem] lg:left-1 md:left-[0.2rem] md:top-[1rem] max-md:top-6 ">
           <FaMinus className="relative left-[0.3px]" />
         </div>
         {postsData?.map((post) => (
           <tr key={post.id}>
-            <td className="px-2 py-5 text-sm bg-white border-b border-gray-200 md:px-1 ">
+            <td className="py-5 bg-white border-b border-gray-200 x-scroll overflow-text-sm">
               <p className="flex items-center">
                 <span className="flex items-center gap-4 md:gap-2">
                   <span
@@ -148,7 +140,7 @@ const PostHistory = () => {
               </p>
             </td>
 
-            <td className="flex gap-2 px-2 py-12 text-sm bg-white border-b border-gray-200 whitespace-nowrap ">
+            <td className="flex gap-2 py-12 pr-4 text-sm bg-white border-b border-b-gray-200 whitespace-nowrap ">
               {post.keywords?.slice(0, 2).map((keyword, index) => (
                 <p
                   key={index}
@@ -170,13 +162,13 @@ const PostHistory = () => {
               </span>
             </td>
 
-            <td className="text-sm bg-white border-b border-gray-200 ">
+            <td className="pr-4 text-sm bg-white border-b border-gray-200 ">
               <p
                 className={`${
                   post.traffic < 5
                     ? "text-[#ba352a] bg-[#fef3f2]  border-[#fedad7]"
                     : "text-[#2d8d64] bg-[#ecfdf3] border-[#caf5dc] "
-                } whitespace-no-wrap flex text-[10px] font-bold  items-center border w-[43px] gap-1  justify-center rounded-full  py-2 px-2`}
+                } whitespace-no-wrap flex text-[10px] font-bold  items-center border gap-1  justify-center rounded-full  py-2 px-2`}
               >
                 {post.traffic < 5 ? (
                   <FaArrowDownLong className="text-[#ba352a]" />
@@ -186,7 +178,7 @@ const PostHistory = () => {
                 {post.traffic}%
               </p>
             </td>
-            <td className="text-sm bg-white border-b border-gray-200 ">
+            <td className="pr-4 text-sm bg-white border-b border-gray-200">
               <p className="ml-1 text-gray-500 whitespace-no-wrap">
                 {new Date(post.publishedDate).toLocaleDateString("en-US", {
                   month: "short",
@@ -195,38 +187,45 @@ const PostHistory = () => {
                 })}
               </p>
             </td>
-            <td className="text-sm bg-white border-b border-gray-200">
-              <p className="relative w-[120px] h-[7px] rounded-[10px] bg-[#e4e7ec]">
-                <span
-                  className={`absolute h-[7px] rounded-[10px]`}
-                  style={{
-                    width: `${post.rating}%`,
-                    backgroundColor: `${
-                      post.rating < 50
-                        ? "#ef3a29"
-                        : post.rating > 75
-                        ? "#17b26a"
-                        : "#ffad05"
-                    }`,
-                  }}
-                ></span>
-              </p>
-            </td>
-            <td className="text-sm bg-white border-gray-200 ">
-            
+            <td className="pr-4 text-sm bg-white border-b border-gray-200">
+              <div className="flex items-center gap-3">
+                <div className="relative w-[120px] h-[7px] rounded-[10px] bg-[#e4e7ec]">
+                  <span
+                    className={`absolute h-[7px] rounded-[10px]`}
+                    style={{
+                      width: `${post.rating}%`,
+                      backgroundColor: `${
+                        post.rating < 50
+                          ? "#ef3a29"
+                          : post.rating > 75
+                          ? "#17b26a"
+                          : "#ffad05"
+                      }`,
+                    }}
+                  ></span>
+                
+                </div>
                 <span>{post.rating}</span>
-              
+              </div>
             </td>
-            <div className="flex items-center gap-3 py-6 ml-4">
-            <td className=" cursor-pointer text-sm bg-white  border-gray-200 text-[#a3aab3]">
+            {/* <td className="pr-8 text-sm text-gray-600 bg-white border-b border-gray-200">
+            
+              
+              
+            </td> */}
+
+            <td className="pr-8 text-sm text-gray-600 bg-white border-b border-gray-200">
               <RiDeleteBin6Line className="text-[15px]" />
             </td>
-            <td className=" cursor-pointer  text-sm bg-white border-gray-200 text-[#a3aab3]">
+            <td className="pr-2 text-sm text-gray-600 bg-white border-b border-gray-200">
               <Link to={`/dashboard/blog-post/${post.id}`}>
                 <FiEdit2 className="text-[15px] md:text-[13px]" />
               </Link>
             </td>
-            </div>
+            <td className="pr-2 text-sm text-gray-600 bg-white border-b border-gray-200">
+            
+            </td>
+          
           </tr>
         ))}
       </DataTable>

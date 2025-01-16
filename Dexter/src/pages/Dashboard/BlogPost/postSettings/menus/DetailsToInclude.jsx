@@ -7,7 +7,7 @@ const DetailsToInclude = () => {
   const [activeSample, setActiveSample] = useState("sample1");
 
   return (
-    <div className="lg:mt-2 md:mt-2 max-md:mt-10 bg-white border border-gray-300 h-fit shadow-md rounded-lg p-4 lg:w-[84%] md:w-[84%] max-md:w-full ">
+    <div className="lg:mt-2 md:mt-2 max-md:mt-16 relative bg-white border border-gray-300 h-fit shadow-md rounded-lg p-4 lg:w-[84%] md:w-[84%] max-md:w-full ">
       <form>
         <div className="flex flex-col gap-5">
           <div className="flex items-center gap-2">
@@ -19,7 +19,7 @@ const DetailsToInclude = () => {
                 <input type="checkbox" name="intense" id="intense" {...field} />
               )}
             />
-            <label htmlFor="sample" className="text-#545a67] text-[12px]">
+            <label htmlFor="sample" className="text-#545a67] text-sm">
               {" "}
               Intense mode: to each section, beyond just the entire article
             </label>
@@ -61,8 +61,8 @@ const DetailsToInclude = () => {
                                   ? "bg-[#e7e6fe]"
                                   : "bg-none"
                               }`}
-                              onClick={() => {setActiveSample("sample2");
-                              
+                              onClick={() => {
+                                setActiveSample("sample2");
                               }}
                             >
                               Sample 2
@@ -79,7 +79,7 @@ const DetailsToInclude = () => {
                             </span>
                           </div>
                           <div
-                            className={`text-[12px] ${
+                            className={`text-sm ${
                               textLength > 500
                                 ? "text-red-500"
                                 : "text-gray-500 "
@@ -94,14 +94,14 @@ const DetailsToInclude = () => {
                               ? "border-red-500"
                               : " border-gray-300 "
                           }`}
-                          rows = {8}
+                          rows={8}
                           placeholder="e.g phone number as 222-333-444"
                           name={activeSample}
                           id={activeSample}
                           {...field}
                         />
                         {fieldState.error && (
-                          <p className="text-red-600 text-sm">
+                          <p className="text-sm text-red-600">
                             {fieldState.error.message}
                           </p>
                         )}

@@ -10,7 +10,6 @@ import { authApi } from "../../../lib/config/axios-instance";
 import { postsData } from "../../../lib/data";
 
 const PostDetails = () => {
-
   const { postId } = useParams();
   const [body, setBody] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -22,7 +21,7 @@ const PostDetails = () => {
       const { data } = await authApi.get(`blog/single?blogPostId=${postId}`);
       if (data) {
         const postData = data.data;
-        console.log(data.data.content)
+        console.log(data.data.content);
 
         setBody(postData.content);
         setDailyUsage(postData.performance.organicTraffic);
@@ -56,7 +55,7 @@ const PostDetails = () => {
       <div className="flex items-center justify-between px-16">
         <div className="flex items-center gap-2 mb-4">
           <FaArrowLeft
-            className="text-[12px] cursor-pointer text-gray-500"
+            className="text-sm cursor-pointer text-gray-500"
             onClick={() => window.history.back()}
           />
           <span className="text-[#6c7685] font-semibold">Back</span>
@@ -78,11 +77,13 @@ const PostDetails = () => {
       </div>
 
       <div className="p-16 w-[80%] bg-white">
-        {body && <Editor
-          content={body}
-          editable={true}
-          onDataChange={(data) => setBody(data)}
-        />}
+        {body && (
+          <Editor
+            content={body}
+            editable={true}
+            onDataChange={(data) => setBody(data)}
+          />
+        )}
 
         <div className="w-full p-4 mx-auto">
           <img src={sampleImage} alt="Post Image" />

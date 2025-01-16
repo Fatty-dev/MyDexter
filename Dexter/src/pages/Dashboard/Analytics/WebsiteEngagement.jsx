@@ -26,11 +26,11 @@ const WebsiteEngagement = ({ setShowDetails }) => {
           >
             <Metrics
               metric={metric}
-              className="relative left-4 text-[#98a8bf]   text-[13px] bottom-8"
+
               marginTop="mt-4"
               spanColor="text-[#7a8eac] text-[8px]"
             />
-            <p className="text-[#9795fa] ml-10 text-[10px] md:text-[9px] -mt-1 font-semibold ">
+            <p className="text-[#9795fa] ml-10 text-[10px] md:text-[9px] font-semibold ">
               View {metric.toView}
             </p>
           </div>

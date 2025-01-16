@@ -29,7 +29,7 @@ export const Details = ({ showDetails, setShowDetails }) => {
             className="relative left-8 bottom-16 text-white  text-[20px]"
             spanColor="text-[#8c94a0] font-semibold text-[11px]"
           />
-          <div className="flex items-center gap-2  text-white opacity-80">
+          <div className="flex items-center gap-2 text-white opacity-80">
             <IoIosInformationCircleOutline size={20} />
             <p>Good, but room for improvement</p>
           </div>
@@ -89,7 +89,7 @@ export const Details = ({ showDetails, setShowDetails }) => {
               ))}
         </div>
         <div className="fixed bottom-0 right-0 p-8 z-[1000] lg:w-[23%] md:w-[50%] max-md:w-full  bg-white ">
-            <button className="text-white flex gap-2 items-center w-full bg-[#6d68fb] max-md:justify-center md:justify-center text-[12px] p-2     rounded-md">
+            <button className="text-white flex gap-2 items-center w-full bg-[#6d68fb] max-md:justify-center md:justify-center text-sm p-2     rounded-md">
               <span className="">Generate SEO Optimization Strategy</span>
               <PiMagicWand className="text-white text-[15px]" />
             </button>
