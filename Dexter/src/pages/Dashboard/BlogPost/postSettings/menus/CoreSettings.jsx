@@ -192,7 +192,7 @@ const CoreSettings = () => {
               </div>
             </div>
 
-            <div className="relative pt-4">
+            <div className="relative pt-[3px]">
               <div className="flex flex-col gap-3">
                 <label htmlFor="humanize" className="text-#545a67] flex items-center text-[12px] gap-2">
                   Humanize text <IoMdInformationCircleOutline size = {16}/>
