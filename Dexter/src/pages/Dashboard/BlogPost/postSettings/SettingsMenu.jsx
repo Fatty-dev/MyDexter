@@ -10,7 +10,7 @@ const SettingsMenu = ({ selectedSetting, setSelectedSetting }) => {
         {menuList.map((menu) => (
           <div
             key={menu.id}
-            className={`${menu.icon ? "flex gap-3 items-center" : "block"} ${
+            className={`text-sm ${menu.icon ? "flex gap-3 items-center" : "block"} ${
               menu.id === selectedSetting
                 ? "text-[#7a75fb] font-semibold bg-[#e7e6fe]"
                 : ""

@@ -64,14 +64,14 @@ const PostSettings = () => {
         </h1>
         <div className="flex items-center gap-4 pb-3">
           <div>
-            <button className="bg-white p-3 shadow-lg border border-gray-300 w-[70px] text-[#697383] font-semibold   rounded-lg">
+            <button className="bg-white px-4 py-2 shadow-lg border border-gray-300  text-[#697383] font-semibold   rounded-lg">
               Cancel
             </button>
           </div>
           <div>
             <button
               onClick={handleSubmit(onSubmit)}
-              className="text-white font-semibold flex gap-2 items-center bg-[#6d68fb] p-3 w-[60px] justify-center rounded-lg border  border-gray-300"
+              className="text-white font-semibold flex gap-2 items-center bg-[#6d68fb] px-4  py-2 justify-center rounded-lg border  border-gray-300"
             >
               Save
             </button>

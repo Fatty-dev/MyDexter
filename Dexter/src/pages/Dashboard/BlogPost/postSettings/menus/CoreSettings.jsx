@@ -14,7 +14,7 @@ const CoreSettings = () => {
           {/* First part */}
           <div className="lg:w-[40%] space-y-6">
             <div className="flex flex-col gap-3">
-              <label htmlFor="language" className="text-#545a67] flex items-center text-[12px] gap-2">Language</label>
+              <label htmlFor="language" className="text-#545a67] flex items-center text-sm gap-2">Language</label>
               <Controller
                 name="language"
                 control={control}
@@ -33,7 +33,7 @@ const CoreSettings = () => {
             </div>
           
           <div className="flex flex-col gap-3">
-            <label htmlFor="language" className="text-#545a67] flex items-center text-[12px] gap-2"> Tone of voice</label>
+            <label htmlFor="language" className="text-#545a67] flex items-center text-sm gap-2"> Tone of voice</label>
             <Controller
               name="tone"
               control={control}
