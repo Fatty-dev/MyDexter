@@ -67,7 +67,7 @@ const OutlineEditor = ({ formData }) => {
                       {...field}
                       onClick={() => {
                         setIsChecked(!isChecked);
-                        field.onChange(!field.value);
+                        field.onChange(!isChecked);
                       }}
                       className={`${
                         isChecked
