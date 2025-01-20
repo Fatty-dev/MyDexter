@@ -26,7 +26,7 @@ const OutlineEditor = ({ formData }) => {
 
   const { control } = useFormState();
   return (
-    <div className="lg:mt-2 md:mt-2 max-md:mt-16 md:mb-8 max-md:mb-8 flex flex-col gap-4 bg-white border border-gray-300 h-fit shadow-md rounded-lg p-4 lg:w-[84%] md:w-[84%] max-md:w-full ">
+    <div className="lg:mt-2 md:mt-2 max-md:mt-16  md:mb-8 max-md:mb-8 flex flex-col gap-4 bg-white border border-gray-300 h-fit shadow-md rounded-lg p-4 lg:w-[84%] md:w-[84%] max-md:w-full ">
       <div>
         <p className="text-#545a67] text-sm">
           Enable the OUTLINE editor for your article to gain the ability to add

@@ -3,7 +3,7 @@ import { Controller, useFormState } from "react-hook-form";
 const ConnectToWeb = () => {
   const { control } = useFormState();
   return (
-    <div className="lg:mt-2 md:mt-2 max-md:mt-16 relative bg-white border border-gray-300 h-fit shadow-md rounded-lg p-4 lg:w-[84%] md:w-[84%] max-md:w-full ">
+    <div className="lg:mt-2 md:mt-2 max-md:mt-16 mb-8 relative bg-white border border-gray-300 h-fit shadow-md rounded-lg p-4 lg:w-[84%] md:w-[84%] max-md:w-full ">
       <form className="flex items-start gap-6">
         <div className=" w-[28%]">
           <div className="flex flex-col gap-3">

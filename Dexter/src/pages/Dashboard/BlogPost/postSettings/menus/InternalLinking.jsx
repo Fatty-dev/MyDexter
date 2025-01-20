@@ -4,7 +4,7 @@ import { Controller } from "react-hook-form";
 const InternalLinking = () => {
   const { control } = useFormState();
   return (
-    <div className="lg:mt-2 md:mt-2 max-md:mt-16 relative bg-white border border-gray-300 h-fit shadow-md rounded-lg p-4 lg:w-[84%] md:w-[84%] max-md:w-full ">
+    <div className="lg:mt-2 md:mt-2 mb-8 max-md:mt-16 relative bg-white border border-gray-300 h-fit shadow-md rounded-lg p-4 lg:w-[84%] md:w-[84%] max-md:w-full ">
       <form>
         <div className="lg:w-[65%] max-md:w-full md:w-[80%]">
           <p className="text-#545a67] text-[10px]">

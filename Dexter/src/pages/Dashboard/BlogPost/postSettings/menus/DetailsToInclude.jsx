@@ -7,7 +7,7 @@ const DetailsToInclude = () => {
   const [activeSample, setActiveSample] = useState("sample1");
 
   return (
-    <div className="lg:mt-2 md:mt-2 max-md:mt-16 relative bg-white border border-gray-300 h-fit shadow-md rounded-lg p-4 lg:w-[84%] md:w-[84%] max-md:w-full ">
+    <div className="lg:mt-2 md:mt-2 mb-8 max-md:mt-16 relative bg-white border border-gray-300 h-fit shadow-md rounded-lg p-4 lg:w-[84%] md:w-[84%] max-md:w-full ">
       <form>
         <div className="flex flex-col gap-5">
           <div className="flex items-center gap-2">

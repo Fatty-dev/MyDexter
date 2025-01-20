@@ -1,9 +1,9 @@
 import { menuList } from "@/lib/data";
 import { useState } from "react";
-import { RiCloseLine, RiMenu3Line } from "react-icons/ri";
+// import { RiCloseLine, RiMenu3Line } from "react-icons/ri";
 
 const SettingsMenu = ({ selectedSetting, setSelectedSetting }) => {
-  const [openSidebar, setOpenSidebar] = useState(false);
+  // const [openSidebar, setOpenSidebar] = useState(false);
 
   const handleSelectSetting = (id) => {
     setSelectedSetting(id)
@@ -18,7 +18,7 @@ const SettingsMenu = ({ selectedSetting, setSelectedSetting }) => {
               menu.id === selectedSetting
                 ? "text-[#7a75fb] font-semibold bg-[#e7e6fe]"
                 : ""
-            } hover:bg-[#e7e6fe] hover:text-[#7a75fb] hover:font-semibold   p-2 w-[150px] mt-2 rounded-lg cursor-pointer `}
+            }  hover:text-[#7a75fb] hover:font-semibold   p-2 w-[150px] mt-2 rounded-lg cursor-pointer `}
             onClick={() => setSelectedSetting(menu.id)}
           >
             <p>{menu.name}</p>
@@ -63,7 +63,7 @@ const SettingsMenu = ({ selectedSetting, setSelectedSetting }) => {
         />
       )} */}
 
-      <div className="w-[50%] p-2 absolute right-0   bg-white border rounded-lg lg:hidden md:hidden">
+      <div className="w-[70%] p-3 absolute right-0   bg-white border rounded-lg lg:hidden md:hidden">
         <select name="menu" id=""
         className="w-full font-semibold text-purple-500 bg-transparent outline-none cursor-pointer"
             onChange={(e) => handleSelectSetting(e.target.value)} >

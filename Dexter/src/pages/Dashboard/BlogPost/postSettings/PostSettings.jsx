@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { HiOutlineChevronRight } from "react-icons/hi";
 import { RiHome6Line } from "react-icons/ri";
 import SettingsMenu from "./SettingsMenu";
-import { menuList } from "@/lib/data";
 import CoreSettings from "./menus/CoreSettings";
 import DetailsToInclude from "./menus/DetailsToInclude";
 import MediaHub from "./menus/MediaHub";

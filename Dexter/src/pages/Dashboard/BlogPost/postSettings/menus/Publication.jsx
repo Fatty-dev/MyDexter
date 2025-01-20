@@ -4,7 +4,7 @@ import { IoMdInformationCircleOutline } from "react-icons/io";
 const Publication = () => {
   const { control } = useFormState();
   return (
-    <div className="lg:mt-2 md:mt-2 md:pt-4 mb-5 max-md:mt-16 bg-white border border-gray-300 h-fit shadow-md rounded-lg p-4 lg:w-[84%] md:w-[84%] max-md:w-full ">
+    <div className="lg:mt-2 md:mt-2 md:pt-4 mb-8 max-md:mt-16 bg-white border border-gray-300 h-fit shadow-md rounded-lg p-4 lg:w-[84%] md:w-[84%] max-md:w-full ">
       <form className="flex items-start gap-6">
         <div className="flex flex-col gap-4 w-[28%]">
           <div className="flex flex-col gap-3">
