@@ -10,7 +10,7 @@ const WebsiteEngagement = ({ setShowDetails }) => {
   const [showInsights, setShowInsights] = useState(false);
 
   return (
-    <div className="relative w-1/2 p-4 mb-4 bg-white border rounded-lg md:w-full lg:w-1/2 h-fit max-md:w-full">
+    <div className="relative w-1/2 p-4 mb-8 bg-white border rounded-lg md:w-full lg:w-1/2 h-fit max-md:w-full">
       <div className="flex items-center justify-between">
         <p className="font-semibold">Website Engagement</p>
         <CiMenuKebab
@@ -22,7 +22,7 @@ const WebsiteEngagement = ({ setShowDetails }) => {
         {engagementMetrics.map((metric, index) => (
           <div
             key={index}
- className="[&:not(:first-child)]:border-l border-l-[#d5d9e1] [&:not(:first-child)]:pl-4 max-md:[&:not(:first-child)]:border-none max-md:[&:not(:first-child)]:pl-0 md:[&:not(:first-child)]:pl-2 [&:not(:last-child)]:mr-3"
+ className="[&:not(:first-child)]:border-l border-l-[#d5d9e1] lg:[&:not(:first-child)]:pl-6 max-md:[&:not(:first-child)]:border-none max-md:[&:not(:first-child)]:pl-0 md:[&:not(:first-child)]:pl-2 [&:not(:last-child)]:mr-3"
           >
             <Metrics
               metric={metric}

@@ -76,7 +76,7 @@ const PostDetails = () => {
         </div>
       </div>
 
-      <div className="p-16 w-[80%] bg-white">
+      <div className="p-16 w-[80%] bg-white max-md:w-full max-md:mx-4 min-h-screen">
         {body && (
           <Editor
             content={body}

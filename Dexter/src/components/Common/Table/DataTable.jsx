@@ -1,4 +1,5 @@
 import React from "react";
+import { FaMinus } from "react-icons/fa";
 
 const DataTable = ({
   tableHeaderTitleList,
@@ -8,29 +9,35 @@ const DataTable = ({
   children,
 }) => {
   return (
-    <div className="relative w-full mt-5 overflow-x-scroll">
+    <div className="relative w-full  mt-5 max-md:overflow-x-auto">
       <div className="py-8">
-        <div className="overflow-x-auto sm:-mx-8 sm:px-8">
+        <div className="overflow-x-auto">
           <div className="inline-block min-w-full overflow-hidden rounded-lg">
             <div className="flex flex-row justify-between w-full ">
               <div className="w-full bg-white ">
                 <div className="relative "></div>
               </div>
-              <table className="relative min-w-full leading-normal">
+              <table
+              
+               className="relative min-w-full  table-auto leading-normal ">
                 <thead>
                   <tr>
-                    {tableHeaderTitleList.map((post, index) => (
+                    {tableHeaderTitleList.map((item, index) => (
                       <th
                         key={index}
                         scope="col"
-                        className="lg:first-of-type:pl-14 md:first-of-type:pl-0 px-2 py-3 md:px-1 md:first-of-type:relative  right-5 text-[11px] max-md:first-of-type:relative max-md:first-of-type:left-8  text-left text-[#677282]  bg-white border-b border-gray-200"
+                    
+                        className={`px-2 py-3    text-[11px]    text-left text-[#677282]  bg-white border-b border-gray-200  ${(item.title === "Keywords" || item.title === "Published Date") && "hidden lg:table-cell"}`}
                       >
-                        <p className="flex items-center gap-3 md:gap-1">
-                          {post.title}
-                          {post.icon && (
-                            <span className="ml-2">{post.icon}</span>
+                        <div className="flex items-center gap-3 md:gap-1">
+                          {item.title === "Post Title" && <div className="bg-[#6d68fb] relative right-2 w-5 h-5 rounded-[5px] p-1   text-white cursor-pointer text-[9px]  ">
+                                    <FaMinus className="ml-[0.3px]" />
+                                  </div>}
+                          {item.title}
+                          {item.icon && (
+                            <span className="ml-2">{item.icon}</span>
                           )}
-                        </p>
+                        </div>
                       </th>
                     ))}
                   </tr>
