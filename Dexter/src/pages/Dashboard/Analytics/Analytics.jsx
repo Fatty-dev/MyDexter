@@ -27,7 +27,7 @@ const Analytics = () => {
       {/* Header */}
       <div className="flex flex-col gap-1">
         <h1 className="text-3xl font-semibold text-[#131c2e] tracking-wide">Analytics</h1>
-        <div className="flex items-center justify-between max-md:gap-4 max-md:flex-col">
+        <div className="flex items-center justify-between max-md:gap-4 max-md:flex-col md:flex-col md:gap-4 md:items-start max-md:items-start">
         <p className="text-[#7b7b83]  text-[14px]">Track key metrics, uncover opportunities, and optimize your SEO strategy with ease.</p>
       
         <div className="flex items-center gap-2 mb-2 ">
@@ -57,7 +57,7 @@ const Analytics = () => {
         <MdClose size={22} />
       </div>
 
-      <SeoDashboard/>
+      <SeoDashboard />
 
       <div className="flex gap-4 mt-4 max-md:flex-col md:flex-col lg:flex-row">
         <DomainOptimization setShowDetails = {setShowDetails}/>

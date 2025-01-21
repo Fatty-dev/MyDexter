@@ -11,6 +11,7 @@ import like from "@/assets/like.svg";
 import dislike from "@/assets/dislike.svg";
 import hand from "@/assets/hand.svg";
 import { CiCircleQuestion } from "react-icons/ci";
+import { AiTwotoneLike } from "react-icons/ai";
 
 export const metrics = [
   {
@@ -55,7 +56,7 @@ export const metrics = [
     badgeColor: "stroke-red-500",
   },
   {
-    label: "Average Page Position",
+    label: "Avg. Page Position",
     value: 58,
     max: 100,
     icon: (
@@ -85,12 +86,14 @@ export const tableHeaderTitleList = [
   { icon: <FaArrowDownLong />, title: "Post Title" },
   { title: "Keywords" },
   { icon: "", title: "" },
+
   { title: "Published Date" },
+
   { title: "Rating" },
   { icon: "", title: "" },
   { icon: "", title: "" },
-  { icon: "", title: "" },
-];
+]
+ 
 
 export const postsData = [
   {

@@ -18,26 +18,27 @@ const PostHistory = () => {
 
   return (
     <div className="p-4 mb-12 bg-white rounded-lg shadow`">
-      <div className="flex items-center justify-between mb-6 border-b border-b-[#98a8bf] pb-4 ">
+      <div className="flex items-center justify-between max-md:flex-col max-md:gap-4 max-md:items-start mb-6 border-b border-gray-300 pb-4 ">
         <h3 className="font-bold text-gray-700">Post History</h3>
-        <div className="flex gap-4">
-          <div className="flex items-center gap-2 p-2 border border-gray-300 rounded-lg w-[250px]">
-            <FaSearch className="text-gray-400 text-[20px]" />
+        <div className="flex gap-4  ">
+          <div className="flex items-center gap-2 p-2 border border-gray-300 rounded-lg lg:w-[250px] ">
+            <FaSearch className="text-gray-400 text-[20px] " />
             <input
               type="text"
-              placeholder="Search for keyword, title, and/or metric."
-              className="w-full px-2 py-1 text-sm border-transaparent"
+              placeholder="Search for keyword, title or metric."
+              className="w-full px-2 py-1 outline-none text-sm border-transaparent"
             />
           </div>
           <div className="text-[#344054] cursor-pointer text-[16px] font-bold flex items-center gap-2 p-2 border border-gray-300 rounded-lg w-fit">
             <IoFilterSharp />
-            <span>Post Filter</span>
+            <span >Post Filter</span>
           </div>
         </div>
       </div>
-      <div className="grid lg:grid-cols-5 max-md:grid-cols-3 md:grid-cols-3 pl-8 gap-4 py-6 rounded-lg bg-[#f5f7f9]">
+      <div className="grid lg:grid-cols-5 max-md:grid-cols-2
+         max-md:space-x-2 max-md:place-items-start md:space-x-6 lg:space-x-0 lg:space-y-0  md:grid-cols-3 max-md:p-4 md:p-4 lg:p-12   md:gap-6   max-md:gap-6 py-6 rounded-lg bg-[#f5f7f9] ">
         {metrics.map((metric, index) => (
-          <div  key={index} className="flex flex-col items-start   [&:not(:first-child)]:border-l border-l-[#d5d9e1] [&:not(:first-child)]:pl-8 max-md:[&:not(:first-child)]:border-none max-md:[&:not(:first-child)]:pl-0 ">
+          <div  key={index} className="lg:[&:not(:first-child)]:border-l lg:[&:not(:first-child)]:border-l-[#d5d9e1] lg:[&:not(:first-child)]:pl-6 max-md:[&:not(:first-child)]:border-l-none md:[&:not(:first-child)]:border-l-none max-md:[&:not(:first-child)]:pl-0 md:first-of-type:pl-6  flex justify-center lg:items-center flex-col ">
           <div
            
             className="flex items-start gap-2 "
@@ -67,7 +68,7 @@ const PostHistory = () => {
                   strokeDashoffset={metric.max - metric.value}
                 />
               </svg>
-              <div className="absolute inset-0 left-0 flex items-center justify-center w-full h-full ">
+              <div className="absolute transition-transform  left-[52%] top-1/2 -translate-x-2 -translate-y-1/2 w-full">
                 {metric.icon}
               </div>
             </div>
@@ -80,7 +81,7 @@ const PostHistory = () => {
                   /<span className="text-sm">{metric.max}</span>
                   </div>
 
-                  <div className="text-[#98a8bf] flex items-center gap-2">
+                  <div className="text-[#98a8bf] flex items-center  space-x-1 text-sm">
                     <p>{metric.label}</p>
                     <CiCircleQuestion className="cursor-pointer text-[15px]" />
                   </div>
@@ -89,7 +90,7 @@ const PostHistory = () => {
               
           </div>
             <div className="ml-2">
-            <p className="text-[#9795fa] text-start mt-2 font-semibold ">
+            <p className="text-[#9795fa] text-sm  ml-5 mt-1 font-semibold ">
               View {metric.label}
             </p>
             </div>
@@ -97,7 +98,7 @@ const PostHistory = () => {
         ))}
       </div>
 
-      <DataTable
+   <DataTable
         tableHeaderTitleList={tableHeaderTitleList}
         isLoading={isLoading}
         isFetching={isFetching}
@@ -106,12 +107,10 @@ const PostHistory = () => {
         // setCurrentPage={setCurrentPage}
         // currentPage={currentPage}
       >
-        <div className="bg-[#6d68fb] w-5 h-5 rounded-[5px] p-1 flex justify-center items-center text-white cursor-pointer text-[9px] absolute lg:top-[0.9rem] lg:left-1 md:left-[0.2rem] md:top-[1rem] max-md:top-6 ">
-          <FaMinus className="relative left-[0.3px]" />
-        </div>
+        
         {postsData?.map((post) => (
           <tr key={post.id}>
-            <td className="py-5 bg-white border-b border-gray-200 x-scroll overflow-text-sm">
+            <td className=" py-5 text-sm bg-white border-b border-gray-200">
               <p className="flex items-center">
                 <span className="flex items-center gap-4 md:gap-2">
                   <span
@@ -131,16 +130,17 @@ const PostHistory = () => {
                       src={post.image}
                       alt="Post Image"
                       className="object-cover "
+
                     />
                   </span>
-                  <span className=" text-gray-900 whitespace-no-wrap text-[14px] md:text-[10px] md:w-[150px] w-[270px]">
+                  <span className=" text-gray-900 max-md:w-[150px] font-semibold whitespace-no-wrap text-md md:w-[130px] lg:w-[250px]">
                     {post.title}
                   </span>
                 </span>
               </p>
             </td>
 
-            <td className="flex gap-2 py-12 pr-4 text-sm bg-white border-b border-b-gray-200 whitespace-nowrap ">
+            <td className="gap-2 hidden lg:flex lg:py-[3.2rem] py-12 text-sm bg-white border-b border-gray-200 whitespace-nowrap ">
               {post.keywords?.slice(0, 2).map((keyword, index) => (
                 <p
                   key={index}
@@ -161,14 +161,15 @@ const PostHistory = () => {
                 + {post.keywords.length - 2}
               </span>
             </td>
+     
 
-            <td className="pr-4 text-sm bg-white border-b border-gray-200 ">
+            <td className="text-sm bg-white border-b md:pr-4 border-gray-200 ">
               <p
                 className={`${
                   post.traffic < 5
                     ? "text-[#ba352a] bg-[#fef3f2]  border-[#fedad7]"
                     : "text-[#2d8d64] bg-[#ecfdf3] border-[#caf5dc] "
-                } whitespace-no-wrap flex text-[10px] font-bold  items-center border gap-1  justify-center rounded-full  py-2 px-2`}
+                } whitespace-no-wrap flex text-[10px] font-bold  items-center border w-[40px] gap-1  justify-center rounded-full  p-1`}
               >
                 {post.traffic < 5 ? (
                   <FaArrowDownLong className="text-[#ba352a]" />
@@ -177,8 +178,8 @@ const PostHistory = () => {
                 )}
                 {post.traffic}%
               </p>
-            </td>
-            <td className="pr-4 text-sm bg-white border-b border-gray-200">
+            </td> 
+            <td className="text-sm bg-white border-b hidden lg:table-cell border-gray-200 max-md:hidden md:px-4">
               <p className="ml-1 text-gray-500 whitespace-no-wrap">
                 {new Date(post.publishedDate).toLocaleDateString("en-US", {
                   month: "short",
@@ -187,20 +188,20 @@ const PostHistory = () => {
                 })}
               </p>
             </td>
-            <td className="pr-4 text-sm bg-white border-b border-gray-200">
+
+            <td className=" text-sm bg-white border-b px-3 py-5 border-gray-200">
               <div className="flex items-center gap-3">
-                <div className="relative w-[120px] h-[7px] rounded-[10px] bg-[#e4e7ec]">
+                <div className="relative max-md:w-[80px] md:w-[80px] lg:w-[120px] h-[7px] rounded-[10px] bg-[#e4e7ec]">
                   <span
-                    className={`absolute h-[7px] rounded-[10px]`}
+                   className="absolute h-[7px] rounded-[10px]"
                     style={{
                       width: `${post.rating}%`,
-                      backgroundColor: `${
-                        post.rating < 50
+                      backgroundColor:  `${post.rating < 50
                           ? "#ef3a29"
                           : post.rating > 75
                           ? "#17b26a"
-                          : "#ffad05"
-                      }`,
+                          : "#ffad05"}`
+                      
                     }}
                   ></span>
                 
@@ -208,27 +209,19 @@ const PostHistory = () => {
                 <span>{post.rating}</span>
               </div>
             </td>
-            {/* <td className="pr-8 text-sm text-gray-600 bg-white border-b border-gray-200">
-            
-              
-              
-            </td> */}
-
-            <td className="pr-8 text-sm text-gray-600 bg-white border-b border-gray-200">
-              <RiDeleteBin6Line className="text-[15px]" />
+          
+            <td className=" cursor-pointer   md:px-3  text-sm bg-white border-b py-5 border-gray-200 text-gray-900">
+              <RiDeleteBin6Line className="text-[15px] max-md:text-[10px]" />
             </td>
-            <td className="pr-2 text-sm text-gray-600 bg-white border-b border-gray-200">
+            <td className=" cursor-pointer max-md:pl-2 md:px-3  text-sm bg-white border-b py-5 border-gray-200 text-gray-900">
               <Link to={`/dashboard/blog-post/${post.id}`}>
-                <FiEdit2 className="text-[15px] md:text-[13px]" />
+                <FiEdit2 className="text-[15px] max-md:text-[10px]" />
               </Link>
-            </td>
-            <td className="pr-2 text-sm text-gray-600 bg-white border-b border-gray-200">
-            
             </td>
           
           </tr>
         ))}
-      </DataTable>
+      </DataTable> 
 
       {/* <p className="mt-4 text-center text-gray-500">
       All blog posts will appear here. Until then, continue reviewing, scheduling, and

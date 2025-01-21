@@ -53,7 +53,7 @@ const Metrics = ({ metric, className, marginTop, spanColor, otherClasses }) => {
       <img
         src={metric.imageSrc}
         alt='Metric Image'
-        className="max-w-[40%] max-h-[40%] object-contain "
+        className="absolute transition-transform  left-1/2 top-1/2 max-h-[50%] -translate-x-1/2 -translate-y-1/2 max-w-[40%]"
       />
     ) : (
       <div className={className}>{metric.icon}</div>

@@ -15,48 +15,57 @@ import {
 import { ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
+ 
   
  } from "../ui/chart"
 const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
+  { month: "January", optimization: 186, engagement: 80 },
+  { month: "February", optimization: 305, engagement: 200 },
+  { month: "March", optimization: 237, engagement: 120 },
+  { month: "April", optimization: 73, engagement: 190 },
+  { month: "May", optimization: 209, engagement: 130 },
+  { month: "June", optimization: 214, engagement: 140 },
 ]
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  optimization: {
+    label: "Domain Optimization Trend",
     color: "hsl(var(--chart-1))",
   },
-  mobile: {
-    label: "Mobile",
+  engagement: {
+    label: "Website Engagement Trend",
     color: "hsl(var(--chart-2))",
   },
+  // visibility: {
+  //   label: "Overall Visibility",
+  //   color: "#FFC107",
+  // },
 } 
+
+// Legend Configuration
+const legendConfig = [
+  { label: "Domain Optimization Trend", color: "hsl(var(--chart-1))" },
+  { label: "Website Engagement Trend", color: "hsl(var(--chart-2))" },
+  { label: "Overall Visibility.", color: "#FFC107" },
+];
 
 export function Chart() {
   return (
     <Card >
       <CardHeader>
-        <CardTitle>Visibility Over Time</CardTitle>
+        <CardTitle className = "relative right-12">Visibility Over Time</CardTitle>
        
       </CardHeader>
       <CardContent className = "">
-        <ChartContainer config={chartConfig} className = "h-[100px] w-full border-b border-l ">
+        <ChartContainer config={chartConfig} className = "h-[150px] w-full lg:w-[90%] border-b border-gray-300 border-l ">
           <LineChart
             accessibilityLayer
             data={chartData}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
-          >
-            <CartesianGrid vertical={false}   />
-            <XAxis
         
+          >
+            <CartesianGrid vertical={false} stroke="#687181" strokeWidth={0.8} />
+            <XAxis
+
               dataKey="month"
               tickLine={false}
               axisLine={false}
@@ -66,24 +75,35 @@ export function Chart() {
       
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <Line
-            className=""
-              dataKey="desktop"
+          
+              dataKey="optimization"
               type="monotone"
-              stroke="var(--color-desktop)"
+              stroke="var(--color-optimization)"
               strokeWidth={2}
               dot={false}
             />
             <Line
-              dataKey="mobile"
+              dataKey="engagement"
               type="monotone"
-              stroke="var(--color-mobile)"
+              stroke="var(--color-engagement)"
               strokeWidth={2}
               dot={false}
             />
           </LineChart>
+          <div className="mt-4 flex justify-center gap-6">
+  {legendConfig.map((item, index) => (
+    <div key={index} className="flex items-center gap-2 ">
+      <span
+        className="block h-3 w-3 rounded-full"
+        style={{ backgroundColor: item.color }}
+      ></span>
+      <span className="text-sm text-[#596473] font-semibold">{item.label}</span>
+    </div>
+  ))}
+</div>
         </ChartContainer>
       </CardContent>
-    
+ 
     </Card>
   )
 }

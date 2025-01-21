@@ -19,14 +19,14 @@ const SeoDashboard = () => {
 
 
   return (
-    <div className="bg-[#344054] rounded-lg p-4">
-      <h1 className="text-[#b4b8c0] font-semibold ml-4 mb-6">
+    <div className="bg-[#344054] rounded-lg px-4 py-12">
+      <h1 className="text-[#dee0e3] tracking-wide text-lg font-semibold ml-4 mb-6">
         My SEO Dashboard
       </h1>
 
-      <div className="flex lg:flex-row lg:items-start max-md:items-center lg:gap-16 max-md:gap-4 md:items-center md:gap-4 max-md:flex-col md:flex-col">
+      <div className="flex lg:flex-row lg:items-start   lg:gap-16 max-md:gap-4  md:gap-4 max-md:flex-col md:flex-col">
         {/* Visibility Score */}
-        <div className="flex justify-between lg:ml-8 max-md:ml-4 md:ml-0 ">
+        <div className="flex lg:justify-between lg:ml-8  md:ml-0 ">
           <div className="">
             <Metrics
               metric={visibilityScore}
@@ -46,7 +46,7 @@ const SeoDashboard = () => {
               </div>
             </div>
 
-            <button className="text-white flex gap-2 items-center bg-[#6d68fb] text-[10px] p-2 mt-2 relative right-2  max-md:left-4 max-md:w-[120px]  justify-center rounded-md">
+            <button className="text-white flex gap-2 items-center bg-[#6d68fb] text-[10px] p-2 mt-2 relative right-2   max-md:w-[150px]  justify-center rounded-md">
               Improve My Score
               <PiMagicWand className="text-white text-[15px]" />
             </button>
@@ -74,7 +74,7 @@ const SeoDashboard = () => {
         </div>
 
         {/* Chart */}
-        <div className="w-[50%]   max-md:w-full ">
+        <div className="lg:w-[60%]  max-md:w-full md:w-full lg:relative bottom-8">
           <Chart />
         </div>
       </div>
