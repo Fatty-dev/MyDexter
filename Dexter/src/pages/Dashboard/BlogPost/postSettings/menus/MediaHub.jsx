@@ -13,11 +13,11 @@ const MediaHub = () => {
   return (
     <div className="lg:mt-2 md:mt-2 max-md:mt-10 md:mb-8 max-md:mb-8 bg-white border border-gray-300 h-fit shadow-md rounded-lg p-4 lg:w-[84%] md:w-[84%] max-md:w-full ">
       <form className="flex flex-col gap-4">
-        <div className="flex max-md:flex-col md:flex-col lg:flex-row gap-8">
+        <div className="flex gap-8 max-md:flex-col md:flex-col lg:flex-row">
           {/* First part */}
-          <div className="lg:w-1/2 space-y-6">
+          <div className="space-y-6 lg:w-1/2">
             <div className="flex gap-6">
-              <div className="flex flex-col gap-3 w-1/2">
+              <div className="flex flex-col w-1/2 gap-3">
                 <label
                   htmlFor="aiImages"
                   className="text-#545a67] flex items-center text-[12px] gap-2 md:text-[12px]"
@@ -32,7 +32,7 @@ const MediaHub = () => {
                     <select
                       {...field}
                       id="aiImages"
-                      className="w-full outline-none focus:border-2 focus:border-gray-500 border border-gray-300 text-gray-400 rounded-lg p-2"
+                      className="w-full p-2 text-gray-400 border border-gray-300 rounded-lg outline-none focus:border-2 focus:border-gray-500"
                     >
                       <option value="" disabled>
                         Select an option
@@ -44,7 +44,7 @@ const MediaHub = () => {
                 />
               </div>
 
-              <div className="flex flex-col gap-3 w-1/2">
+              <div className="flex flex-col w-1/2 gap-3">
                 <label
                   htmlFor="numberOfImages"
                   className="text-#545a67] flex items-center text-[12px] gap-2"
@@ -60,7 +60,7 @@ const MediaHub = () => {
                     <select
                       {...field}
                       id="numberOfImages"
-                      className="w-full text-gray-400 outline-none focus:border-2 focus:border-gray-500 border border-gray-300 rounded-lg p-2"
+                      className="w-full p-2 text-gray-400 border border-gray-300 rounded-lg outline-none focus:border-2 focus:border-gray-500"
                     >
                       <option value="" disabled>
                         Select an option
@@ -76,9 +76,9 @@ const MediaHub = () => {
           </div>
 
           {/* Second part */}
-          <div className="lg:w-1/2 md:w-full space-y-6">
+          <div className="space-y-6 lg:w-1/2 md:w-full">
             <div className="flex gap-6">
-              <div className="flex flex-col gap-3 w-1/2 relative">
+              <div className="relative flex flex-col w-1/2 gap-3">
                 <label
                   htmlFor="imageStyle"
                   className="text-#545a67] flex items-center text-[12px] gap-2"
@@ -94,7 +94,7 @@ const MediaHub = () => {
                       <select
                         {...field}
                         id="imageStyleimage-style"
-                        className="w-full outline-none focus:border-2 focus:border-gray-500 border border-gray-300 text-gray-400 rounded-lg p-2"
+                        className="w-full p-2 text-gray-400 border border-gray-300 rounded-lg outline-none focus:border-2 focus:border-gray-500"
                       >
                         <option value="" disabled>
                           Select an option
@@ -110,7 +110,7 @@ const MediaHub = () => {
                         <span>0</span>/<span>50</span>
                       </div>
                       {fieldState.error && (
-                          <p className="text-red-600 text-sm">
+                          <p className="text-sm text-red-600">
                             {fieldState.error.message}
                           </p>
                       )}
@@ -119,7 +119,7 @@ const MediaHub = () => {
                 />
               </div>
 
-              <div className="flex flex-col gap-3 w-1/2">
+              <div className="flex flex-col w-1/2 gap-3">
                 <label
                   htmlFor="imageSizes"
                   className="text-#545a67] flex items-center text-[12px] gap-2"
@@ -135,7 +135,7 @@ const MediaHub = () => {
                     <select
                       {...field}
                       id="imageSizes"
-                      className="w-full text-gray-400 outline-none focus:border-2 focus:border-gray-500 border border-gray-300 rounded-lg p-2"
+                      className="w-full p-2 text-gray-400 border border-gray-300 rounded-lg outline-none focus:border-2 focus:border-gray-500"
                     >
                       <option value="" disabled>
                         Select an option
@@ -150,10 +150,10 @@ const MediaHub = () => {
           </div>
         </div>
         <div className="flex gap-6">
-              <div className="flex flex-col gap-3  relative w-1/2">
+              <div className="relative flex flex-col w-1/2 gap-3">
                 <label
                   htmlFor="additionalInfo"
-                  className="text-#545a67] md:gap-1 lg:gap-3 max-md:gap-6 flex items-center text-[12px]  gap-2"
+                  className="text-#545a67] md:gap-1 lg:gap-3 max-md:gap-12 flex items-center text-[12px]  gap-2"
                 >
                   <p className="max-md:w-[40px]"> Additional information</p>
                  
@@ -174,7 +174,7 @@ const MediaHub = () => {
                       <input
                         {...field}
                         id="additionalInfo"
-                        className="w-full outline-none focus:border-2 focus:border-gray-500 border border-gray-300 text-gray-400 rounded-lg p-2"
+                        className="w-full p-2 text-gray-400 border border-gray-300 rounded-lg outline-none focus:border-2 focus:border-gray-500"
                         type="text"
                         placeholder="Enter details or creative directions"
                       />
@@ -185,7 +185,7 @@ const MediaHub = () => {
                   )}
                 />
               </div>
-              <div className="flex flex-col gap-3 relative w-1/2">
+              <div className="relative flex flex-col w-1/2 gap-3">
                 <label
                   htmlFor="brandName"
                   className="text-#545a67] md:gap-1 max-md:gap-1 lg:gap-3  flex items-center text-[12px] gap-2"
@@ -209,7 +209,7 @@ const MediaHub = () => {
                       <input
                         {...field}
                         id="brandName"
-                        className="w-full outline-none focus:border-2 focus:border-gray-500 border border-gray-300 text-gray-400 rounded-lg p-2"
+                        className="w-full p-2 text-gray-400 border border-gray-300 rounded-lg outline-none focus:border-2 focus:border-gray-500"
                         type="text"
                         placeholder="Enter your brand name"
                       />
@@ -223,7 +223,7 @@ const MediaHub = () => {
                         <span>{field.value.length}</span>/<span>150</span>
                       </div>
                       {fieldState.error && (
-                          <p className="text-red-600 text-sm">
+                          <p className="text-sm text-red-600">
                             {fieldState.error.message}
                           </p>
                       )}
@@ -266,7 +266,7 @@ const MediaHub = () => {
                     <select
                       {...field}
                       id="youtube"
-                      className="w-full outline-none focus:border-2 focus:border-gray-500 border border-gray-300 text-gray-400 rounded-lg p-2"
+                      className="w-full p-2 text-gray-400 border border-gray-300 rounded-lg outline-none focus:border-2 focus:border-gray-500"
                     >
                       <option value="" disabled>
                         Select an option
@@ -278,7 +278,7 @@ const MediaHub = () => {
                 />
               </div>
 
-              <div className="flex flex-col  gap-3 lg:w-1/2 max-md:w-full md:w-full">
+              <div className="flex flex-col gap-3 lg:w-1/2 max-md:w-full md:w-full">
                 <label
                   htmlFor="numberOfVideos"
                   className="text-#545a67] flex items-center text-[12px] gap-2"
@@ -294,7 +294,7 @@ const MediaHub = () => {
                     <select
                       {...field}
                       id="numberOfVideos"
-                      className="w-full text-gray-400 outline-none focus:border-2 focus:border-gray-500 border border-gray-300 rounded-lg p-2"
+                      className="w-full p-2 text-gray-400 border border-gray-300 rounded-lg outline-none focus:border-2 focus:border-gray-500"
                     >
                       <option value="" disabled>
                         Select an option
@@ -324,7 +324,7 @@ const MediaHub = () => {
                     <select
                       {...field}
                       id="layout"
-                      className="w-full text-gray-400 outline-none focus:border-2 focus:border-gray-500 border border-gray-300 rounded-lg p-2"
+                      className="w-full p-2 text-gray-400 border border-gray-300 rounded-lg outline-none focus:border-2 focus:border-gray-500"
                     >
                       <option value="" disabled>
                         Select an option

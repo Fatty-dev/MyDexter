@@ -21,9 +21,9 @@ const Seo = () => {
               them to generate the article.
             </p>
 
-            <div className="flex  items-start gap-4 text-[#4b586b]">
+            <div className="flex  items-start gap-4 text-[#4b586b]  ">
               <TfiEraser size = {18} className="mt-2 -rotate-1"/>
-              <div className="border border-gray-300 rounded-lg p-2 w-[150px] text-center cursor-pointer text-sm font-[500]">
+              <div className="border border-gray-300 rounded-lg p-2 max-md:w-fit md:w-fit lg:w-[150px] text-center cursor-pointer text-sm font-[500]">
                 <p>NLP keywords generation</p>
               </div>
             </div>
@@ -65,7 +65,7 @@ const Seo = () => {
                           {...field}
                         />
                         {fieldState.error && (
-                          <p className="text-red-600 text-sm">
+                          <p className="text-sm text-red-600">
                            {fieldState.error.message}
                           </p>
                         )}

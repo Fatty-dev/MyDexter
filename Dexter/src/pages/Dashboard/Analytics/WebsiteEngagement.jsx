@@ -10,7 +10,7 @@ const WebsiteEngagement = ({ setShowDetails }) => {
   const [showInsights, setShowInsights] = useState(false);
 
   return (
-    <div className="relative w-1/2 p-4 mb-4 md:w-full lg:w-1/2 bg-white border rounded-lg h-fit max-md:w-full">
+    <div className="relative w-1/2 p-4 mb-4 bg-white border rounded-lg md:w-full lg:w-1/2 h-fit max-md:w-full">
       <div className="flex items-center justify-between">
         <p className="font-semibold">Website Engagement</p>
         <CiMenuKebab
@@ -18,11 +18,11 @@ const WebsiteEngagement = ({ setShowDetails }) => {
           onClick={() => setShowMenu(!showMenu)}
         />
       </div>
-      <div className="flex justify-evenly max-md:gap-12 md:gap-2 mt-4 items-center    lg:flex-row max-md:flex-wrap p-4  rounded-lg bg-[#f5f7f9]">
+      <div className="flex justify-evenly max-md:gap-4 md:gap-2 mt-4 max-md:flex-wrap    lg:flex-row  p-4  rounded-lg bg-[#f5f7f9]">
         {engagementMetrics.map((metric, index) => (
           <div
             key={index}
-            className="[&:not(:first-child)]:border-l border-l-[#d5d9e1] [&:not(:first-child)]:pl-4 max-md:[&:not(:first-child)]:border-none max-md:[&:not(:first-child)]:pl-0 md:[&:not(:first-child)]:pl-2 [&:not(:last-child)]:mr-3"
+ className="[&:not(:first-child)]:border-l border-l-[#d5d9e1] [&:not(:first-child)]:pl-4 max-md:[&:not(:first-child)]:border-none max-md:[&:not(:first-child)]:pl-0 md:[&:not(:first-child)]:pl-2 [&:not(:last-child)]:mr-3"
           >
             <Metrics
               metric={metric}
