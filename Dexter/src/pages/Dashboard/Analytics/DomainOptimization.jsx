@@ -12,7 +12,7 @@ const DomainOptimization = ({ setShowDetails }) => {
   const [showInsights, setShowInsights] = useState(false);
 
   return (
-    <div className="relative w-1/2 p-4 mb-4 bg-white border rounded-lg lg:w-1/2 h-fit max-md:w-full md:w-full">
+    <div className="relative w-1/2 p-4 mb-6 bg-white border rounded-lg lg:w-1/2 h-fit max-md:w-full md:w-full">
       <div className="flex items-center justify-between">
         <p className="font-semibold">Domain Optimization</p>
         <CiMenuKebab
@@ -24,19 +24,15 @@ const DomainOptimization = ({ setShowDetails }) => {
         {optimizationMetrics.map((metric, index) => (
           <div
             key={index}
-className="[&:not(:first-child)]:border-l border-l-[#d5d9e1] [&:not(:first-child)]:pl-4 max-md:[&:not(:first-child)]:border-none max-md:[&:not(:first-child)]:pl-0 md:[&:not(:first-child)]:pl-2 [&:not(:last-child)]:mr-3"
+className="[&:not(:first-child)]:border-l border-l-[#d5d9e1] lg:[&:not(:first-child)]:pl-6 max-md:[&:not(:first-child)]:border-none max-md:[&:not(:first-child)]:pl-0 md:[&:not(:first-child)]:pl-2 [&:not(:last-child)]:mr-3"
           >
             <Metrics
               metric={metric}
-              className={`relative left-4 text-[#98a8bf]   text-[13px] ${
-                metric.label === "Meta Tag Status"
-                  ? "bottom-[28px]"
-                  : "bottom-[24px]"
-              } `}
+            
               marginTop="mt-4"
               spanColor="text-[#7a8eac] text-[8px]"
             />
-            <p className="text-[#9795fa] ml-10 -mt-1 font-semibold text-[10px] ">
+            <p className="text-[#9795fa] ml-10  font-semibold text-[10px] ">
               View {metric.toView}
             </p>
           </div>
@@ -107,5 +103,6 @@ className="[&:not(:first-child)]:border-l border-l-[#d5d9e1] [&:not(:first-child
     </div>
   );
 };
+
 
 export default DomainOptimization;

@@ -11,6 +11,7 @@ import like from "@/assets/like.svg";
 import dislike from "@/assets/dislike.svg";
 import hand from "@/assets/hand.svg";
 import { CiCircleQuestion } from "react-icons/ci";
+import { AiTwotoneLike } from "react-icons/ai";
 
 export const metrics = [
   {
@@ -21,8 +22,7 @@ export const metrics = [
       <img
         src={like}
         alt="like"
-        width={12}
-        className="flex justify-center items-center relative right-[0.1rem]"
+        className="max-w-[30%] max-h-[40%]"
       />
     ),
     badgeColor: "stroke-green-500",
@@ -35,8 +35,8 @@ export const metrics = [
       <img
         src={hand}
         alt="hand"
-        width={16}
-        className="flex justify-center items-center relative right-[0.1rem] "
+       
+        className="max-w-[40%] max-h-[40%]"
       />
     ),
     badgeColor: "stroke-yellow-500",
@@ -49,23 +49,21 @@ export const metrics = [
       <img
         src={dislike}
         alt="dislike"
-        width={12}
-        className="flex justify-center items-center relative right-[0.2rem]"
+     
+         className="max-w-[30%] max-h-[40%]"
       />
     ),
     badgeColor: "stroke-red-500",
   },
   {
-    label: "Average Page Position",
+    label: "Avg. Page Position",
     value: 58,
     max: 100,
     icon: (
       <img
         src={hand}
         alt="hand"
-        width={16}
-        className="flex justify-center items-center relative right-[0.1rem] "
-      />
+        className="max-w-[40%] max-h-[40%]"/>
     ),
     badgeColor: "stroke-yellow-500",
   },
@@ -77,8 +75,7 @@ export const metrics = [
       <img
         src={hand}
         alt="hand"
-        width={16}
-        className="flex justify-center items-center relative right-[0.1rem] "
+  className="max-w-[40%] max-h-[40%]"
       />
     ),
     badgeColor: "stroke-yellow-500",
@@ -89,12 +86,14 @@ export const tableHeaderTitleList = [
   { icon: <FaArrowDownLong />, title: "Post Title" },
   { title: "Keywords" },
   { icon: "", title: "" },
+
   { title: "Published Date" },
+
   { title: "Rating" },
   { icon: "", title: "" },
   { icon: "", title: "" },
-  { icon: "", title: "" },
-];
+]
+ 
 
 export const postsData = [
   {
@@ -192,14 +191,7 @@ export const engagementInsights = [
 export const optimizationMetrics = [
   {
     label: "Total Keywords",
-    icon: (
-      <img
-        src={like}
-        alt="like"
-        width={12}
-        className="flex justify-center items-center absolute  "
-      />
-    ),
+    imageSrc: like,
     value: 11300,
     max: 22500,
     radius: 8,
@@ -224,14 +216,7 @@ export const optimizationMetrics = [
   },
   {
     label: "Meta Tag Status",
-    icon: (
-      <img
-        src={hand}
-        alt="hand"
-        width={16}
-        className="flex justify-center items-center absolute -bottom-[1.2rem] "
-      />
-    ),
+    imageSrc: hand,
     value: 50,
     max: 100,
     radius: 8,
@@ -259,14 +244,7 @@ export const optimizationMetrics = [
 
   {
     label: "Top Pages",
-    icon: (
-      <img
-        src={dislike}
-        alt="dislike"
-        width={12}
-        className="flex justify-center items-center absolute "
-      />
-    ),
+    imageSrc: dislike,
     value: 11300,
     max: 22500,
     radius: 8,
@@ -295,14 +273,8 @@ export const optimizationMetrics = [
 export const engagementMetrics = [
   {
     label: "Page Visits",
-    icon: (
-      <img
-        src={happyIcon}
-        alt="happy"
-        width={16}
-        className="flex justify-center items-center absolute -bottom-[1.24rem] -left-[0.2rem]"
-      />
-    ),
+    imageSrc: happyIcon,
+  
     value: 5300,
     max: 22500,
     radius: 8,
@@ -328,14 +300,7 @@ export const engagementMetrics = [
   },
   {
     label: "Avg. Visit Duration",
-    icon: (
-      <img
-        src={neutralIcon}
-        alt="neutral"
-        width={16}
-        className="flex justify-center items-center absolute -bottom-[1.2rem] -left-[0.15rem]"
-      />
-    ),
+    imageSrc: neutralIcon,
     value: 1.2,
     max: "s",
     radius: 8,
@@ -362,14 +327,7 @@ export const engagementMetrics = [
 
   {
     label: "Bounce Rate",
-    icon: (
-      <img
-        src={neutralIcon}
-        alt="neutral"
-        width={16}
-        className="flex justify-center items-center absolute -bottom-[1.2rem] -left-[0.15rem]"
-      />
-    ),
+    imageSrc: neutralIcon,
     value: 41,
     max: 100,
     radius: 8,
@@ -398,37 +356,23 @@ export const engagementMetrics = [
 export const scores = [
   {
     label: "Domain Optimization Score",
-    icon: (
-      <img
-        src={optimize}
-        alt="optimize"
-        width={28}
-        className="flex justify-center items-center absolute -bottom-[1.8rem] -left-[0.2rem]"
-      />
-    ),
+    imageSrc:optimize,
     value: 87,
     max: 100,
     radius: 8,
     strokeWidth: 2,
     textColor: "text-white",
-    ringSize: "size-24",
+    ringSize: "size-20",
   },
   {
     label: "Website Engagement Score",
-    icon: (
-      <img
-        src={tap}
-        alt="tap"
-        width={20}
-        className="flex justify-center items-center absolute -bottom-[2.1rem] -left-1.8"
-      />
-    ),
+    imageSrc: tap,
     value: 41,
     max: 100,
     radius: 8,
     strokeWidth: 2,
     textColor: "text-white",
-    ringSize: "size-24",
+    ringSize: "size-20",
   },
 ];
 

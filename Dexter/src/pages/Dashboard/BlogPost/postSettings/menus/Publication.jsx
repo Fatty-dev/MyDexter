@@ -4,8 +4,8 @@ import { IoMdInformationCircleOutline } from "react-icons/io";
 const Publication = () => {
   const { control } = useFormState();
   return (
-    <div className="lg:mt-2 md:mt-2 md:pt-4 mb-5 max-md:mt-10 bg-white border border-gray-300 h-fit shadow-md rounded-lg p-4 lg:w-[84%] md:w-[84%] max-md:w-full ">
-      <form className="flex gap-6 items-start">
+    <div className="lg:mt-2 md:mt-2 md:pt-4 mb-8 max-md:mt-16 bg-white border border-gray-300 h-fit shadow-md rounded-lg p-4 lg:w-[84%] md:w-[84%] max-md:w-full ">
+      <form className="flex items-start gap-6">
         <div className="flex flex-col gap-4 w-[28%]">
           <div className="flex flex-col gap-3">
             <label htmlFor="shopify" className="text-#545a67]  text-[11px]">
@@ -19,7 +19,7 @@ const Publication = () => {
                 <select
                   {...field}
                   id="shopify"
-                  className="w-full max-md:text-[9px] text-gray-400 outline-none focus:border-2 focus:border-gray-500 border border-gray-300 rounded-lg p-2 text-[11px]"
+                  className="w-full p-2 text-sm text-gray-400 border border-gray-300 rounded-lg outline-none focus:border-2 focus:border-gray-500"
                 >
                   <option value="" disabled>
                     Select an option
@@ -42,7 +42,7 @@ const Publication = () => {
                 <select
                   {...field}
                   id="wix"
-                  className="w-full max-md:text-[9px] text-gray-400 outline-none focus:border-2 focus:border-gray-500 border border-gray-300 rounded-lg p-2 text-[11px]"
+                  className="w-full p-2 text-sm text-gray-400 border border-gray-300 rounded-lg outline-none focus:border-2 focus:border-gray-500"
                 >
                   <option value="" disabled>
                     Select an option
@@ -65,7 +65,7 @@ const Publication = () => {
                 <select
                   {...field}
                   id="wordpress"
-                  className="w-full max-md:text-[9px] text-gray-400 outline-none focus:border-2 focus:border-gray-500 border border-gray-300 rounded-lg p-2 text-[11px]"
+                  className="w-full p-2 text-sm text-gray-400 border border-gray-300 rounded-lg outline-none focus:border-2 focus:border-gray-500"
                 >
                   <option value="" disabled>
                     Select an option

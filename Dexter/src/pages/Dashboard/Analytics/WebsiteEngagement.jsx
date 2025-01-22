@@ -10,7 +10,7 @@ const WebsiteEngagement = ({ setShowDetails }) => {
   const [showInsights, setShowInsights] = useState(false);
 
   return (
-    <div className="relative w-1/2 p-4 mb-4 bg-white border rounded-lg md:w-full lg:w-1/2 h-fit max-md:w-full">
+    <div className="relative w-1/2 p-4 mb-8 bg-white border rounded-lg md:w-full lg:w-1/2 h-fit max-md:w-full">
       <div className="flex items-center justify-between">
         <p className="font-semibold">Website Engagement</p>
         <CiMenuKebab
@@ -22,15 +22,15 @@ const WebsiteEngagement = ({ setShowDetails }) => {
         {engagementMetrics.map((metric, index) => (
           <div
             key={index}
- className="[&:not(:first-child)]:border-l border-l-[#d5d9e1] [&:not(:first-child)]:pl-4 max-md:[&:not(:first-child)]:border-none max-md:[&:not(:first-child)]:pl-0 md:[&:not(:first-child)]:pl-2 [&:not(:last-child)]:mr-3"
+ className="[&:not(:first-child)]:border-l border-l-[#d5d9e1] lg:[&:not(:first-child)]:pl-6 max-md:[&:not(:first-child)]:border-none max-md:[&:not(:first-child)]:pl-0 md:[&:not(:first-child)]:pl-2 [&:not(:last-child)]:mr-3"
           >
             <Metrics
               metric={metric}
-              className="relative left-4 text-[#98a8bf]   text-[13px] bottom-8"
+
               marginTop="mt-4"
               spanColor="text-[#7a8eac] text-[8px]"
             />
-            <p className="text-[#9795fa] ml-10 text-[10px] md:text-[9px] -mt-1 font-semibold ">
+            <p className="text-[#9795fa] ml-10 text-[10px] md:text-[9px] font-semibold ">
               View {metric.toView}
             </p>
           </div>

@@ -32,27 +32,27 @@ const BlogPost = () => {
       </div>
       <hr className="my-2" />
       <div className="flex items-center justify-between px-4 py-2 my-4 text-white rounded-lg bg-primary">
-        <p className="mt-1 text-sm font-medium">
+        <p className="mt-1 text-sm font-medium max-md:w-[90%]">
           API connected successfully! You now have access to powerful blog creation tools.
         </p>
         <MdClose size={22} />
       </div>
 
       {/* Call-to-Action Section */}
-      <div className="bg-[#344054] flex items-center justify-between p-4 text-white rounded-md mb-6">
-        <div className="w-[50%]">
+      <div className="bg-[#344054] max-md:flex-col max-md:items-start md:items-start md:flex-col md:gap-4 flex lg:items-center justify-between p-4 text-white rounded-md mb-6">
+        <div className="w-[50%] max-md:w-full md:w-full">
           <h2 className="text-xl font-bold">Create & Optimize Your Content with Dexter!</h2>
           <p className="mt-1 text-sm">
             Create, edit, and schedule content effortlessly while tracking performance—all from a
             single, intuitive dashboard. <span className="font-semibold text-primary">Learn more</span>
           </p>
         </div>
-        <div className="mt-4 flex gap-4 whitespace-nowrap w-[43%]">
-          <button className="bg-white flex items-center gap-2 text-[#475467] px-4 py-2 rounded" onClick={handleBulkArticle}>
+        <div className="mt-4 flex lg:gap-4 max-md:gap-4 md:gap-4 whitespace-nowrap lg:w-[43%]  ">
+          <button className="bg-white flex items-center max-md:w-1/2 gap-2 text-[#475467] px-4 py-2 rounded" onClick={handleBulkArticle}>
             Create Articles in Bulk
             <PiCopySimpleBold />
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 text-white rounded bg-primary" onClick={() => setCreatePostModalOpen(true)}> 
+          <button className="flex items-center max-md:w-1/2 gap-2 px-4 py-2 text-white rounded bg-primary" onClick={() => setCreatePostModalOpen(true)}> 
             Start Your 1-Click Post
             <FaRegEdit />
           </button>
@@ -67,7 +67,7 @@ const BlogPost = () => {
             Auto Scheduler
           </button>
         </div>
-        <div className="relative overflow-hidden transition-shadow duration-300 bg-white border rounded-lg shadow-lg group w-80 hover:shadow-xl">
+        <div className="relative overflow-hidden max-md:mt-4 transition-shadow duration-300 bg-white border rounded-lg shadow-lg group w-80 hover:shadow-xl">
           {/* Card Header */}
           <div className="bg-[#E4E4F2] p-4">
             <h3 className="text-[black] font-semibold flex items-center justify-center gap-2">

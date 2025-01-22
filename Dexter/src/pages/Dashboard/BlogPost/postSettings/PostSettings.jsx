@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { HiOutlineChevronRight } from "react-icons/hi";
 import { RiHome6Line } from "react-icons/ri";
 import SettingsMenu from "./SettingsMenu";
-import { menuList } from "@/lib/data";
 import CoreSettings from "./menus/CoreSettings";
 import DetailsToInclude from "./menus/DetailsToInclude";
 import MediaHub from "./menus/MediaHub";
@@ -53,7 +52,7 @@ const PostSettings = () => {
       </div>
       <div className="flex items-center gap-2 mb-4">
         <FaArrowLeft
-          className="text-[12px] cursor-pointer text-gray-500"
+          className="text-sm cursor-pointer text-gray-500"
           onClick={() => window.history.back()}
         />
         <span className="text-[#6c7685] font-semibold">Back</span>

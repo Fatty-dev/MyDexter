@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { CiCircleQuestion } from "react-icons/ci";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { FaCheck } from "react-icons/fa";
@@ -6,13 +6,14 @@ import { FaAngleDown } from "react-icons/fa6";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import { GrPowerCycle } from "react-icons/gr";
 import { FaRegSave } from "react-icons/fa";
-import { IoMdCopy } from "react-icons/io";
+import { IoMdClose, IoMdCopy } from "react-icons/io";
 import { Link, useParams } from "react-router-dom";
 
 const PostOverview = () => {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [showOverview, setShowOverview] = useState(true);
 
-  const {postId} = useParams()
+  const { postId } = useParams();
 
   const metaTags = [
     "Meta Title",
@@ -57,9 +58,13 @@ const PostOverview = () => {
   ];
 
   return (
-    <div className="absolute  right-0 top-[4.2rem] p-5 md:w-[50%] max-md:w-[70%] lg:w-[25%] h-fit bottom-0 bg-white shadow-lg border border-gray-300">
+    <div className={`absolute  right-0 top-[4.2rem] p-5 md:w-[50%] max-md:w-[70%] lg:w-[25%] h-fit bottom-0 bg-white shadow-lg border border-gray-300 ${showOverview ? "block" : "hidden"}`}>
       {/* Schedule */}
       <div className="flex items-center justify-between my-3">
+           <IoMdClose
+                    className="cursor-pointer absolute right-1 top-2"
+                    onClick={() => setShowOverview(false)}
+                  />
         <div className="flex items-center gap-2">
           <h1 className="font-semibold">Schedule this post</h1>
           <CiCircleQuestion className="text-[15px] cursor-pointer text-gray-500" />
@@ -110,7 +115,7 @@ const PostOverview = () => {
         {metaTags.map((tag, index) => (
           <div
             key={index}
-            className="bg-[#f9fafb] text-[#6ccea1] text-[12px] p-3 rounded-lg flex justify-between items-center"
+            className="bg-[#f9fafb] text-[#6ccea1] text-sm p-3 rounded-lg flex justify-between items-center"
           >
             <span>{tag}</span>
             <FaCheck />
@@ -145,7 +150,10 @@ const PostOverview = () => {
       </div>
 
       {settingsOpen && (
-        <Link to = {`/dashboard/blog-post/${postId}/settings`} className="bg-white absolute right-12 top-12 shadow-md p-4 flex items-center gap-2 w-[150px] flex-col">
+        <Link
+          to={`/dashboard/blog-post/${postId}/settings`}
+          className="bg-white absolute right-12 top-12 shadow-md p-4 flex items-center gap-2 w-[150px] flex-col"
+        >
           {settings.map((item, index) => (
             <div
               key={index}
