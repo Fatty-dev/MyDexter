@@ -22,7 +22,7 @@ export const metrics = [
       <img
         src={like}
         alt="like"
-        className="max-w-[30%] max-h-[40%]"
+        className="size-5"
       />
     ),
     badgeColor: "stroke-green-500",
@@ -36,7 +36,7 @@ export const metrics = [
         src={hand}
         alt="hand"
        
-        className="max-w-[40%] max-h-[40%]"
+        className="size-8"
       />
     ),
     badgeColor: "stroke-yellow-500",
@@ -50,7 +50,7 @@ export const metrics = [
         src={dislike}
         alt="dislike"
      
-         className="max-w-[30%] max-h-[40%]"
+         className="size-5"
       />
     ),
     badgeColor: "stroke-red-500",
@@ -63,7 +63,7 @@ export const metrics = [
       <img
         src={hand}
         alt="hand"
-        className="max-w-[40%] max-h-[40%]"/>
+        className="size-8"/>
     ),
     badgeColor: "stroke-yellow-500",
   },
@@ -75,7 +75,7 @@ export const metrics = [
       <img
         src={hand}
         alt="hand"
-  className="max-w-[40%] max-h-[40%]"
+  className="size-8"
       />
     ),
     badgeColor: "stroke-yellow-500",

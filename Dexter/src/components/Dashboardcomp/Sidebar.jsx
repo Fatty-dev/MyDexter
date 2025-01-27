@@ -10,7 +10,9 @@ import { BsPersonCircle } from "react-icons/bs";
 import ai from "../../assets/ai.svg";
 import analytics from "../../assets/analytics.svg";
 import collapse from "../../assets/collapse.svg";
+import logoIcon from "../../assets/logo-icon.svg";
 import useEmailStore, {
+  useSidebar,
   useUserSuscriptionTypeStore,
 } from "../../lib/store/global.store";
 import { authApi } from "../../lib/config/axios-instance";
@@ -19,6 +21,7 @@ import { MdOutlineContactSupport } from "react-icons/md";
 import { BsGear, BsBoxArrowRight, BsPersonLinesFill } from "react-icons/bs";
 import prologo from "../../assets/proLogo.svg";
 import toast from "react-hot-toast";
+import { BsReverseLayoutSidebarReverse } from "react-icons/bs";
 
 const Sidebar = ({ isOpen }) => {
   const navigate = useNavigate();
@@ -32,6 +35,8 @@ const Sidebar = ({ isOpen }) => {
   const [recentChats, setRecentChats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showDropdown, setShowDropdown] = useState(false);
+
+  const { expanded, toggleExpand } = useSidebar();
 
   useEffect(() => {
     const fetchChatHistory = async () => {
@@ -61,46 +66,99 @@ const Sidebar = ({ isOpen }) => {
   const navigationItems =
     type === "pro"
       ? [
-          { id: 1, label: "Overview", icon: overview, path: "/dashboard/Overview" },
+          {
+            id: 1,
+            label: "Overview",
+            icon: overview,
+            path: "/dashboard/Overview",
+          },
           { id: 2, label: "Dexter AI", icon: ai, path: "/dashboard" },
-          { id: 3, label: "Analytics", icon: analytics, path: "/dashboard/analytics" },
-          { id: 4, label: "Blog Post", icon: blog, path: "/dashboard/blog-post" },
-          { id: 5, label: "Strategies", icon: strategies, path: "/dashboard/strategies" },
+          {
+            id: 3,
+            label: "Analytics",
+            icon: analytics,
+            path: "/dashboard/analytics",
+          },
+          {
+            id: 4,
+            label: "Blog Post",
+            icon: blog,
+            path: "/dashboard/blog-post",
+          },
+          {
+            id: 5,
+            label: "Strategies",
+            icon: strategies,
+            path: "/dashboard/strategies",
+          },
         ]
       : isSignedUp
       ? [
           { id: 1, label: "Dexter AI", icon: ai, path: "/dashboard" },
-          { id: 2, label: "Analytics", icon: analytics, path: "/dashboard/analytics" },
-          { id: 3, label: "Blog Post", icon: blog, path: "/dashboard/blog-post" },
+          {
+            id: 2,
+            label: "Analytics",
+            icon: analytics,
+            path: "/dashboard/analytics",
+          },
+          {
+            id: 3,
+            label: "Blog Post",
+            icon: blog,
+            path: "/dashboard/blog-post",
+          },
         ]
       : [
           { id: 1, label: "Dexter AI", icon: ai, path: "/dashboard" },
-          { id: 2, label: "Analytics", icon: analytics, path: "/dashboard/analytics" },
-          { id: 3, label: "Blog Post", icon: blog, path: "/dashboard/blog-post" },
+          {
+            id: 2,
+            label: "Analytics",
+            icon: analytics,
+            path: "/dashboard/analytics",
+          },
+          {
+            id: 3,
+            label: "Blog Post",
+            icon: blog,
+            path: "/dashboard/blog-post",
+          },
           { id: 4, label: "Sign In", icon: signin, path: "/login" },
         ];
 
   return (
     <div
-      className={`fixed top-0 left-0 w-64 flex flex-col justify-between bg-white h-full shadow-xl z-20 transform transition-transform duration-300 ease-in-out ${
-        isOpen ? "translate-x-0" : "-translate-x-full"
-      } md:translate-x-0`}
+      className={`fixed top-0 left-0 flex flex-col z-[2000] justify-between bg-white h-full shadow-xl transform transition-transform duration-300 ease-in-out ${
+        expanded ? "w-64" : "w-16"
+      } ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
     >
       {/* Sidebar Header */}
-      <div className="px-6 pt-8 flex items-center justify-between">
-        <img src={`${type === "pro" ? prologo : logo}`} alt="Dexter AI Logo" className="w-[11rem]" />
-        <button className="md:hidden">
+      <div
+        className={`${
+          expanded ? "px-6" : "px-5"
+        } pt-8 flex items-center justify-between`}
+      >
+        {expanded && (
+          <img
+            src={`${expanded ? (type === "pro" ? prologo : logo) : logoIcon}`}
+            alt="Dexter AI Logo"
+            width={30}
+            className={!expanded ? "w-[1rem]" : "w-[11rem]"}
+          />
+        )}
+        <button className="" onClick={toggleExpand}>
           <img src={collapse} alt="Collapse Sidebar" />
         </button>
       </div>
 
       {/* Navigation Links */}
-      <nav className="space-y-1 px-6 md:px-6 mt-6">
-        <p className="text-secondary text-xs">ASSISTANT</p>
+      <nav className={` mt-6 ${expanded ? "px-6 space-y-1" : "px-4 space-y-5"}`}>
+        {expanded && <p className="text-secondary text-xs">ASSISTANT</p>}
         {navigationItems.map((item) => (
           <div
             key={item.id}
-            className={`flex items-center space-x-3 cursor-pointer py-2 px-2 rounded-md ${
+            className={`flex items-center space-x-3 cursor-pointer rounded-md ${
+              expanded ? "p-2" : "p-1"
+            } ${
               location.pathname === item.path
                 ? "bg-hover text-[#344054]"
                 : "hover:text-primary hover:bg-hover"
@@ -109,12 +167,14 @@ const Sidebar = ({ isOpen }) => {
           >
             <img
               src={item.icon}
-              className="w-[10%]"
+              className={expanded ? "w-[10%]" : "flex-shrink-0 w-5"}
               alt={`${item.label} icon`}
             />
-            <span className="text-[tetiary] font-medium text-sm md:text-base">
-              {item.label}
-            </span>
+            {expanded && (
+              <span className="text-[tetiary] font-medium text-sm md:text-base">
+                {item.label}
+              </span>
+            )}
           </div>
         ))}
       </nav>
@@ -135,7 +195,7 @@ const Sidebar = ({ isOpen }) => {
       )}
 
       {/* Recent Chats Section */}
-      {isSignedUp && (
+      {isSignedUp && expanded && (
         <div className="mt-6 border-t  px-6 md:px-4">
           <p className="text-secondary my-4 text-sm font-semibold mb-2">
             RECENT CHATS
@@ -174,7 +234,11 @@ const Sidebar = ({ isOpen }) => {
             >
               <BsPersonCircle size={24} />
             </div>
-            <span className="text-secondary text-sm font-medium">{email}</span>
+            {expanded && (
+              <span className="text-secondary text-sm font-medium">
+                {email}
+              </span>
+            )}
 
             {/* Dropdown Menu */}
             {showDropdown && (

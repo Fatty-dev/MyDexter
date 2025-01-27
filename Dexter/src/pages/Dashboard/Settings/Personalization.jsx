@@ -60,7 +60,7 @@ const Personalization = () => {
 
       <div className="p-4 flex flex-col gap-8">
         <button className="border border-[#908dfc] rounded-lg p-2 text-[#908dfc] w-[90px] hover:bg-[#908dfc] hover:text-gray-900 transition-all duration-300 ">Manage</button>
-        <button className="bg-[#d92d20] hover:bg-opacity-50 transition-all duration-300 text-white p-2 w-[180px] rounded-lg">Clear Mydexter memory</button>
+        <button className="bg-[#d92d20] whitespace-nowrap hover:bg-opacity-50 transition-all duration-300 text-white p-2 w-[30%] rounded-lg">Clear Mydexter memory</button>
       </div>
     </div>
   );

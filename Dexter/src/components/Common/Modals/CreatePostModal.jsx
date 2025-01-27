@@ -3,7 +3,8 @@ import { IoMdClose } from "react-icons/io";
 import { useForm } from "react-hook-form";
 import { FiEdit } from "react-icons/fi";
 import { motion } from "framer-motion";
-// import { popupVariant } from "../../../lib/utils";
+import { FiRefreshCcw } from "react-icons/fi";
+import { popupVariant } from "../../../lib/utils/index";
 import { authApi } from "../../../lib/config/axios-instance";
 import toast from "react-hot-toast";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -37,9 +38,39 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
     }
   };
 
-  const handleRemoveKeyword = (index) => {
-    setKeywords((prev) => prev.filter((_, i) => i !== index));
+  const rewrite = async () => {
+    if (!keywords.length) {
+      toast.error("Please add at least one keyword before rewriting.");
+      return;
+    }
+  
+    try {
+      setLoading(true);
+  
+      const response = await authApi.post(
+        `/blog/generate-title`,
+        {
+          mainKeyword: inputs.keywords.split(","),
+        }
+      );
+  
+      if (response?.data?.title) {
+        toast.success("Title rewritten successfully!");
+  
+        document.querySelector('input[name="title"]').value = response.data.title;
+      } else {
+        toast.error("Failed to generate a new title. Please try again.");
+      }
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message || "Something went wrong. Please try again.";
+      toast.error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
   };
+  
+  
 
   const onSubmit = async (data) => {
     setLoading(true);
@@ -68,11 +99,11 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
   return (
     <motion.div
       {...variant}
-      className="flex justify-center items-center fixed inset-0 z-[50] bg-black bg-opacity-50"
+      className="flex justify-center items-center fixed inset-0 z-[2000] bg-black bg-opacity-50"
     >
       <motion.div
-        // {...popupVariant}
-        className="bg-white md:w-[60%] lg:w-[45%] w-[90%] p-6 rounded-lg shadow-lg relative"
+        {...popupVariant}
+        className="bg-white md:w-[60%] lg:w-[50%] w-[90%] p-6 rounded-lg shadow-lg relative"
       >
         {/* Header Section */}
         <div className="mb-4">
@@ -120,37 +151,53 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
           </div>
 
           {/* Title Input */}
-          <div>
-            <label className="flex justify-between text-sm font-medium text-gray-600">
-              <span>Title</span>
-              <span
-                className={`text-xs ${
-                  values[0]?.length > 100 ? "text-red-600" : "text-gray-400"
-                }`}
-              >
-                {values[0]?.length || 0}/100
-              </span>
-            </label>
-            <input
-              type="text"
-              placeholder="Enter post title"
-              {...register("title", {
-                required: "Title is required.",
-                maxLength: {
-                  value: 100,
-                  message: "Title should not exceed 100 characters.",
-                },
-              })}
-              className={`border mt-2 p-3 rounded-md w-full text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300 ${
-                errors.title ? "border-red-600" : "border-gray-300"
-              }`}
-            />
-            {errors.title && (
-              <p className="mt-1 text-xs text-red-600">
-                {errors.title.message}
-              </p>
-            )}
-          </div>
+{/* Title Input */}
+<div>
+  <label className="flex justify-between text-sm font-medium text-gray-600">
+    <span>Title</span>
+    <span
+      className={`text-xs ${
+        values[0]?.length > 100 ? "text-red-600" : "text-gray-400"
+      }`}
+    >
+      {values[0]?.length || 0}/100
+    </span>
+  </label>
+  <div className="relative mt-2">
+  <input
+    type="text"
+    placeholder="Enter post title (e.g., 5 Tips for Better Productivity)"
+    {...register("title", {
+      required: "Title is required.",
+      maxLength: {
+        value: 100,
+        message: "Title should not exceed 100 characters.",
+      },
+    })}
+    className={`border p-3 pr-20 rounded-md w-full text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300 ${
+      errors.title ? "border-red-600" : "border-gray-300"
+    }`}
+  />
+  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-2" 
+      onClick={rewrite}
+
+  >
+    <FiRefreshCcw
+      className="text-gray-600 cursor-pointer hover:text-gray-800"
+    />
+    <span className="text-gray-600 text-sm cursor-pointer hover:text-gray-800">
+      Rewrite
+    </span>
+  </div>
+</div>
+
+  {errors.title && (
+    <p className="mt-1 text-xs text-red-600">
+      {errors.title.message}
+    </p>
+  )}
+</div>
+
 
           {/* Prompt Input */}
           <div>
@@ -179,8 +226,8 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
           <hr className="mt-4" />
 
           {/* Footer Section */}
-          <div className="flex items-center justify-between mt-4">
-            <p className="text-sm text-gray-500 w-[50%]">
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-0 justify-between mt-4">
+            <p className="text-sm text-gray-500 md:w-[50%]">
               Click 'Generate' to create an editable post. Results may vary.
             </p>
             <button

@@ -58,13 +58,17 @@ const PostOverview = () => {
   ];
 
   return (
-    <div className={`absolute  right-0 top-[4.2rem] p-5 md:w-[50%] max-md:w-[70%] lg:w-[25%] h-fit bottom-0 bg-white shadow-lg border border-gray-300 ${showOverview ? "block" : "hidden"}`}>
+    <div
+      className={`max-h-[calc(100vh-80px)] p-4 scrollbar-none overflow-y-auto bottom-0 bg-white shadow-lg border border-gray-300 ${
+        showOverview ? "block" : "hidden"
+      }`}
+    >
       {/* Schedule */}
       <div className="flex items-center justify-between my-3">
-           <IoMdClose
-                    className="cursor-pointer absolute right-1 top-2"
-                    onClick={() => setShowOverview(false)}
-                  />
+        {/* <IoMdClose
+          className="cursor-pointer absolute right-1 top-2"
+          onClick={() => setShowOverview(false)}
+        /> */}
         <div className="flex items-center gap-2">
           <h1 className="font-semibold">Schedule this post</h1>
           <CiCircleQuestion className="text-[15px] cursor-pointer text-gray-500" />
@@ -152,7 +156,7 @@ const PostOverview = () => {
       {settingsOpen && (
         <Link
           to={`/dashboard/blog-post/${postId}/settings`}
-          className="bg-white absolute right-12 top-12 shadow-md p-4 flex items-center gap-2 w-[150px] flex-col"
+          className="bg-white absolute right-8 top-12 shadow-md p-3 flex items-center gap-2  flex-col"
         >
           {settings.map((item, index) => (
             <div
@@ -162,8 +166,8 @@ const PostOverview = () => {
               }}
               className="flex items-center w-full gap-3 p-2 text-gray-500 rounded-lg cursor-pointer hover:bg-gray-100"
             >
-              <span className="text-[14px] cursor-pointer">{item.icon}</span>
-              <span>{item.name}</span>
+              <span className="text-sm cursor-pointer">{item.icon}</span>
+              <span className="text-sm">{item.name}</span>
             </div>
           ))}
         </Link>

@@ -46,7 +46,7 @@ const SeoDashboard = () => {
               </div>
             </div>
 
-            <button className="text-white flex gap-2 items-center bg-[#6d68fb] text-[10px] p-2 mt-2 relative right-2   max-md:w-[150px]  justify-center rounded-md">
+            <button className="text-white flex gap-2 whitespace-nowrap items-center bg-[#6d68fb] text-sm p-2 mt-2 relative  justify-center rounded-md">
               Improve My Score
               <PiMagicWand className="text-white text-[15px]" />
             </button>

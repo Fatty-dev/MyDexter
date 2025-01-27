@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { publicApi } from "../../lib/config/axios-instance";
 import toast from "react-hot-toast";
 import logo from "../../assets/Main_Logo.svg";
-import useEmailStore,{ useUserSuscriptionTypeStore} from "../../lib/store/global.store";
+import useEmailStore,{ useUserPlatformSiteStore, useUserSuscriptionTypeStore} from "../../lib/store/global.store";
 
 
 const Login = () => {
@@ -26,6 +26,8 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
+  const { setSite } = useUserPlatformSiteStore()
+
   const onSubmit = async (data) => {
     setLoading(true);
     try {
@@ -36,10 +38,21 @@ const Login = () => {
 
       // toast.success("Login successful! Redirecting to dashboard...");
       localStorage.setItem("accessToken", res.data.accessToken);
-      setEmail(res.data.user.email);
-      // console.log(res.data.user.subscription.type);
-      // console.log(res.data.user);
 
+      const user = res.data.user;
+      setEmail(user.email);
+      // console.log(res.data.user.subscription.type);
+      // console.log(res.data.user)
+
+
+      const connectedAppsKeys = Object.keys(user?.platforms ?? {})
+      console.log({ connectedAppsKeys, user })
+
+      if (connectedAppsKeys) {
+        connectedAppsKeys.forEach(key => {
+          setSite(key, user?.platforms[key].sites[0])
+        })
+      }
       
       setType(res.data.user.subscription.type);
       navigate("/dashboard");

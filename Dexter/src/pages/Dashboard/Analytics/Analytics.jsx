@@ -16,7 +16,7 @@ const Analytics = () => {
 
   console.log(showDetails)
   return (
-    <div className="w-[90%] mx-auto">
+    <div className="w-[90%] mx-auto mt-[1.5rem]">
       <div className="flex items-center gap-2 mb-6">
         <RiHome6Line className="text-gray-500" />
         <h1 className="text-sm text-gray-500">Assistant</h1>

@@ -20,19 +20,19 @@ const DomainOptimization = ({ setShowDetails }) => {
           onClick={() => setShowMenu(!showMenu)}
         />
       </div>
-      <div className="flex justify-evenly max-md:gap-4 md:gap-2 mt-4 max-md:flex-wrap    lg:flex-row  p-4  rounded-lg bg-[#f5f7f9]">
+      <div className="flex    lg:flex-row  p-3  rounded-lg bg-[#f5f7f9]">
         {optimizationMetrics.map((metric, index) => (
           <div
             key={index}
-className="[&:not(:first-child)]:border-l border-l-[#d5d9e1] lg:[&:not(:first-child)]:pl-6 max-md:[&:not(:first-child)]:border-none max-md:[&:not(:first-child)]:pl-0 md:[&:not(:first-child)]:pl-2 [&:not(:last-child)]:mr-3"
+className="[&:not(:first-child)]:border-l border-l-[#d5d9e1]  [&:not(:first-child)]:pl-4 [&:not(:last-child)]:mr-2"
           >
             <Metrics
               metric={metric}
             
               marginTop="mt-4"
-              spanColor="text-[#7a8eac] text-[8px]"
+              spanColor="text-[#7a8eac] text-sm"
             />
-            <p className="text-[#9795fa] ml-10  font-semibold text-[10px] ">
+            <p className="text-[#9795fa] font-semibold text-[10px] ">
               View {metric.toView}
             </p>
           </div>
@@ -69,19 +69,19 @@ className="[&:not(:first-child)]:border-l border-l-[#d5d9e1] lg:[&:not(:first-ch
                 <span
                   className={` ${
                     insight.type === "Success"
-                      ? "text-[#4caf50] text-[18px]"
+                      ? "text-[#4caf50] text-[16px]"
                       : insight.type === "Warning"
                       ? "text-[#ff9800]  text-[18px]"
                       : insight.type === "Info text-[18px]"
                       ? "text-[#6e69fb]"
-                      : "text-[#f44336] text-[21px]"
+                      : "text-[#f44336] text-[18px]"
                   } `}
                 >
                   {insight.icon}
                 </span>
-                <p>{insight.detail} </p>
+                <p className="text-sm">{insight.detail} </p>
               </div>
-              <IoMdClose size={18} className="cursor-pointer" />
+              <IoMdClose size={24} className="cursor-pointer" />
             </div>
           ))}
         </div>

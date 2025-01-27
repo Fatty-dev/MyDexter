@@ -39,7 +39,7 @@ const featuresDataset = [
 
 const Features = () => {
   return (
-    <div class="bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#F2F6FC_100%)]">
+    <div className="bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#F2F6FC_100%)]">
     <section className="container mx-auto py-16">
       {/* Background Decorations */}
       <div className="absolute inset-0 to-transparent pointer-events-none"></div>

@@ -30,7 +30,7 @@ const Risk = () => {
   };
 
   return (
-    <div class=" bg-white  [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#F2F6FC_100%)]">
+    <div className=" bg-white  [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#F2F6FC_100%)]">
       <div className='py-16'>
       <div className="w-full  max-w-6xl mx-auto px-4">
         <p className="bg-layer text-primary rounded-lg text-center py-2 w-40 mx-auto mb-6">

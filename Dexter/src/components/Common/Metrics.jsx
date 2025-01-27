@@ -14,7 +14,7 @@ const Metrics = ({ metric, className, marginTop, spanColor, otherClasses }) => {
   const formatValue = (value) => (value >= 1000 ? `${(value / 1000).toFixed(1)}k` : value);
 
   return (
-    <div className={`${otherClasses} flex items-start gap-3`}>
+    <div className={`${otherClasses} flex items-start gap-1`}>
       {/* Circular Progress */}
       <div className={`relative ${marginTop}`}>
         <svg
@@ -65,11 +65,11 @@ const Metrics = ({ metric, className, marginTop, spanColor, otherClasses }) => {
       {/* Metric Details */}
       <div className={`${metric.label === "Dexter's Visibility Score" ? 'hidden' : 'flex'} flex-col mt-4`}>
         <div className={metric.textColor}>
-          <span className="text-3xl">{formatValue(metric.value)}</span>/
+          <span className="text-xl">{formatValue(metric.value)}</span>/
           <span className={`${spanColor || metric.textColor} text-sm`}>{formatValue(metric.max)}</span>
         </div>
-        <div className={`${spanColor || metric.textColor} flex items-center gap-2 max-md:gap-1 text-[10px]`}>
-          <p>{metric.label.replace(/\s*Score$/, '')}</p>
+        <div className={`${spanColor || metric.textColor} flex items-center gap-2  `}>
+          <p className='text-[10px] whitespace-nowrap'>{metric.label.replace(/\s*Score$/, '')}</p>
           <CiCircleQuestion className="cursor-pointer text-[15px]" />
         </div>
       </div>

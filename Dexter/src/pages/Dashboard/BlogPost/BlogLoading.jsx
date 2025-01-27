@@ -42,16 +42,19 @@ const BlogLoading = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="flex flex-col items-center justify-center">
-        <Loader />
-        <h2 className="text-[#344054]">Dexter is writing....</h2>
-        <p className="text-[#6B7280]">
-          Dexter may take up to five minutes to write a blog post. Please come
-          back later and contact support if an issue arises.
-        </p>
-      </div>
-    </div>
+    <div className="min-h-screen flex items-center justify-center p-4">
+  <div className="flex flex-col items-center justify-center space-y-4 sm:space-y-6">
+    <Loader />
+    <h2 className="text-[#344054] text-lg sm:text-xl lg:text-2xl text-center">
+      Dexter is writing....
+    </h2>
+    <p className="text-[#6B7280] text-sm sm:text-base lg:text-lg text-center md:max-w-xl">
+      Dexter may take up to five minutes to write a blog post. Please come back
+      later and contact support if an issue arises.
+    </p>
+  </div>
+</div>
+
   );
 };
 

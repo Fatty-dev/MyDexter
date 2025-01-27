@@ -42,7 +42,7 @@ const PostSettings = () => {
   };
 
   return (
-    <div className="w-[90%] mx-auto relative">
+    <div className="w-[90%] mx-auto relative mt-[1.5rem]">
       {" "}
       <div className="flex items-center gap-2 mb-6">
         <RiHome6Line className="text-gray-500" />

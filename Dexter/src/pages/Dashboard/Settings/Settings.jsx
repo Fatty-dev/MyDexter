@@ -22,6 +22,7 @@ import ConnectedApps from "./ConnectedApps";
 import Security from "./Security";
 import About from "./About";
 import { useFormContext } from "react-hook-form";
+import { Link, useSearchParams } from "react-router-dom";
 
 // Sidebar menu dataset
 const sidebarMenu = [
@@ -48,7 +49,11 @@ const components = {
 };
 
 const Settings = () => {
-  const [activeSetting, setActiveSetting] = useState(1);
+  const [searchParams] = useSearchParams();
+
+  const [activeSetting, setActiveSetting] = useState(
+    searchParams.get("tag") ? Number(searchParams.get("tag")) : 1
+  );
 
   const { handleSubmit, watch } = useFormContext();
 
@@ -83,14 +88,14 @@ const Settings = () => {
         </h1>
         <div className="flex items-center gap-4 pb-3">
           <div>
-            <button className="bg-white p-3 shadow-lg border border-gray-300 w-[70px] text-[#697383] font-semibold   rounded-lg">
+            <button className="bg-white py-3 px-4 shadow-lg border border-gray-300 text-[#697383] font-semibold   rounded-lg">
               Cancel
             </button>
           </div>
           <div>
             <button
               onClick={handleSubmit(onSubmit)}
-              className="text-white font-semibold flex gap-2 items-center bg-[#6d68fb] p-3 w-[60px] justify-center rounded-lg border  border-gray-300"
+              className="text-white font-semibold flex gap-2 items-center bg-[#6d68fb] py-3 px-4  justify-center rounded-lg border  border-gray-300"
             >
               Save
             </button>
@@ -99,23 +104,25 @@ const Settings = () => {
       </div>
       <hr />
       <div className="flex items-start relative w-full gap-8 justify-between">
-
         {/* Desktop */}
         <aside className="lg:w-[15%] w-[25%] hidden lg:block md:block">
           <nav className="mt-4">
-            <ul>
+            <ul className="space-y-3">
               {sidebarMenu.map((item) => (
-                <li
-                  key={item.id}
-                  className={`flex items-center text-[#344054] hover:text-[#7a75fb] hover:font-semibold  px-6 py-3 cursor-pointer rounded-lg ${
-                    item.id === activeSetting
-                      ? "bg-[#E7E6FE] text-primary hover:bg-gray-100 "
-                      : ""
-                  }`}
-                  onClick={() => setActiveSetting(item.id)}
-                >
-                  <span className="mr-3">{item.icon}</span>
-                  <span>{item.label}</span>
+                <li key={item.id}>
+                  <Link to={`/dashboard/settings?tag=${item.id}`}>
+                    <p
+                      className={`flex items-center text-sm  text-[#344054] hover:text-[#7a75fb] px-2 py-3 cursor-pointer rounded-lg ${
+                        item.id === activeSetting
+                          ? "bg-[#E7E6FE] text-primary hover:bg-gray-100 "
+                          : ""
+                      }`}
+                      onClick={() => setActiveSetting(item.id)}
+                    >
+                      <span className="mr-3">{item.icon}</span>
+                      <span>{item.label}</span>
+                    </p>
+                  </Link>
                 </li>
               ))}
             </ul>

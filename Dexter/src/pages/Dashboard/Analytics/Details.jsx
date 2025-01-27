@@ -31,7 +31,7 @@ export const Details = ({ showDetails, setShowDetails }) => {
           />
           <div className="flex items-center gap-2 text-white opacity-80">
             <IoIosInformationCircleOutline size={20} />
-            <p>Good, but room for improvement</p>
+            <p className="text-sm">Good, but room for improvement</p>
           </div>
         </div>}
 
@@ -68,12 +68,12 @@ export const Details = ({ showDetails, setShowDetails }) => {
                 className="[&:not(:first-child)]:border-t [&:not(:first-child)]:border-t-gray-300 pb-3 last-of-type:mb-24"
               >
                 <div className="mt-4">
-                  <p className="font-bold text-[#455062] mb-2">{item.label}</p>
+                  <p className="font-bold text-sm text-[#455062] mb-2">{item.label}</p>
                   {item.desc}
                 </div>
                 <div className="bg-[#f0f0ff] rounded-lg p-4 mt-4">
                   <div className="flex items-start gap-3">
-                    <div className="text-[20px] text-[#6d68fb] ">
+                    <div className="text-sm text-[#6d68fb] ">
                         <MdInfo    />
                     </div>
 
@@ -89,7 +89,7 @@ export const Details = ({ showDetails, setShowDetails }) => {
               ))}
         </div>
         <div className="fixed bottom-0 right-0 p-8 z-[1000] lg:w-[23%] md:w-[50%] max-md:w-full  bg-white ">
-            <button className="text-white flex gap-2 items-center w-full bg-[#6d68fb] max-md:justify-center md:justify-center text-sm p-2     rounded-md">
+            <button className="text-white flex gap-2 whitespace-nowrap items-center w-full bg-[#6d68fb] max-md:justify-center md:justify-center text-sm p-3  rounded-md">
               <span className="">Generate SEO Optimization Strategy</span>
               <PiMagicWand className="text-white text-[15px]" />
             </button>

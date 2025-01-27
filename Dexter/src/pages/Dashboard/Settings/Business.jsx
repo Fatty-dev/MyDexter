@@ -88,9 +88,9 @@ const Business = () => {
             </p>
         </div>
           <div className="flex gap-3 items-center">
-            <div className="text-xl w-[80px] cursor-pointer flex gap-2 justify-center bg-primary p-3 rounded-lg text-white">Add  <IoMdAdd size={16} className="mt-[0.2rem]"/></div>
+            <button className="text-md  cursor-pointer flex gap-2 justify-center bg-primary px-2 py-1 rounded-lg text-white">Add  <IoMdAdd size={16} className="mt-[0.2rem]"/></button>
           
-            <div className="border rounded-md p-1 w-8 h-8 relative text-gray-700">
+            <div className="border rounded-md p-1  relative text-gray-700">
             <IoMdInformationCircleOutline size={16}/>
 
           </div>
