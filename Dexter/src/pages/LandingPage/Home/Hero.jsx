@@ -2,9 +2,15 @@ import React from 'react';
 import { IoArrowForward } from "react-icons/io5";
 import Background from '../../../assets/Background.png';
 import Laptop from '../../../assets/Macbook.png';
+import { useNavigate } from 'react-router-dom';
 
 
 const Hero = () => {
+  const navigate = useNavigate()
+
+const tryPro = () => {
+  navigate("/dashboard")
+}
   return (
     <div className="relative container mx-auto">
 <div className='absolute left-1/2 top-5 -translate-x-1/2 w-[80%] -z-[1]'>
@@ -36,7 +42,7 @@ const Hero = () => {
         </p>
 
         {/* Button */}
-        <button className="bg-primary text-white font-semibold text-lg px-6 py-3 rounded-full hover:bg-primary transition mt-4">
+        <button className="bg-primary text-white font-semibold text-lg px-6 py-3 rounded-full hover:bg-primary transition mt-4" onClick={tryPro}>
           Try Pro for Free
         </button>
       </div>

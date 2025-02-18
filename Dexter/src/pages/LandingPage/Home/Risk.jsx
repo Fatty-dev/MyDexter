@@ -3,8 +3,14 @@ import { HiMiniXMark } from "react-icons/hi2";
 import { IoCheckmark } from "react-icons/io5";
 import Man from "../../../assets/rec1.png";
 import Woman from "../../../assets/rec2.png";
+import { useNavigate } from 'react-router-dom';
 
 const Risk = () => {
+  const navigate = useNavigate()
+
+  const tryPro = () => {
+    navigate("/dashboard")
+  }
   // Data for Jon and Sarah
   const data = {
     jon: {
@@ -86,7 +92,7 @@ const Risk = () => {
           </div>
         </div>
         <div className="mt-8 text-center">
-          <button className="bg-primary text-white py-3 px-8 text-lg rounded-full hover:bg-primary">
+          <button className="bg-primary text-white py-3 px-8 text-lg rounded-full hover:bg-primary" onClick={tryPro}>
             Try Dexter for Free
           </button>
         </div>
