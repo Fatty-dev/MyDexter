@@ -189,58 +189,58 @@ export const engagementInsights = [
 ];
 
 export const optimizationMetrics = [
-  {
-    label: "Total Keywords",
-    imageSrc: like,
-    value: 11300,
-    max: 22500,
-    radius: 8,
-    strokeWidth: 2,
-    textColor: "text-[#4a5566] font-[500]",
-    ringSize: "size-12",
-    toView: "Keywords",
-    strokeColor: "#e4e7eb",
-    ringFill: "white",
-    desc: (
-      <p className="text-[#6d7584]">
-        our site ranks for <b>350 keywords</b>. This is a solid start, but
-        expanding your keyword reach can attract more organic traffic.
-      </p>
-    ),
-    action: (
-      <span className="text-[11px] text-[#787f91] ">
-        Target 10-15 new high-value keywords that align with your content to
-        boost search visibility.
-      </span>
-    ),
-  },
-  {
-    label: "Meta Tag Status",
-    imageSrc: hand,
-    value: 50,
-    max: 100,
-    radius: 8,
-    strokeWidth: 2,
-    textColor: "text-[#4a5566] font-[500]",
-    ringSize: "size-12",
-    toView: "Meta Tags",
-    strokeColor: "#e4e7eb",
-    ringFill: "white",
-    desc: (
-      <p className="text-[#6d7584]">
-        Improving your Meta Tag Status can lead to higher click-through rates
-        and better visibility in search results.
-      </p>
-    ),
-    action: (
-      <span className="text-[11px] text-[#787f91] ">
-        {" "}
-        Review and update your meta tags. Ensure each page has unique,
-        keyword-rich titles and descriptions to improve search engine visibility
-        and click-through rates. Learn more
-      </span>
-    ),
-  },
+  // {
+  //   label: "Total Keywords",
+  //   imageSrc: like,
+  //   value: 11300,
+  //   max: 22500,
+  //   radius: 8,
+  //   strokeWidth: 2,
+  //   textColor: "text-[#4a5566] font-[500]",
+  //   ringSize: "size-12",
+  //   toView: "Keywords",
+  //   strokeColor: "#e4e7eb",
+  //   ringFill: "white",
+  //   desc: (
+  //     <p className="text-[#6d7584]">
+  //       our site ranks for <b>350 keywords</b>. This is a solid start, but
+  //       expanding your keyword reach can attract more organic traffic.
+  //     </p>
+  //   ),
+  //   action: (
+  //     <span className="text-[11px] text-[#787f91] ">
+  //       Target 10-15 new high-value keywords that align with your content to
+  //       boost search visibility.
+  //     </span>
+  //   ),
+  // },
+  // {
+  //   label: "Meta Tag Status",
+  //   imageSrc: hand,
+  //   value: 50,
+  //   max: 100,
+  //   radius: 8,
+  //   strokeWidth: 2,
+  //   textColor: "text-[#4a5566] font-[500]",
+  //   ringSize: "size-12",
+  //   toView: "Meta Tags",
+  //   strokeColor: "#e4e7eb",
+  //   ringFill: "white",
+  //   desc: (
+  //     <p className="text-[#6d7584]">
+  //       Improving your Meta Tag Status can lead to higher click-through rates
+  //       and better visibility in search results.
+  //     </p>
+  //   ),
+  //   action: (
+  //     <span className="text-[11px] text-[#787f91] ">
+  //       {" "}
+  //       Review and update your meta tags. Ensure each page has unique,
+  //       keyword-rich titles and descriptions to improve search engine visibility
+  //       and click-through rates. Learn more
+  //     </span>
+  //   ),
+  // },
 
   {
     label: "Top Pages",

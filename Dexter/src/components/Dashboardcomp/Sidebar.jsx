@@ -21,6 +21,7 @@ import { MdOutlineContactSupport } from "react-icons/md";
 import { BsGear, BsBoxArrowRight, BsPersonLinesFill } from "react-icons/bs";
 import prologo from "../../assets/proLogo.svg";
 import toast from "react-hot-toast";
+import ProModal from "../Common/Modals/ProModal";
 import { BsReverseLayoutSidebarReverse } from "react-icons/bs";
 
 const Sidebar = ({ isOpen }) => {
@@ -35,7 +36,7 @@ const Sidebar = ({ isOpen }) => {
   const [recentChats, setRecentChats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showDropdown, setShowDropdown] = useState(false);
-
+const [openModal, setOpenModal] = useState(false);
   const { expanded, toggleExpand } = useSidebar();
 
   useEffect(() => {
@@ -125,6 +126,9 @@ const Sidebar = ({ isOpen }) => {
           { id: 4, label: "Sign In", icon: signin, path: "/login" },
         ];
 
+        const showModal = () => {
+setOpenModal(true);
+        }
   return (
     <div
       className={`fixed top-0 left-0 flex flex-col z-[2000] justify-between bg-white h-full shadow-xl transform transition-transform duration-300 ease-in-out ${
@@ -177,6 +181,12 @@ const Sidebar = ({ isOpen }) => {
             )}
           </div>
         ))}
+
+        {/* {type === "free" && (
+          <div className="mt-4">
+          <button className="rounded-full  text-sm border border-primary w-full px-4 py-2 hover:bg-primary hover:text-white text-primary" onClick={showModal}>Try Pro</button>
+          </div>
+        )} */}
       </nav>
 
       {!isSignedUp && (
@@ -301,6 +311,10 @@ const Sidebar = ({ isOpen }) => {
           </ul>
           <p className="mt-4 text-xs text-secondary">© 2024 My Dexter</p>
         </div>
+      )}
+
+      {openModal && (
+        <ProModal/>
       )}
     </div>
   );

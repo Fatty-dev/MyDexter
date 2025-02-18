@@ -8,73 +8,77 @@ import { FiInfo } from "react-icons/fi";
 import { authApi } from "@/lib/config/axios-instance";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const BulkArticle = () => {
+  const navigate = useNavigate();
   const [rows, setRows] = useState([{ keyword: "", title: "", keywords: [] }]);
+  const [loading, setLoading] = useState(false);
 
   const addRow = () => {
     setRows([...rows, { keyword: "", title: "", keywords: [] }]);
   };
 
   const generateMainKeyword = async () => {
-    const mainKeyword = rows[0].keyword; // Get the keyword from the specific row
+    setLoading(true);
     try {
-      const {
-        data: { data },
-      } = await authApi.post("/blog/generate-main-keywords", {
-        mainKeyword: mainKeyword,
-      });
-
-      // Update the row with the generated keywords
-      const updatedRows = [...rows];
-      updatedRows[0].keywords = (data || []).map(
-        ({ mainKeyword }) => mainKeyword
-      ).join(', '); // Assuming 'data' contains the generated keywords
+      const updatedRows = await Promise.all(
+        rows.map(async (row) => {
+          if (!row.keyword) return row; // Skip empty rows
+  
+          const { data } = await authApi.post("/blog/generate-row", {
+            mainKeyword: row.keyword,
+          });
+  
+          return {
+            ...row,
+            title: data?.data?.title || "",
+            estimatedMonthlyTraffic: data?.data?.estimate || "",
+            keywords: (data?.data?.keywords || []).join(", "),
+          };
+        })
+      );
+  
       setRows(updatedRows);
       toast.success("Keywords generated successfully!");
     } catch (err) {
       toast.error("Error generating keywords.");
+    }finally{
+      setLoading(false);
     }
   };
 
-  const generateTitle = async () => {
-    const mainKeyword = rows[0].keyword; // Get the keyword from the specific row
+
+  const goBack = () => {
+    navigate("/dashboard/blog-post")
+  }
+
+
+
+  const initiateBulkPost = async () => {
     try {
-      const {
-        data: { data },
-      } = await authApi.post("/blog/generate-bulk-titles", {
-        mainKeyword: [mainKeyword],
-      });
-
-      // Update the row with the generated keywords
-      const updatedRows = [...rows];
-      updatedRows[0].keywords = data; // Assuming 'data' contains the generated keywords
-      setRows(updatedRows);
-      toast.success("Keywords generated successfully!");
+      const payload = {
+        articles: rows.map((row) => ({
+          mainKeyword: row.keyword,
+          title: row.title,
+          keywords: [row.keywords],
+        })),
+      };
+  
+      const { data } = await authApi.post("/blog/bulk-generate", payload);
+  
+      if (data.success) {
+        toast.success("Bulk generation initiated successfully!");
+        navigate("/dashboard/blog-post")
+      } else {
+        toast.error(data.message || "Failed to initiate bulk generation.");
+      }
     } catch (err) {
-      toast.error("Error generating keywords.");
+      toast.error("Error initiating bulk post.");
     }
   };
+  
 
-  const keyword = async () => {
-    const mainKeyword = rows.keyword; // Get the keyword from the specific row
-    try {
-      const {
-        data: { data },
-      } = await authApi.post("blog/generate-bulk-keywords", {
-        mainKeyword: mainKeyword,
-        title: title,
-      });
-
-      // Update the row with the generated keywords
-      const updatedRows = [...rows];
-      updatedRows[0].keywords = data; // Assuming 'data' contains the generated keywords
-      setRows(updatedRows);
-      toast.success("Keywords generated successfully!");
-    } catch (err) {
-      toast.error("Error generating keywords.");
-    }
-  };
 
   return (
     <div className="w-[90%] mx-auto mt-[1.5rem]">
@@ -89,7 +93,7 @@ const BulkArticle = () => {
       </div>
 
       {/* Header */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3" onClick={goBack}>
         <AiOutlineLeft className="text-gray-500 cursor-pointer" size={20} />
         <button>Back</button>
       </div>
@@ -110,7 +114,8 @@ const BulkArticle = () => {
           <button className="flex items-center text-gray-700 border border-gray-300 py-2 px-4 rounded hover:bg-gray-100">
             Cancel
           </button>
-          <button className="flex items-center gap-2 bg-primary text-white py-2 px-4 rounded hover:bg-primary">
+          <button className="flex items-center gap-2 bg-primary text-white py-2 px-4 rounded hover:bg-primary"
+            onClick={initiateBulkPost}>
             Generate Bulk Posts
             <PiCopySimpleBold size={22} />
           </button>
@@ -130,7 +135,7 @@ const BulkArticle = () => {
           </p>
         </div>
         <div className="">
-          <button className="flex items-center gap-2 text-primary border border-primary py-2 px-4 rounded hover:bg-primary">
+          <button className="flex items-center gap-2 text-primary border border-primary py-2 px-4 rounded ">
             <BiImport className="" size={16} /> Import from Excel
           </button>
         </div>
@@ -148,8 +153,16 @@ const BulkArticle = () => {
                     className="flex items-center gap-1 cursor-pointer hover:text-blue-700"
                     onClick={generateMainKeyword}
                   >
-                    <AiOutlineSync className="text-primary" size={16} />
-                    <p>Generate</p>
+                {loading ? ( 
+                      <span className="animate-spin">
+                        <AiOutlineSync className="text-primary" size={16} />
+                      </span>
+                    ) : (
+                      <>
+                        <AiOutlineSync className="text-primary" size={16} />
+                        <p>Generate</p>
+                      </>
+                    )}
                   </div>
                 </div>
               </th>
@@ -159,25 +172,25 @@ const BulkArticle = () => {
               <th className="py-3 text-sm px-4 text-left">
                 <div className="flex items-center gap-2">
                   Title
-                  <div
+                  {/* <div
                     className="flex items-center gap-1 cursor-pointer hover:text-blue-700"
                     onClick={generateTitle}
                   >
                     <AiOutlineSync className="text-primary" size={16} />
                     <p>Generate</p>
-                  </div>
+                  </div> */}
                 </div>
               </th>
               <th className="py-3 text-sm px-4 text-left">
                 <div className="flex items-center gap-2">
                   Keywords
-                  <div
+                  {/* <div
                     className="flex items-center gap-1 cursor-pointer hover:text-blue-700"
                     onClick={keyword}
                   >
                     <AiOutlineSync className="text-primary" size={16} />
                     <p>Generate</p>
-                  </div>
+                  </div> */}
                 </div>
               </th>
             </tr>
@@ -188,7 +201,7 @@ const BulkArticle = () => {
                 <td className="py-3 px-4">
                   <textarea
                     placeholder="Enter your main keyword"
-                    className="w-full rounded p-2 min-h-20 text-sm outline-none resize-none overflow-hidden"
+                    className="w-full rounded p-2 min-h-60 text-sm outline-none resize-none overflow-hidden"
                     rows={1}
                     value={row.keyword}
                     onChange={(e) => {
@@ -202,7 +215,7 @@ const BulkArticle = () => {
                 <td className="py-3 px-4 text-gray-500 text-sm">
                   <textarea
                     placeholder="Enter estimated monthly traffic"
-                    className="w-full rounded p-2 min-h-20 text-sm outline-none resize-none overflow-hidden"
+                    className="w-full rounded py-2 min-h-60 text-sm outline-none resize-none overflow-hidden"
                     rows={1}
                     value={row.estimatedMonthlyTraffic}
                     onChange={(e) => {
@@ -216,7 +229,7 @@ const BulkArticle = () => {
                 <td className="py-3 px-4">
                   <textarea
                     placeholder="Enter your title"
-                    className="w-full rounded p-2 min-h-20 text-sm outline-none resize-none overflow-hidden"
+                    className="w-full rounded py-2 min-h-60 text-sm outline-none resize-none overflow-hidden"
                     rows={1}
                     value={row.title}
                     onChange={(e) => {
@@ -230,7 +243,7 @@ const BulkArticle = () => {
                 <td className="py-3 px-4">
                   <textarea
                     placeholder="Generated keywords will appear here"
-                    className="w-full rounded p-2 min-h-40 text-sm outline-none resize-none overflow-hidden"
+                    className="w-full rounded py-2 min-h-60 text-sm outline-none resize-none overflow-hidden break-words"
                     rows={1}
                     value={row.keywords}
                     onChange={(e) => {

@@ -8,7 +8,7 @@ import mastercardImage from "../../../assets/Mastercard.svg";
 
 const CheckoutModal = ({ onClose }) => {
   return (
-    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
+    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-[1000]">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-4xl">
         {/* Header */}
         <div className="flex justify-between items-center border-b px-6 py-3">

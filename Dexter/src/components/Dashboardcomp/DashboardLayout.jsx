@@ -13,7 +13,7 @@ const Layout = () => {
       <div className="flex flex-1">
         <Sidebar />
 
-        <div className={`flex-grow duration-300 bg-[#F8F8F8]  ${ expanded ? 'md:ml-[15rem]' : 'ml-16'} min-h-screen`}>
+        <div className={`flex-grow duration-300 bg-[#F8F8F8]  ${ expanded ? 'md:ml-[15rem]' : 'md:ml-16'} min-h-screen`}>
           <Outlet />
         </div>
       </div>

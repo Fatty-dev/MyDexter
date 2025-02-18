@@ -38,7 +38,7 @@ const ProModal = ({ onClose }) => {
   return (
     <motion.div
       {...variant}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50"
+      className="fixed inset-0 z-[2000] flex items-center justify-center bg-gray-900 bg-opacity-50"
     >
       <motion.div
         // {...popupVariant}

@@ -14,7 +14,7 @@ const SeoDashboard = () => {
     radius: 15,
     strokeWidth: 4,
     textColor: "text-white",
-    ringSize: "size-28",
+    ringSize: "",
   };
 
 
@@ -26,11 +26,11 @@ const SeoDashboard = () => {
 
       <div className="flex lg:flex-row lg:items-start   lg:gap-16 max-md:gap-4  md:gap-4 max-md:flex-col md:flex-col">
         {/* Visibility Score */}
-        <div className="flex lg:justify-between lg:ml-8  md:ml-0 ">
-          <div className="">
+        <div className="flex lg:justify-between lg:ml-4  md:ml-0 ">
+          <div className=" flex flex-col items-center justify-center">
             <Metrics
               metric={visibilityScore}
-              className=" text-white  text-[25px]"
+              className=" text-white text-[25px]"
                marginTop = "mb-8"
               
             />
@@ -40,7 +40,7 @@ const SeoDashboard = () => {
                 <span className="ml-6 text-3xl">{visibilityScore.value}</span>/
                 <span className="text-sm">{visibilityScore.max}</span>
               </div>
-              <div className="text-[#98a8bf] flex items-center max-md:text-center gap-2 text-[10px] right-3  lg:relative ">
+              <div className="text-[#98a8bf] flex items-center  gap-2 text-xs">
                 <p>{visibilityScore.label}</p>
                 <CiCircleQuestion className="cursor-pointer text-[15px]" />
               </div>
@@ -52,7 +52,7 @@ const SeoDashboard = () => {
             </button>
           </div>
           {/* Seperator and other scores */}
-          <div className="relative mt-12 ml-6 max-md:ml-6">
+          <div className="relative mt-12 ml-8 max-md:ml-6">
             <div className="w-[30px] h-[0.2rem] bg-gray-500"></div>
             <div className="w-[0.15rem] h-[85px] bg-gray-500"></div>
             <div className="w-[30px] h-[0.15rem] absolute right-[30px] top-[45px] bg-gray-500"></div>

@@ -19,14 +19,20 @@ const BlogLoading = () => {
 
   const makeRequest = async () => {
     try {
+      // Check if inputs.keywords is an array
+      const keywords = Array.isArray(inputs.keywords) ? inputs.keywords : [];
+  
+      // Use flatMap to split each keyword string by comma and flatten the result
+      const mainKeyword = keywords.flatMap(keyword => keyword.split(",").map(k => k.trim()));
+  
       const {
         data: { data },
       } = await authApi.post("/blog/generate-single-article", {
-        mainKeyword: inputs.keywords.split(","),
+        mainKeyword: mainKeyword, // No need to wrap in another array
         title: inputs.title,
         aiPrompt: inputs.prompt,
       });
-
+  
       toast.success("Post created successfully!");
       navigate(`/dashboard/blog-post/${data._id || crypto.randomUUID()}`);
     } catch (err) {
