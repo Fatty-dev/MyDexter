@@ -148,6 +148,11 @@ const BlogPost = () => {
     </div>
   
     {/* Blog Post Grid */}
+    {isLoading ? (
+      <div className="p-4 mb-6 bg-white rounded-lg shadow">Blog post Loading....</div>
+    ) : blogPosts.length === 0 ? (
+      <div>No blogpost</div>
+    ):(
     <div className="p-4 mb-6 bg-white rounded-lg shadow">
       <div className="flex items-center justify-between">
         <h3 className="font-bold text-gray-700">Automate Your Blog Posts</h3>
@@ -218,7 +223,8 @@ const BlogPost = () => {
         ))}
       </div>
     </div>
-  
+    )}
+
     {/* Post History */}
     <PostHistory />
   

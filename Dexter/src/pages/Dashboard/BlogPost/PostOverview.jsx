@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CiCircleQuestion } from "react-icons/ci";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { FaCheck } from "react-icons/fa";
@@ -8,12 +8,46 @@ import { GrPowerCycle } from "react-icons/gr";
 import { FaRegSave } from "react-icons/fa";
 import { IoMdClose, IoMdCopy } from "react-icons/io";
 import { Link, useParams } from "react-router-dom";
+import { authApi } from "@/lib/config/axios-instance";
 
 const PostOverview = () => {
+  const { postId } = useParams();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [showOverview, setShowOverview] = useState(true);
+  const [post, setPost] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [dailyUsage, setDailyUsage] = useState(0);
+  const [dailyLimit, setDailyLimit] = useState(0);
+  const [loading, setLoading] = useState(false);
 
-  const { postId } = useParams();
+  const getDetails = async () => {
+    setLoading(true);
+    try {
+      const { data } = await authApi.get(`blog/single?blogPostId=${postId}`);
+      if (data) {
+        const postData = data.data;
+        console.log(data.data.content);
+
+        setPost(postData);
+        // setDailyUsage(postData.performance.organicTraffic);
+        // setDailyLimit(postData.performance.pagesPerSession);
+
+        console.log("Post Metadata: ", postData.metadata);
+        console.log("SEO Analysis: ", postData.seoAnalysis);
+      } else {
+        console.error("Failed to fetch the blog post:", data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching blog post:", error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getDetails();
+  }, []);
+
 
   const metaTags = [
     "Meta Title",
@@ -81,13 +115,13 @@ const PostOverview = () => {
         />
       </div>
 
-      <p className="bg-[#f9fafb] text-[#9a86f6] p-3 my-4 shadow-md rounded-lg">
+      {/* <p className="bg-[#f9fafb] text-[#9a86f6] p-3 my-4 shadow-md rounded-lg">
         Publish immediately
-      </p>
-      <div className="flex items-center gap-2 p-2">
+      </p> */}
+      {/* <div className="flex items-center gap-2 p-2">
         <input type="checkbox" />
         <label>Enable bulk posting</label>
-      </div>
+      </div> */}
 
       {/* SEO Analysis */}
 
@@ -97,20 +131,22 @@ const PostOverview = () => {
       </div>
 
       <div className="bg-[#f9fafb] rounded-lg p-4 shadow-md">
-        <div className="flex items-center justify-between">
-          <p className="text-[#525e70]">
-            Overall SEO score <span className="text-gray-400">(5/5)</span>{" "}
-          </p>
-          <p className="text-[#384356] text-[20px] font-semibold">100%</p>
-        </div>
-        <div className="w-full h-[10px] rounded-[10px] bg-gray-500 relative">
-          <div className="w-full h-[10px] rounded-[10px] bg-[#4ab282] absolute"></div>
-        </div>
-      </div>
+  <div className="flex items-center justify-between">
+    <p className="text-[#525e70]">Overall SEO score</p>
+    <p className="text-[#384356] text-[20px] font-semibold">{post?.seoScore}%</p>
+  </div>
+  <div className="w-full h-[10px] rounded-[10px] bg-gray-300 relative overflow-hidden">
+    <div
+      className="h-full rounded-[10px] bg-[#4ab282] transition-all duration-300"
+      style={{ width: `${post?.seoScore || 0}%` }}
+    ></div>
+  </div>
+</div>
+
 
       <div>
         <p className="text-[10px] text-gray-500 my-4">
-          The main keyword <span className="font-bold">(Cleaning product)</span>{" "}
+          The main keyword <span className="font-bold">({post?.mainKeyword || "no Keyword"})</span>{" "}
           is in :
         </p>
       </div>
@@ -137,20 +173,43 @@ const PostOverview = () => {
       </div>
 
       <p className="text-[8px] text-gray-500 px-2 mb-3 relative bottom-2">
-        2331 Words, 14328 Characters
+       {post?.metadata.wordCount} Words, {post?.metadata.characterCount} Characters
       </p>
 
       <div className="flex flex-col gap-3  text-[10px]">
-        {metaData.map((data, index) => (
+        
           <div
-            key={index}
             className="bg-[#f9fafb] text-gray-500  p-3 rounded-lg flex justify-between items-center"
           >
             <p className="">
-              {data.name} :<span className="font-bold"> {data.content} </span>
+              Main keyword :<span className="font-bold"> {post?.mainKeyword || "no Keyword"} </span>
             </p>
           </div>
-        ))}
+
+          <div
+            className="bg-[#f9fafb] text-gray-500  p-3 rounded-lg flex justify-between items-center"
+          >
+              <p className="">
+              Ai prompt :<span className="font-bold"> {post?.aiPrompt} </span>
+            </p>
+          </div>
+
+          <div
+            className="bg-[#f9fafb] text-gray-500  p-3 rounded-lg flex justify-between items-center"
+          >
+              <p className="">
+              Meta Title :<span className="font-bold"> {post?.metadata.metaTitle} </span>
+            </p>
+          </div>
+
+          <div
+            className="bg-[#f9fafb] text-gray-500  p-3 rounded-lg flex justify-between items-center"
+          >
+              <p className="">
+              Meta Description :<span className="font-bold"> {post?.metadata.metaDescription} </span>
+            </p>
+          </div>
+        
       </div>
 
       {settingsOpen && (

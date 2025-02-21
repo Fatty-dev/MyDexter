@@ -31,11 +31,18 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
 
   const handleAddKeyword = (e) => {
     const value = e.target.value.trim();
-
+  
     if (e.key === "Enter" && value) {
-      setKeywords((prev) => [...prev, value]);
+      e.preventDefault(); // Prevent form submission
+      if (!keywords.includes(value)) {
+        setKeywords((prev) => [...prev, value]);
+      }
       e.target.value = "";
     }
+  };
+  
+  const handleRemoveKeyword = (index) => {
+    setKeywords((prev) => prev.filter((_, i) => i !== index));
   };
 
   const rewrite = async () => {
@@ -124,32 +131,31 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
         {/* Form Section */}
         <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
           {/* Keywords Input */}
-          <div>
-            <label className="text-sm font-medium text-gray-600">
+          <div className="border rounded-md p-2 flex flex-wrap items-center gap-2">
+          <label className="text-sm font-medium text-gray-600">
               Main Keywords
             </label>
-            <div className="flex flex-wrap gap-2 mt-2">
-              {keywords.map((keyword, index) => (
-                <div
-                  key={index}
-                  className="flex items-center px-2 py-1 text-sm bg-gray-200 rounded-md"
-                >
-                  <span>{keyword}</span>
-                  <IoMdClose
-                    className="ml-2 text-gray-600 cursor-pointer"
-                    onClick={() => handleRemoveKeyword(index)}
-                  />
-                </div>
-              ))}
-            </div>
-            <input
-              type="text"
-              placeholder="Type a keyword and press Enter"
-              onKeyDown={handleAddKeyword}
-              className="w-full p-3 mt-2 text-sm text-gray-800 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-300"
-            />
-          </div>
+  {keywords.map((keyword, index) => (
+    <div
+      key={index}
+      className="flex items-center px-2 py-1 text-sm bg-gray-200 rounded-md"
+    >
+      <span>{keyword}</span>
+      <IoMdClose
+        className="ml-2 text-gray-600 cursor-pointer"
+        onClick={() => handleRemoveKeyword(index)}
+      />
+    </div>
+  ))}
+  <input
+    type="text"
+    placeholder="Type a keyword and press Enter"
+    onKeyDown={handleAddKeyword}
+    className="flex-1 p-2 text-sm text-gray-800 focus:outline-none"
+  />
+</div>
 
+        
           {/* Title Input */}
 {/* Title Input */}
 <div>

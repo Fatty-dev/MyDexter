@@ -14,6 +14,8 @@ import BlogPostChat from "@/components/Dashboardcomp/BlogPostChat";
 import SkeletonLoader from "@/components/Dashboardcomp/SkeletonLoader";
 import toast from "react-hot-toast";
 import { IoMdClose } from "react-icons/io";
+import ConfirmPlatform from "@/components/Common/Modals/ConfirmPlatform";
+
 
 const PostDetails = () => {
   const navigate = useNavigate();
@@ -23,6 +25,8 @@ const PostDetails = () => {
   const [dailyUsage, setDailyUsage] = useState(0);
   const [dailyLimit, setDailyLimit] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [showConfirmPlatform, setShowConfirmPlatform] = useState(false);
+
 
   const { expanded } = useSidebar();
   const { sites } = useUserPlatformSiteStore();
@@ -55,18 +59,20 @@ const PostDetails = () => {
     getDetails();
   }, []);
 
-  const publish = async (postId) => {
-    setLoading(true); // Start loading
-    try {
-      const data = await authApi.post(
-        `/publish/wordpress/?blogPostId=${postId}`,
-        {
-          siteId: sites["wordpress"]?.siteId,
-        }
-      );
-      console.log("error");
 
+  const publish = async (postId) => {
+    if (!sites["wordpress"]?.siteId) {
+      setShowConfirmPlatform(true);
+      return;
+    }
+  
+    setLoading(true);
+    try {
+      await authApi.post(`/publish/wordpress/?blogPostId=${postId}`, {
+        siteId: sites["wordpress"]?.siteId,
+      });
       toast.success("Post Published successfully!");
+      navigate("/dashboard/blog-post");
     } catch (error) {
       console.error("Error publishing post:", error);
       toast.error("Failed to publish the post. Please try again.");
@@ -74,6 +80,7 @@ const PostDetails = () => {
       setLoading(false);
     }
   };
+  
 
   const addMessage = (newMessage) => {
     setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -196,6 +203,10 @@ const PostDetails = () => {
           <PostOverview />
         </div>
       </div>
+
+      {showConfirmPlatform && (
+      <ConfirmPlatform onClose={() => setShowConfirmPlatform(false)} />
+    )}
     </div>
   );
 };
