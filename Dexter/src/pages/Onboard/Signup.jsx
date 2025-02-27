@@ -31,7 +31,7 @@ const Signup = () => {
     setLoading(true);
     try {
       const response = await publicApi.post("/auth/register", {
-        email: data.email,
+        email: data.email.toLowerCase(), // Convert email to lowercase
         password: data.password,
       });
       toast.success("Signup successful! Redirecting to login...");
@@ -46,6 +46,7 @@ const Signup = () => {
       reset();
     }
   };
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
