@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import {
   AiOutlineBold,
   AiOutlineClose,
@@ -14,14 +14,87 @@ import { BiParagraph } from "react-icons/bi";
 import { MdOutlineLayersClear } from "react-icons/md";
 import { TbSpacingVertical } from "react-icons/tb";
 import { PiImageSquareBold } from "react-icons/pi";
+import { authApi } from "@/lib/config/axios-instance";
+import toast from "react-hot-toast";
 
-const MenuBar = ({ editor }) => {
+const MenuBar = ({ editor, postId, content }) => {
+  const fileInputRef = useRef(null);
+  const uploadedImages = useRef([]); // Store uploaded images metadata
+
   const addImage = useCallback(() => {
-    const url = window.prompt("Enter image URL:");
-    if (url) {
-      editor.chain().focus().setImage({ src: url }).run();
+    // Trigger the file input click
+    fileInputRef.current.click();
+  }, []);
+
+  const handleFileChange = useCallback(
+    async (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = async () => {
+          // Prepare image metadata
+          const imageMetadata = {
+            name: file.name,
+            size: file.size,
+            type: file.type,
+            src: reader.result, // Base64 URL
+          };
+
+          // Upload the image to the server
+          try {
+            const formData = new FormData();
+
+            formData.append("images", file);
+            formData.append("content", content);
+
+            // Use backticks for template literals
+            const response = await authApi.patch(
+              `/blog/update?blogPostId=${postId}`,
+              formData,
+              {
+                headers: { "Content-Type": "multipart/form-data" },
+              }
+            );
+            if (response.data.success) {
+              const imageUrl = response.data.imageUrl; // Assuming the response contains the image URL
+              uploadedImages.current.push(imageMetadata); // Store the image metadata
+              editor.chain().focus().setImage({ src: imageUrl }).run(); // Insert the image into the editor
+            } else {
+              toast.error("Image upload failed.");
+            }
+          } catch (error) {
+            toast.error("Error uploading image.");
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    },
+    [editor, postId]
+  );
+
+  const handleSave = async () => {
+    // const content = editor.getHTML(); // Get the current content of the editor
+    const images = uploadedImages.current; // Get the uploaded images metadata
+
+    try {
+      const response = await authApi.patch(
+        `/blog/update?blogPostId=${postId}`,
+        {
+          content,
+          imageMetadata: images,
+          images: images.map((image) => image.src), // Assuming you want to send the Base64 URLs as well
+        }
+      );
+
+      if (response.data.success) {
+        toast.success("Blog post updated successfully!");
+      } else {
+        toast.error("Failed to update the blog post.");
+      }
+    } catch (error) {
+      toast.error("Error updating the blog post.");
     }
-  }, [editor]);
+  };
 
   if (!editor) {
     return null;
@@ -120,6 +193,13 @@ const MenuBar = ({ editor }) => {
       <button onClick={addImage} className="editor-btn">
         <PiImageSquareBold />
       </button>
+      <input
+        type="file"
+        accept="image/*"
+        ref={fileInputRef}
+        onChange={handleFileChange} // Pass postId here
+        style={{ display: "none" }} // Hide the file input
+      />
 
       {/* Bullet List */}
       <button

@@ -29,6 +29,7 @@ export const useUserPlatformSiteStore = create()(
         set((state) => ({
           sites: { ...state.sites, [platform]: site },
         })),
+      resetPlatforms: () => set({ sites: {} })
     }),
     { name: "use-platformsite" }
   )

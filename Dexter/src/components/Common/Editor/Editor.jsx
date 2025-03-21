@@ -11,13 +11,13 @@ import { marked } from "marked";
 import { useState, useRef, useEffect } from "react";
 import { useSelectionStore } from "@/lib/store/global.store";
 
-const Editor = ({ onDataChange, content, editable }) => {
+const Editor = ({ onDataChange, content, editable, postId }) => {
   const [showIcon, setShowIcon] = useState(false);
   const [iconPosition, setIconPosition] = useState({ top: 0, left: 0 });
   const editorRef = useRef(null);
-  const selectionRef = useRef(null);
+  const { updateValue } = useSelectionStore();
 
-  // Parse content using `marked` (ensure input sanitization if content is external)
+  // Parse content using `marked`
   const parsedContent = content ? marked(content) : "";
 
   const editor = useEditor({
@@ -39,7 +39,7 @@ const Editor = ({ onDataChange, content, editable }) => {
         HTMLAttributes: {
           class: "text-xl font-bold",
         },
-        levels: [1], // Only allow H2 headings
+        levels: [1],
       }),
       Table.configure({
         resizable: true,
@@ -66,23 +66,20 @@ const Editor = ({ onDataChange, content, editable }) => {
     },
   });
 
-  const { updateValue } = useSelectionStore();
-
   // Function to handle the copy action
   const copySelectedText = () => {
     const selection = window.getSelection();
     if (!selection || selection.isCollapsed) return;
 
-    // Copy the selected text
     const selectedText = selection.toString();
-    updateValue(selectedText);
+    updateValue(selectedText); // Store the selected text in the global state
   };
 
   // Function to show the copy icon when text is selected
   const handleTextSelection = () => {
     const selection = window.getSelection();
     if (!selection || selection.isCollapsed) {
-      setShowIcon(false); // Hide the icon if no text is selected
+      setShowIcon(false);
       return;
     }
 
@@ -91,11 +88,11 @@ const Editor = ({ onDataChange, content, editable }) => {
     const containerRect = editorRef.current.getBoundingClientRect();
 
     setIconPosition({
-      top: rect.top - containerRect.top - 30, // Adjust position above the selection
-      left: rect.left - containerRect.left + rect.width / 2 - 20, // Center above selected text
+      top: rect.top - containerRect.top - 30,
+      left: rect.left - containerRect.left + rect.width / 2 - 20,
     });
 
-    setShowIcon(true); // Show the copy icon
+    setShowIcon(true);
   };
 
   // Add event listener to track text selection
@@ -107,14 +104,21 @@ const Editor = ({ onDataChange, content, editable }) => {
     };
   }, []);
 
+  // Update the editor content when the content prop changes
+  useEffect(() => {
+    if (editor) {
+      editor.commands.setContent(parsedContent); // Update the editor content when it changes
+    }
+  }, [content, editor]);
+
   return (
     <div className="relative bg-white" ref={editorRef}>
       {editable && (
         <div className="w-full sticky top-0 z-50 bg-white shadow">
-          <MenuBar editor={editor} />
+          <MenuBar editor={editor} postId={postId} content={content} />
         </div>
       )}
-      <div className="">
+      <div>
         <EditorContent editor={editor} />
       </div>
 

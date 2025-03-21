@@ -5,16 +5,15 @@ import { useNavigate } from "react-router-dom";
 import { publicApi } from "../../lib/config/axios-instance";
 import toast from "react-hot-toast";
 import logo from "../../assets/Main_Logo.svg";
-import useEmailStore,{ useUserPlatformSiteStore, useUserSuscriptionTypeStore} from "../../lib/store/global.store";
-
+import useEmailStore, {  useUserPlatformSiteStore, useUserSuscriptionTypeStore } from "../../lib/store/global.store";
 
 const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
- 
+
   const { setEmail } = useEmailStore();
-  const {setType} = useUserSuscriptionTypeStore();
+  const { setType } = useUserSuscriptionTypeStore();
   const {
     register,
     handleSubmit,
@@ -26,7 +25,7 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
-  const { setSite } = useUserPlatformSiteStore()
+  const { setSite } = useUserPlatformSiteStore();
 
   const onSubmit = async (data) => {
     setLoading(true);
@@ -36,30 +35,22 @@ const Login = () => {
         password: data.password,
       });
 
-      // toast.success("Login successful! Redirecting to dashboard...");
       localStorage.setItem("accessToken", res.data.accessToken);
 
       const user = res.data.user;
       setEmail(user.email);
-      // console.log(res.data.user.subscription.type);
-      // console.log(res.data.user)
 
-
-      const connectedAppsKeys = Object.keys(user?.platforms ?? {})
-      console.log({ connectedAppsKeys, user })
-
+      const connectedAppsKeys = Object.keys(user?.platforms ?? {});
       if (connectedAppsKeys) {
         connectedAppsKeys.forEach(key => {
-          setSite(key, user?.platforms[key].sites[0])
-        })
+          setSite(key, user?.platforms[key].sites[0]);
+        });
       }
-      
+
       setType(res.data.user.subscription.type);
       navigate("/dashboard");
     } catch (error) {
-      console.log({ error });
-      const errorMessage =
-        error.response?.data?.message || "Something went wrong.";
+      const errorMessage = error.response?.data?.message || "Something went wrong.";
       toast.error(errorMessage);
     } finally {
       setLoading(false);
@@ -68,10 +59,10 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4 sm:px-0">
+      <div className="w-full max-w-md mx-auto bg-white rounded-lg shadow-lg p-6">
         <div className="text-center">
-          <img src={logo} alt="MyDexter Logo" className="mx-auto mb-4 " />
+          <img src={logo} alt="MyDexter Logo" className="mx-auto mb-4" />
           <p className="text-gray-500 text-sm mb-6">
             Your personal AI-powered SEO specialist
           </p>
@@ -88,6 +79,7 @@ const Login = () => {
             <input
               type="email"
               id="email"
+              disabled={loading}
               placeholder="Enter your email"
               {...register("email", { required: "Email is required" })}
               className="w-full px-2 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary placeholder:text-sm"
@@ -108,6 +100,7 @@ const Login = () => {
             <input
               type={showPassword ? "text" : "password"}
               id="password"
+              disabled={loading}
               placeholder="Create a password"
               {...register("password", { required: "Password is required" })}
               className="w-full px-2 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary placeholder:text-sm"

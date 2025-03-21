@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import logo from "../../assets/Main_Logo.svg";
 import blog from "../../assets/blog.svg";
 import overview from "../../assets/overview.svg";
 import strategies from "../../assets/Strategy.svg";
-
 import signin from "../../assets/signin.svg";
 import { BsPersonCircle } from "react-icons/bs";
 import ai from "../../assets/ai.svg";
@@ -13,6 +12,7 @@ import collapse from "../../assets/collapse.svg";
 import logoIcon from "../../assets/logo-icon.svg";
 import useEmailStore, {
   useSidebar,
+  useUserPlatformSiteStore,
   useUserSuscriptionTypeStore,
 } from "../../lib/store/global.store";
 import { authApi } from "../../lib/config/axios-instance";
@@ -22,7 +22,6 @@ import { BsGear, BsBoxArrowRight, BsPersonLinesFill } from "react-icons/bs";
 import prologo from "../../assets/proLogo.svg";
 import toast from "react-hot-toast";
 import ProModal from "../Common/Modals/ProModal";
-import { BsReverseLayoutSidebarReverse } from "react-icons/bs";
 
 const Sidebar = ({ isOpen }) => {
   const navigate = useNavigate();
@@ -36,8 +35,11 @@ const Sidebar = ({ isOpen }) => {
   const [recentChats, setRecentChats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showDropdown, setShowDropdown] = useState(false);
-const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const { expanded, toggleExpand } = useSidebar();
+  const { resetPlatforms } = useUserPlatformSiteStore();
+  
+  const dropdownRef = useRef(null); // Create a ref for the dropdown
 
   useEffect(() => {
     const fetchChatHistory = async () => {
@@ -63,6 +65,23 @@ const [openModal, setOpenModal] = useState(false);
   }, [isSignedUp]);
 
   const toggleDropdown = () => setShowDropdown((prev) => !prev);
+
+  // Effect to handle clicks outside the dropdown
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false); // Close dropdown if clicked outside
+      }
+    };
+
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    
+    // Cleanup the event listener on component unmount
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
 
   const navigationItems =
     type === "pro"
@@ -126,9 +145,10 @@ const [openModal, setOpenModal] = useState(false);
           { id: 4, label: "Sign In", icon: signin, path: "/login" },
         ];
 
-        const showModal = () => {
-setOpenModal(true);
-        }
+  const showModal = () => {
+    setOpenModal(true);
+  };
+
   return (
     <div
       className={`fixed top-0 left-0 flex flex-col z-[2000] justify-between bg-white h-full shadow-xl transform transition-transform duration-300 ease-in-out ${
@@ -155,7 +175,9 @@ setOpenModal(true);
       </div>
 
       {/* Navigation Links */}
-      <nav className={` mt-6 ${expanded ? "px-6 space-y-1" : "px-4 space-y-5"}`}>
+      <nav
+        className={` mt-6 ${expanded ? "px-6 space-y-1" : "px-4 space-y-5"}`}
+      >
         {expanded && <p className="text-secondary text-xs">ASSISTANT</p>}
         {navigationItems.map((item) => (
           <div
@@ -181,28 +203,7 @@ setOpenModal(true);
             )}
           </div>
         ))}
-
-        {/* {type === "free" && (
-          <div className="mt-4">
-          <button className="rounded-full  text-sm border border-primary w-full px-4 py-2 hover:bg-primary hover:text-white text-primary" onClick={showModal}>Try Pro</button>
-          </div>
-        )} */}
       </nav>
-
-      {!isSignedUp && (
-        <div className="mt-6 border-t px-6">
-          <p className="text-secondary text-sm mt-4 mb-3">
-            Create a free account, or go Pro to unlock automated blog creation
-            and domain analytics!
-          </p>
-          <button
-            className="px-4 py-2 text-primary border border-primary rounded-full w-full font-medium hover:bg-primary hover:text-white"
-            onClick={() => navigate("/signup")}
-          >
-            Sign Up
-          </button>
-        </div>
-      )}
 
       {/* Recent Chats Section */}
       {isSignedUp && expanded && (
@@ -252,7 +253,12 @@ setOpenModal(true);
 
             {/* Dropdown Menu */}
             {showDropdown && (
-              <div className="absolute bottom-5 right-6 mt-2 bg-white shadow-lg rounded-md w-48 py-2 z-30">
+              <div
+                ref={dropdownRef}
+                className={`absolute bottom-5 mt-2 bg-white shadow-lg rounded-md w-48 py-2 z-30 ${
+                  expanded ? "right-6" : "left-0"
+                }`}
+              >
                 <div
                   className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
                   onClick={() => navigate("/dashboard/settings")}
@@ -285,6 +291,7 @@ setOpenModal(true);
                   onClick={() => {
                     localStorage.removeItem("accessToken");
                     navigate("/login");
+                    resetPlatforms();
                   }}
                 >
                   <BsBoxArrowRight className="mr-2 text-[#667085]" />
@@ -301,21 +308,15 @@ setOpenModal(true);
       {!isSignedUp && (
         <div className="px-6 mt-6 pb-6 border-t md:px-6">
           <ul className="space-y-2 text-secondary font-semibold mt-4">
-            <li className="cursor-pointer hover:text-primary">
-              Why My Dexter?
-            </li>
+            <li className="cursor-pointer hover:text-primary">Why My Dexter?</li>
             <li className="cursor-pointer hover:text-primary">FAQ</li>
-            <li className="cursor-pointer hover:text-primary">
-              Terms & Policies
-            </li>
+            <li className="cursor-pointer hover:text-primary">Terms & Policies</li>
           </ul>
           <p className="mt-4 text-xs text-secondary">© 2024 My Dexter</p>
         </div>
       )}
 
-      {openModal && (
-        <ProModal/>
-      )}
+      {openModal && <ProModal />}
     </div>
   );
 };

@@ -7,7 +7,7 @@ import { authApi } from "@/lib/config/axios-instance";
 import { useSelectionStore } from "@/lib/store/global.store";
 import toast from "react-hot-toast";
 
-const BlogPostChat = ({ postId }) => {
+const BlogPostChat = ({ postId ,  updateBody}) => {
   const [input, setInput] = useState("");
   const textareaRef = useRef(null);
   const navigate = useNavigate();
@@ -28,21 +28,27 @@ const BlogPostChat = ({ postId }) => {
       toast.error("Please provide both the selected text and AI prompt.");
       return;
     }
-
+  
     setLoading(true);
-
+  
     try {
       const response = await authApi.patch(
         `/blog/update-section?blogPostId=${postId}`,
         {
-          selectedText: value,
+          selectedText: value, // This is the highlighted text
           AIPrompt: input,
         }
       );
-
-      updateValue("");
-      toast.success("Blog post updated successfully!");
-      reset();
+  
+      if (response.data.success) {
+        // Call the updateBody function to update the content in PostDetails
+        updateBody(response.data.data.newContent);
+        updateValue("");
+        toast.success("Blog post updated successfully!");
+        reset();
+      } else {
+        toast.error("Failed to update the blog post.");
+      }
     } catch (error) {
       toast.error("Error updating the blog post.");
     } finally {

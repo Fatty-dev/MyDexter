@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { FiMenu, FiX } from "react-icons/fi";
+import { CgMenuRight } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 import { FaRegEdit } from "react-icons/fa";
 import { PiCopySimpleBold } from "react-icons/pi";
@@ -13,42 +15,13 @@ import CreatePostModal from "../../../components/Common/Modals/CreatePostModal";
 import { useUserPlatformSiteStore } from "@/lib/store/global.store";
 import toast from "react-hot-toast";
 import { authApi } from "@/lib/config/axios-instance";
+import Sidebar from "@/components/Dashboardcomp/Sidebar";
 
-const BlogData = [
-  {
-    id: 1,
-    title: "The Ultimate Guide to Laundry: Tips, Tricks, and Hacks",
-    description:
-      "Laundry is a chore that many of us dread, but it doesn’t have to be a hassle. With the right tips and tricks, you can make laundry day a breeze.",
-    image: Guy,
-    footerTitle: "The Ultimate Guide to Laundry: Tips, Tricks, and Hacks",
-    footerTags: "Laundry Job, Cleaning, Clothing",
-    status: "Ready for publishing",
-  },
-  {
-    id: 2,
-    title: "Maximizing Your Workspace: Tips for Productivity",
-    description:
-      "Your workspace plays a huge role in your productivity. Learn how to optimize it with simple changes.",
-    image: Guy,
-    footerTitle: "Maximizing Your Workspace: Tips for Productivity",
-    footerTags: "Work, Office, Organization",
-    status: "Work in progress",
-  },
-  {
-    id: 3,
-    title: "Healthy Living: 5 Habits to Boost Your Wellness",
-    description:
-      "Adopting small healthy habits can have a big impact on your overall wellness. Start today!",
-    image: Guy,
-    footerTitle: "Healthy Living: 5 Habits to Boost Your Wellness",
-    footerTags: "Health, Wellness, Lifestyle",
-    status: "Published",
-  },
-];
 
 const BlogPost = () => {
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleSidebar = () => setIsOpen(!isOpen);
   const [createPostModalOpen, setCreatePostModalOpen] = React.useState(false);
   const [blogPosts, setBlogPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -78,7 +51,30 @@ const BlogPost = () => {
   };
   return (
     <div className="w-full max-w-[90%] mx-auto mt-6">
-    <div className="flex items-center gap-2 mb-6">
+
+         {/* Hamburger Menu */}
+         <div className="sm:block md:hidden absolute top-5 left-4 z-20">
+        <button onClick={toggleSidebar} className="text-3xl text-gray-700">
+          {isOpen ? <FiX size={22} /> : <CgMenuRight size={22} />}
+        </button>
+      </div>
+
+            {/* Sidebar */}
+            <div
+        className={`fixed inset-0 bg-black bg-opacity-30 z-10 transition-opacity duration-300 ease-in-out ${
+          isOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        }`}
+        onClick={toggleSidebar}
+      ></div>
+
+      <div
+        className={`fixed top-0 left-0 w-64 md:hidden bg-white h-full shadow-xl z-20 transform transition-transform duration-300 ease-in-out ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <Sidebar isOpen={isOpen} />
+      </div>
+    <div className=" ml-8 md:ml-0 flex items-center gap-2 mb-6">
       <RiHome6Line className="text-gray-500" />
       <h1 className="text-xs md:text-sm text-gray-500">Assistant</h1>
       <HiOutlineChevronRight className="text-gray-500" />
@@ -97,7 +93,7 @@ const BlogPost = () => {
           <p className="text-sm md:text-md">Wordpress</p>
         </div>
   
-        {sites["wordpress"]?.url && (
+         {sites["wordpress"]?.url && (
          <button
          className="text-primary flex items-center gap-2"
          onClick={() => setTimeout(() => window.open(sites["wordpress"].url, "_blank"), 100)}
@@ -105,7 +101,7 @@ const BlogPost = () => {
             {sites["wordpress"].url}
             <HiOutlineChevronDown className="text-[#667085]" />
           </button>
-        )}
+        )} 
       </div>
     </div>
     <hr className="my-2" />
@@ -149,9 +145,9 @@ const BlogPost = () => {
   
     {/* Blog Post Grid */}
     {isLoading ? (
-      <div className="p-4 mb-6 bg-white rounded-lg shadow">Blog post Loading....</div>
+      <div className="p-4 mb-6 mt-4 bg-white rounded-lg shadow">Blog post Loading....</div>
     ) : blogPosts.length === 0 ? (
-      <div>No blogpost</div>
+      <div className="p-4 mb-6 bg-white rounded-lg shadow ">No blogpost</div>
     ):(
     <div className="p-4 mb-6 bg-white rounded-lg shadow">
       <div className="flex items-center justify-between">

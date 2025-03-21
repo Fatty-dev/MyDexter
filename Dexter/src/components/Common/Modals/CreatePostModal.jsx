@@ -19,10 +19,12 @@ const variant = {
 const CreatePostModal = ({ setCreatePostModalOpen }) => {
   const [keywords, setKeywords] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [title, setTitle] = useState("");
   const {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm({});
   const values = watch(["title", "prompt"]);
@@ -57,14 +59,16 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
       const response = await authApi.post(
         `/blog/generate-title`,
         {
-          mainKeyword: inputs.keywords.split(","),
+          mainKeyword: keywords,
         }
       );
   
-      if (response?.data?.title) {
+      // Check the correct response structure
+      if (response?.data?.success && response.data.data?.value) {
         toast.success("Title rewritten successfully!");
-  
-        document.querySelector('input[name="title"]').value = response.data.title;
+        const newTitle = response.data.data.value; // Get the new title
+        setTitle(newTitle); // Update the title state
+        setValue("title", newTitle); // Update react-hook-form field
       } else {
         toast.error("Failed to generate a new title. Please try again.");
       }
@@ -77,21 +81,13 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
     }
   };
   
-  
-
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      // const response = await authApi.post("/blog/generate-single-article", {
-      //   mainKeyword: keywords.join(", "),
-      //   title: data.title,
-      //   aiPrompt: data.prompt,
-      // });
-
-      // toast.success("Post created successfully!");
-
+      // Join keywords into a string
+      const keywordsString = keywords.join(",");
       navigate(
-        `/dashboard/blog-loading?keywords=${keywords}&title=${data.title}&prompt=${data.prompt}`
+        `/dashboard/blog-loading?keywords=${encodeURIComponent(keywordsString)}&title=${encodeURIComponent(data.title)}&prompt=${encodeURIComponent(data.prompt)}`
       );
     } catch (error) {
       const errorMessage =
@@ -132,78 +128,67 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
         <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
           {/* Keywords Input */}
           <div className="border rounded-md p-2 flex flex-wrap items-center gap-2">
-          <label className="text-sm font-medium text-gray-600">
+            <label className="text-sm font-medium text-gray-600">
               Main Keywords
             </label>
-  {keywords.map((keyword, index) => (
-    <div
-      key={index}
-      className="flex items-center px-2 py-1 text-sm bg-gray-200 rounded-md"
-    >
-      <span>{keyword}</span>
-      <IoMdClose
-        className="ml-2 text-gray-600 cursor-pointer"
-        onClick={() => handleRemoveKeyword(index)}
-      />
-    </div>
-  ))}
-  <input
-    type="text"
-    placeholder="Type a keyword and press Enter"
-    onKeyDown={handleAddKeyword}
-    className="flex-1 p-2 text-sm text-gray-800 focus:outline-none"
-  />
-</div>
+            {keywords.map((keyword, index) => (
+              <div
+                key={index}
+                className="flex items-center px-2 py-1 text-sm bg-gray-200 rounded-md"
+              >
+                <span>{keyword}</span>
+                <IoMdClose
+                  className="ml-2 text-gray-600 cursor-pointer"
+                  onClick={() => handleRemoveKeyword(index)}
+                />
+              </div>
+            ))}
+            <input
+              type="text"
+              placeholder="Type a keyword and press Enter"
+              onKeyDown={handleAddKeyword}
+              className="flex-1 p-2 text-sm text-gray-800 focus:outline-none"
+            />
+          </div>
 
-        
           {/* Title Input */}
-{/* Title Input */}
-<div>
-  <label className="flex justify-between text-sm font-medium text-gray-600">
-    <span>Title</span>
-    <span
-      className={`text-xs ${
-        values[0]?.length > 100 ? "text-red-600" : "text-gray-400"
-      }`}
-    >
-      {values[0]?.length || 0}/100
-    </span>
-  </label>
-  <div className="relative mt-2">
-  <input
-    type="text"
-    placeholder="Enter post title (e.g., 5 Tips for Better Productivity)"
-    {...register("title", {
-      required: "Title is required.",
-      maxLength: {
-        value: 100,
-        message: "Title should not exceed 100 characters.",
-      },
-    })}
-    className={`border p-3 pr-20 rounded-md w-full text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300 ${
-      errors.title ? "border-red-600" : "border-gray-300"
-    }`}
-  />
-  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-2" 
-      onClick={rewrite}
+          <div>
+            <label className="flex justify-between text-sm font-medium text-gray-600">
+              <span>Title</span>
+              <span
+                className={`text-xs ${
+                  values[0]?.length > 100 ? "text-red-600" : "text-gray-400"
+                }`}
+              >
+                {values[0]?.length || 0}/100
+              </span>
+            </label>
+            <div className="relative mt-2">
+            <input
+  type="text"
+  placeholder="Enter post title"
+  value={title}
+  onChange={(e) => setTitle(e.target.value)}
+  className="border p-3 pr-20 rounded-md w-full text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300"
+/>
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-2" 
+                  onClick={rewrite}
+              >
+                <FiRefreshCcw
+                  className="text-gray-600 cursor-pointer hover:text-gray-800"
+                />
+                <span className="text-gray-600 text-sm cursor-pointer hover:text-gray-800">
+                  Rewrite
+                </span>
+              </div>
+            </div>
 
-  >
-    <FiRefreshCcw
-      className="text-gray-600 cursor-pointer hover:text-gray-800"
-    />
-    <span className="text-gray-600 text-sm cursor-pointer hover:text-gray-800">
-      Rewrite
-    </span>
-  </div>
-</div>
-
-  {errors.title && (
-    <p className="mt-1 text-xs text-red-600">
-      {errors.title.message}
-    </p>
-  )}
-</div>
-
+            {errors.title && (
+              <p className="mt-1 text-xs text-red-600">
+                {errors.title.message}
+              </p>
+            )}
+          </div>
 
           {/* Prompt Input */}
           <div>

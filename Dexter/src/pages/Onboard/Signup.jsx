@@ -49,7 +49,7 @@ const Signup = () => {
   
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4 sm:px-0">
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg px-6 pb-6 pt-4">
     
         <div className="text-center">
@@ -67,6 +67,7 @@ const Signup = () => {
             <input
               type="email"
               id="email"
+              disabled={loading}
               placeholder="Enter your email"
               className={`w-full px-2 py-2 border ${
                 errors.email ? "border-red-500" : "border-gray-300"
@@ -87,6 +88,7 @@ const Signup = () => {
             <input
               type={showPassword ? "text" : "password"}
               id="password"
+              disabled={loading}
               placeholder="Create a password"
               className={`w-full px-2 py-2 border ${
                 errors.password ? "border-red-500" : "border-gray-300"
@@ -120,6 +122,7 @@ const Signup = () => {
             <input
               type={showConfirmPassword ? "text" : "password"}
               id="confirmPassword"
+              disabled={loading}
               placeholder="Confirm your password"
               className={`w-full px-2 py-2 border ${
                 errors.confirmPassword ? "border-red-500" : "border-gray-300"
