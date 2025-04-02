@@ -86,6 +86,8 @@ const ConnectedApps = () => {
     }
   };
 
+  
+
   return (
     <div className="bg-white max-md:mt-24 mb-8 shadow-md mt-4 rounded-lg p-6">
       <div>

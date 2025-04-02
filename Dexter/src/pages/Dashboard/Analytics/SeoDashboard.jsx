@@ -4,6 +4,10 @@ import { CiCircleQuestion } from "react-icons/ci";
 import { GoEye } from "react-icons/go";
 import {  PiMagicWand } from "react-icons/pi";
 import { scores } from "@/lib/data";
+import { useUserPlatformSiteStore } from "@/lib/store/global.store";
+import { authApi } from "@/lib/config/axios-instance";
+import { useEffect, useState } from "react";
+
 
 const SeoDashboard = () => {
   const visibilityScore = {
@@ -16,6 +20,40 @@ const SeoDashboard = () => {
     textColor: "text-white",
     ringSize: "",
   };
+
+  const { sites } = useUserPlatformSiteStore();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [analytics, setAnalytics] = useState(null);
+
+
+  useEffect(() => {
+    console.log("Sites object:", sites); 
+    const fetchAnalytics = async () => {
+      setIsLoading(true);
+  
+      const siteId = sites["wordpress"]?.site?.siteId;
+  
+      if (!siteId) {
+        console.error("siteId is not available");
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const response = await authApi.get(`./analytics?platform=wordpress&siteId=${siteId}`);
+        setAnalytics(response.data.data.analytics);
+      } catch (error) {
+        console.error("Failed to fetch analytics", error);
+        // Assuming you have a toast function for error notifications
+        toast.error("Failed to fetch analytics");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  
+    fetchAnalytics();
+  }, [sites]); 
 
 
   return (

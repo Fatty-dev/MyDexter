@@ -8,32 +8,28 @@ const Metrics = ({ metric, className, marginTop, spanColor, otherClasses }) => {
   const circumference = 2 * Math.PI * 8;
 
   const getStrokeClass = (value, max) => {
+    if (value === 0) return "stroke-red-500"; // Special case for zero
     const percentage = (value / max) * 100;
     if (percentage < 50) return "stroke-red-500";
-    if (percentage < 75) return "stroke-yellow-500";
+    if (percentage === 50) return "stroke-yellow-500";
     return "stroke-green-500";
   };
-
-
 
   const strokeClass = getStrokeClass(metric.value, metric.max);
 
   const getDynamicIcon = () => {
-    if (strokeClass === "stroke-red-500") return dislike;
-    if (strokeClass === "stroke-green-500") return like;
-    return null;
+    if (metric.value === 0) return dislike; // Show dislike icon for zero value
+    const percentage = (metric.value / metric.max) * 100;
+    if (percentage < 50) return dislike; // Below 50% also shows dislike
+    if (percentage >= 50) return like; // Above 50% shows like
+    return null; // Default case
   };
 
   return (
     <div className={`${otherClasses} flex items-start gap-1`}>
       {/* Circular Progress */}
       <div className={`relative ${marginTop}`}>
-        <svg
-          width={20}
-          height={20}
-          className="size-12"
-          viewBox="0 0 20 20"
-        >
+        <svg width={20} height={20} className="size-12" viewBox="0 0 20 20">
           {/* Background Circle */}
           <circle
             style={{ stroke: "lightgray" }}
@@ -54,7 +50,9 @@ const Metrics = ({ metric, className, marginTop, spanColor, otherClasses }) => {
             strokeDasharray={circumference}
             transform="rotate(-90 10 10)"
             strokeDashoffset={
-              circumference - (metric.value / metric.max) * circumference || 0
+              metric.value === 0
+                ? circumference // Full circumference for zero value
+                : circumference - (metric.value / metric.max) * circumference || 0
             }
           />
         </svg>

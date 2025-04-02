@@ -1,15 +1,53 @@
+import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import USFlag from "@/assets/US.svg";
+import toast from "react-hot-toast";
+import { authApi } from "@/lib/config/axios-instance";
 
 const CoreSettings = () => {
-  const { control } = useFormContext();
+
+  const { control, handleSubmit } = useFormContext();
+  const [loading, setLoading] = useState(false);
+
+
+
+  const updateLanguage = async (data) => {
+    setLoading(true);
+    try {
+      const response = await authApi.patch(`/settings/blog/core?blogPostId=${id}`, {
+        language: data.language,
+        toneOfVoice: data.tone,
+        pointOfView: data.pointOfView,
+        targetCountry: data.country,
+        articleSize: data.articleSize,
+        aiModel: data.aiModel,
+        api: data.api,
+        humanize: data.humanize,
+      });
+
+      if (response.data.success) {
+        toast.success("Settings updated successfully!");
+      } else {
+        toast.error("Failed to update the settings.");
+      }
+    } catch (error) {
+      console.error("Error updating the settings:", error);
+      toast.error("Error updating the settings.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const onSubmit = (data) => {
+    updateLanguage(data);
+  };
 
   return (
     <div className="lg:mt-2 md:mt-2 mb-8 max-md:mt-16 relative bg-white border border-gray-300 h-fit shadow-md rounded-lg p-4 lg:w-[84%] md:w-[84%] max-md:w-full ">
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex gap-8 max-md:flex-col md:flex-col lg:flex-row">
           {/* First part */}
           <div className="lg:w-[40%] space-y-6">
@@ -48,10 +86,9 @@ const CoreSettings = () => {
 
             <div className="flex flex-col gap-3">
               <label
-                htmlFor="language"
+                htmlFor="tone"
                 className="text-#545a67] flex items-center text-sm gap-2"
               >
-                {" "}
                 Tone of voice
               </label>
               <Controller
@@ -79,7 +116,6 @@ const CoreSettings = () => {
                 htmlFor="pointOfView"
                 className="text-#545a67] flex items-center text-sm gap-2"
               >
-                {" "}
                 Point of view <IoMdInformationCircleOutline size={16} />
               </label>
               <Controller
@@ -107,7 +143,6 @@ const CoreSettings = () => {
                 htmlFor="country"
                 className="text-#545a67] flex items-center text-sm gap-2"
               >
-                {" "}
                 Target country <IoMdInformationCircleOutline size={16} />
               </label>
               <Controller
@@ -139,7 +174,6 @@ const CoreSettings = () => {
                   htmlFor="articleSize"
                   className="text-#545a67] flex items-center text-sm gap-2"
                 >
-                  {" "}
                   Article size
                 </label>
                 <Controller
@@ -173,7 +207,6 @@ const CoreSettings = () => {
                 htmlFor="aiModel"
                 className="text-#545a67] flex items-center text-sm gap-2"
               >
-                {" "}
                 Ai model <IoMdInformationCircleOutline size={16} />
               </label>
               <Controller
@@ -197,15 +230,6 @@ const CoreSettings = () => {
                       <option value="option 3">option 3</option>
                       <option value="option 4">option 4</option>
                     </select>
-                    {/* <span
-                      className={`absolute left-[12.8rem] text-[#6d68fb] ${
-                        field.value === "Anthropic Claude 3 Haiku"
-                          ? "visible"
-                          : "invisible"
-                      }`}
-                    >
-                      Popular
-                    </span> */}
                   </div>
                 )}
               />
@@ -222,13 +246,12 @@ const CoreSettings = () => {
                     <Controller
                       name="api"
                       control={control}
-                      defaultValue="false"
+                      defaultValue={false}
                       render={({ field }) => (
-                        <input type="checkbox" name="api" id="api" {...field} />
+                        <input type="checkbox" {...field} />
                       )}
                     />
                     <label htmlFor="api" className="text-#545a67] text-sm">
-                      {" "}
                       Enable with API keys
                     </label>
                   </div>
@@ -254,7 +277,7 @@ const CoreSettings = () => {
                 <Controller
                   name="humanize"
                   control={control}
-                  defaultValue="8th & 9th grade eaily understood"
+                  defaultValue="8th & 9th grade easily understood"
                   render={({ field }) => (
                     <div className="">
                       <select
@@ -270,17 +293,8 @@ const CoreSettings = () => {
                         </option>
                         <option value="option 2">option 2</option>
                         <option value="option 3">option 3</option>
-                        <option value="option 3">option 4</option>
+                        <option value="option 4">option 4</option>
                       </select>
-                      {/* <span
-                        className={`absolute left-[16.5rem] text-[#6d68fb] ${
-                          field.value === "8th & 9th grade easily understood"
-                            ? "visible"
-                            : "invisible"
-                        }`}
-                      >
-                        Popular
-                      </span> */}
                     </div>
                   )}
                 />
@@ -295,6 +309,12 @@ const CoreSettings = () => {
             </div>
           </div>
         </div>
+        <button
+          type="submit"
+          className="mt-4 bg-primary text-white py-2 px-4 rounded"
+        >
+          Update Settings
+        </button>
       </form>
     </div>
   );

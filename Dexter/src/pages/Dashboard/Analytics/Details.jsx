@@ -1,7 +1,10 @@
 import Metrics from "@/components/Common/Metrics";
+import { authApi } from "@/lib/config/axios-instance";
 import { scores } from "@/lib/data";
 import { optimizationMetrics } from "@/lib/data";
 import { engagementMetrics } from "@/lib/data";
+import { useUserPlatformSiteStore } from "@/lib/store/global.store";
+import { useEffect, useState } from "react";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { IoMdClose } from "react-icons/io";
 import { MdInfo } from "react-icons/md";
@@ -11,11 +14,44 @@ export const Details = ({ showDetails, setShowDetails }) => {
   const detailsToShow = scores.find(
     (item) => item.label.replace(/\s*Score$/, "") === showDetails
   );
+  const { sites } = useUserPlatformSiteStore();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [analytics, setAnalytics] = useState(null);
+
+
+  useEffect(() => {
+    console.log("Sites object:", sites); 
+    const fetchAnalytics = async () => {
+      setIsLoading(true);
+  
+      const siteId = sites["wordpress"]?.site?.siteId;
+  
+      if (!siteId) {
+        console.error("siteId is not available");
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const response = await authApi.get(`./analytics?platform=wordpress&siteId=${siteId}`);
+        setAnalytics(response.data.data.analytics);
+      } catch (error) {
+        console.error("Failed to fetch analytics", error);
+        // Assuming you have a toast function for error notifications
+        toast.error("Failed to fetch analytics");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  
+    fetchAnalytics();
+  }, [sites]); 
 
   return (
-    <div className=" fixed inset-0 z-[50] bg-black bg-opacity-60">
+    <div className=" fixed inset-0 z-[2000] bg-black bg-opacity-60">
       <div className="lg:w-[23%] transition-all  duration-300 absolute top-0 bottom-0 right-0  max-md:w-full max-md:top-12 md:w-[50%]  bg-white p-4 overflow-y-scroll">
-        <div className="flex items-center justify-between text-2xl pb-4 border-b border-b-gray-300 text-[#2e3646] font-bold">
+        <div className="flex items-center justify-between text-xl pb-4 border-b border-b-gray-300 text-[#2e3646] font-bold">
           <p>Details</p>
           <IoMdClose
             className="cursor-pointer "

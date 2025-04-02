@@ -6,183 +6,96 @@ import { BsBoxArrowLeft } from "react-icons/bs";
 import { IoMdClose } from "react-icons/io";
 import { optimizationMetrics, optimizationInsights } from "@/lib/data";
 import { authApi } from "@/lib/config/axios-instance";
-// import { useUserPlatformSiteStore } from "@/lib/store/global.store";
+import { useUserPlatformSiteStore } from "@/lib/store/global.store";
 import like from "@/assets/like.svg";
 import dislike from "@/assets/dislike.svg";
 
 
-const mockRes = {
-  analytics: {
-    pageVisitsScore: {
-      organic: 54,
-      total: 726,
-    },
-    avgDurationScore: {
-      organic: 149.04850746268656,
-      total: 149.04850746268656,
-    },
-    bounceRateScore: {
-      organic: 2.5,
-      total: 1.7666666666666668,
-    },
-    topPagesScore: {
-      organic: 205.54850746268656,
-      total: 876.8151741293532,
-    },
-    megaTagStatusScore: {
-      withMetaTags: 58,
-      totalUrl: 58,
-    },
-    totalKeywords: {
-      organic: 437,
-      total: 437,
-    },
-    _id: "67a4a7c311e65e5035590f70",
-    siteUrl: "https://bestdogresources.com/",
-    userId: "67911d6e6a41d832b77553f7",
-    __v: 0,
-    createdAt: "2025-02-06T12:14:58.963Z",
-    updatedAt: "2025-02-06T12:14:58.963Z",
-  },
-  seoAnalysis: [
-    {
-      issue: "Images Missing Alt Text",
-      description:
-        "Images on your site are missing 'alt' attributes. These are important because they improve accessibility for visually impaired users and help search engines understand the content of your images, which can improve your site's SEO.",
-      recommendation:
-        "Add descriptive 'alt' text to all images across your site. This text should briefly describe the image's content.",
-    },
-    {
-      issue: "Broken Internal Links",
-      description:
-        "There are broken links within your site. Broken links can lead to a poor user experience and negatively impact your site's SEO as they make it harder for search engines to crawl and index your site's pages.",
-      recommendation:
-        "Identify and fix all broken internal links on your site. You can do this by either updating the link's URL if it has changed or removing the link if the page no longer exists.",
-    },
-    {
-      issue: "Slow Page Load",
-      description:
-        "Some pages on your site are loading slowly. Page speed is a key factor in SEO, as search engines prioritize sites that load quickly, and users are more likely to abandon a site that doesn't load within a few seconds.",
-      recommendation:
-        "Improve your site's load times by compressing images, minifying CSS, JavaScript, and HTML files, and reducing the number of landing page redirects. Consider using a tool like Google's PageSpeed Insights for more specific recommendations.",
-    },
-  ],
-};
 
 const DomainOptimization = ({ setShowDetails  }) => {
   const [showMenu, setShowMenu] = useState(false);
+  const { sites } = useUserPlatformSiteStore();
+
   const [showInsights, setShowInsights] = useState(false);
   const [domain, setDomain] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [analytics, setAnalytics] = useState(null);
 
-  // const { sites } = useUserPlatformSiteStore();
 
-  // useEffect(() => {
-  //   const fetchDomain = async () => {
-  //     setIsLoading(true);
+  useEffect(() => {
+    console.log("Sites object:", sites); 
+    const fetchAnalytics = async () => {
+      setIsLoading(true);
+  
+      const siteId = sites["wordpress"]?.site?.siteId;
+  
+      if (!siteId) {
+        console.error("siteId is not available");
+        setIsLoading(false);
+        return;
+      }
 
-  //     console.log(sites, sites["wordpress"].url);
-
-  //     try {
-  //       const response = await authApi.get(
-  //         `./analytics/?siteUrl=${sites["wordpress"].url}/&trackingCode=${sites["wordpress"].ga4TrackingCode}`
-  //       );
-  //       setDomain(response.data.data.analytics);
-  //     } catch (error) {
-  //       toast.error("failed to fetch analytics");
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
-
-  //   fetchDomain();
-  // }, []);
+      try {
+        const response = await authApi.get(`./analytics?platform=wordpress&siteId=${siteId}`);
+        setAnalytics(response.data.data.analytics);
+      } catch (error) {
+        console.error("Failed to fetch analytics", error);
+        // Assuming you have a toast function for error notifications
+        toast.error("Failed to fetch analytics");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  
+    fetchAnalytics();
+  }, [sites]); 
 
   return (
-    <div className="relative w-1/2 p-4 mb-6 bg-white border rounded-lg lg:w-1/2 h-fit max-md:w-full md:w-full">
-      <div className="flex items-center justify-between">
-        <p className="font-semibold">Domain Optimization</p>
-        <CiMenuKebab
-          className="text-gray-700 cursor-pointer"
-          onClick={() => setShowMenu(!showMenu)}
+    <div className="relative w-1/2 p-3 mb-6 bg-white border rounded-lg">
+    <div className="flex items-center justify-between">
+      <p className="font-semibold">Domain Optimization</p>
+      <CiMenuKebab className="text-gray-700 cursor-pointer" onClick={() => setShowMenu(!showMenu)} />
+    </div>
+    <div className="flex items-center justify-between p-3 rounded-lg bg-[#f5f7f9]">
+   
+
+      {/* Bounce Rate Score */}
+      <div className="flex flex-col items-center border-r border-gray-300 pr-4">
+  <Metrics
+    metric={{
+      value: analytics?.totalKeywords?.organic || 0,
+      max: analytics?.totalKeywords?.total || 0,
+      label: "Total Keywords",
+    }}
+    className="flex flex-col items-center " // Ensure Metrics component also centers its content
+  />
+  {/* <p className="text-xs text-gray-500 text-center">View</p>  */}
+</div>
+
+      {/* Top Pages Score */}
+      <div className="flex flex-col items-center border-r border-gray-300 pr-4">
+        <Metrics
+          metric={{
+            value: analytics?.topPagesScore?.organic || 0,
+            max: analytics?.topPagesScore?.total || 0,
+            label: "Top Pages Score",
+          }}
         />
+        {/* <p className="text-xs text-gray-500">View</p> */}
       </div>
-      <div className="flex items-center justify-between   lg:flex-row  p-3  rounded-lg bg-[#f5f7f9]">
-        {/* total keyword */}
-        <div className="[&:not(:first-child)]:border-l border-l-[#d5d9e1]  [&:not(:first-child)]:pl-4 [&:not(:last-child)]:mr-2">
-          <Metrics
-            metric={{
-              value: mockRes.analytics.totalKeywords.organic || 0,
-              max: mockRes.analytics.totalKeywords.total || 0,
-              label: "Total Keywords",
-              imageSrc: null, // Ensures image doesn't override the icon
-              icon: null, // Let Metrics decide the icon dynamically
-            }}
-            marginTop="mt-4"
-            spanColor="text-[#7a8eac] text-sm"
-          />
-          <div className="flex items-center justify-center">
-          <p className="text-[#9795fa] font-semibold text-xs ">
-            View Keywords
-          </p>
-          </div>
-        </div>
-        {/* Meta Tag Status */}
-        <div className="[&:not(:first-child)]:border-l border-l-[#d5d9e1]  [&:not(:first-child)]:pl-4 [&:not(:last-child)]:mr-2">
-          <Metrics
-            metric={{
-              value: mockRes.analytics.megaTagStatusScore.withMetaTags || 0,
-              max: mockRes.analytics.megaTagStatusScore.totalUrl || 0,
-              label: "Meta Tag Status",
-              imageSrc: null, // Ensures image doesn't override the icon
-              icon: null, // Let Metrics decide the icon dynamically
-            }}
-            marginTop="mt-4"
-            spanColor="text-[#7a8eac] text-sm"
-          />
-          <div className="flex items-center justify-center">
-          <p className="text-[#9795fa] font-semibold text-xs ">
-            View Meta Tags
-          </p>
-          </div>
-        </div>
 
-                {/* top pages */}
-                <div className="[&:not(:first-child)]:border-l border-l-[#d5d9e1]  [&:not(:first-child)]:pl-4 [&:not(:last-child)]:mr-2">
-          <Metrics
-            metric={{
-              value: mockRes.analytics.topPagesScore.organic.toFixed(2) || 0,
-              max: mockRes.analytics.topPagesScore.total.toFixed(2)|| 0,
-              label: "Top Pages Score",
-              imageSrc: null, // Ensures image doesn't override the icon
-    icon: null, // Let Metrics decide the icon dynamically
-            }}
-            marginTop="mt-4"
-            spanColor="text-[#7a8eac] text-sm"
-          />
-          <div className="flex items-center justify-center">
-          <p className="text-[#9795fa] font-semibold text-xs ">
-            View Top Pages
-          </p>
-          </div>
-        </div>
-
-        {/* {optimizationMetrics.map((metric, index) => (
-          <div
-            key={index}
-            className="[&:not(:first-child)]:border-l border-l-[#d5d9e1]  [&:not(:first-child)]:pl-4 [&:not(:last-child)]:mr-2"
-          >
-            <Metrics
-              metric={metric}
-              marginTop="mt-4"
-              spanColor="text-[#7a8eac] text-sm"
-            />
-            <p className="text-[#9795fa] font-semibold text-xs ">
-              View {metric.toView}
-            </p>
-          </div>
-        ))} */}
+      {/* Mega Tag Status Score (last metric, no right border) */}
+      <div className="flex flex-col items-center">
+        <Metrics
+          metric={{
+            value: analytics?.megaTagStatusScore?.organic || 0,
+            max: analytics?.megaTagStatusScore?.total || 0,
+            label: "Meta Tag Status",
+          }}
+        />
+        {/* <p className="text-xs text-gray-500">View</p> */}
       </div>
+    </div>
 
       {/* Insights */}
 
@@ -196,41 +109,47 @@ const DomainOptimization = ({ setShowDetails  }) => {
         </div>
       </div>
       {showInsights && (
-        <div className="flex flex-col gap-3 mt-4">
-          {optimizationInsights.map((insight, index) => (
-            <div
-              key={index}
-              className={`w-full flex justify-between items-center rounded-lg p-3 ${
-                insight.type === "Warning"
-                  ? "bg-[#fff5e5] text-[#714a10]]"
-                  : insight.type === "Success"
-                  ? "bg-[#edf7ed] text-[#29502b]"
+  <div className="flex flex-col gap-3 ">
+    {analytics?.domainOptimization?.insight?.length > 0 ? (
+      analytics?.insight?.map((insight, index) => (
+        <div
+          key={index}
+          className={`w-full flex justify-between items-center rounded-lg p-3 ${
+            insight.type === "Warning"
+              ? "bg-[#fff5e5] text-[#714a10]"
+              : insight.type === "Success"
+              ? "bg-[#edf7ed] text-[#29502b]"
+              : insight.type === "Info"
+              ? "bg-[#f0f0ff] text-[#587795]"
+              : "bg-[#feeceb] text-[#621b16]"
+          }`}
+        >
+          <div className="flex items-start gap-3">
+            <span
+              className={` ${
+                insight.type === "Success"
+                  ? "text-[#4caf50] text-[16px]"
+                  : insight.type === "Warning"
+                  ? "text-[#ff9800] text-[18px]"
                   : insight.type === "Info"
-                  ? "bg-[#f0f0ff] text-[#587795]"
-                  : "bg-[#feeceb] text-[#621b16]"
-              }`}
+                  ? "text-[#6e69fb]"
+                  : "text-[#f44336] text-[18px]"
+              } `}
             >
-              <div className="flex items-start gap-3">
-                <span
-                  className={` ${
-                    insight.type === "Success"
-                      ? "text-[#4caf50] text-[16px]"
-                      : insight.type === "Warning"
-                      ? "text-[#ff9800]  text-[18px]"
-                      : insight.type === "Info text-[18px]"
-                      ? "text-[#6e69fb]"
-                      : "text-[#f44336] text-[18px]"
-                  } `}
-                >
-                  {insight.icon}
-                </span>
-                <p className="text-sm">{insight.detail} </p>
-              </div>
-              <IoMdClose size={24} className="cursor-pointer" />
-            </div>
-          ))}
+              {insight.icon}
+            </span>
+            <p className="text-sm">{analytics?.insight?.detail}</p>
+          </div>
+          <IoMdClose size={24} className="cursor-pointer" />
         </div>
-      )}
+      ))
+    ) : (
+      <div className="w-full flex text-sm justify-center items-center text-gray-500">
+        <p>No insights available.</p>
+      </div>
+    )}
+  </div>
+)}
       {showMenu && (
         <div
           onClick={() => {

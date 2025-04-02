@@ -26,25 +26,32 @@ const Analytics = () => {
 
 
   useEffect(() => {
+    console.log("Sites object:", sites); 
     const fetchAnalytics = async () => {
       setIsLoading(true);
-
-      // console.log(sites, sites["wordpress"].url);
+  
+      const siteId = sites["wordpress"]?.site?.siteId;
+  
+      if (!siteId) {
+        console.error("siteId is not available");
+        setIsLoading(false);
+        return;
+      }
 
       try {
-        const response = await authApi.get(
-          `./analytics/?siteUrl=${sites["wordpress"].url}/&trackingCode=${sites["wordpress"].ga4TrackingCode}`
-        );
+        const response = await authApi.get(`./analytics?platform=wordpress&siteId=${siteId}`);
         setAnalytics(response.data.data.analytics);
       } catch (error) {
-        toast.error("failed to fetch analytics");
+        console.error("Failed to fetch analytics", error);
+        // Assuming you have a toast function for error notifications
+        toast.error("Failed to fetch analytics");
       } finally {
         setIsLoading(false);
       }
     };
-
+  
     fetchAnalytics();
-  }, []);
+  }, [sites]); 
 
   return (
     <div className="w-[90%] mx-auto mt-[1.5rem]">

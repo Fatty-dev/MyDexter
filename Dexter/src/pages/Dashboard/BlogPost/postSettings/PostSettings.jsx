@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { HiOutlineChevronRight } from "react-icons/hi";
 import { RiHome6Line } from "react-icons/ri";
@@ -15,17 +15,26 @@ import ExternalLinking from "./menus/ExternalLinking";
 import Document from "./menus/Document";
 import Publication from "./menus/Publication";
 import { useFormContext } from "react-hook-form";
+import { useSearchParams } from "react-router-dom";
 
 const PostSettings = () => {
-  const [selectedSetting, setSelectedSetting] = useState(0);
-
+  const [searchParams, setSearchParams] = useSearchParams();
   const { handleSubmit, watch } = useFormContext();
+  const formData = watch(); // Watch the current form state
+
+  // Get the active setting from the URL or default to 0
+  const initialSetting = searchParams.get("tag") ? Number(searchParams.get("tag")) : 0;
+  const [selectedSetting, setSelectedSetting] = useState(initialSetting);
 
   const onSubmit = (data) => {
     console.log("Form Data:", data);
   };
 
-  const formData = watch(); // Watch the current form state
+  // Update the URL when the selected setting changes
+  const handleSelectSetting = (id) => {
+    setSelectedSetting(id);
+    setSearchParams({ tag: id });
+  };
 
   const components = {
     0: <CoreSettings />,
@@ -43,7 +52,6 @@ const PostSettings = () => {
 
   return (
     <div className="w-[90%] mx-auto relative mt-[1.5rem]">
-      {" "}
       <div className="flex items-center gap-2 mb-6">
         <RiHome6Line className="text-gray-500" />
         <h1 className="text-sm text-gray-500">Assistant</h1>
@@ -63,14 +71,14 @@ const PostSettings = () => {
         </h1>
         <div className="flex items-center gap-4 pb-3">
           <div>
-            <button className="bg-white px-4 py-2 shadow-lg border border-gray-300  text-[#697383] font-semibold   rounded-lg">
+            <button className="bg-white px-4 py-2 shadow-lg border border-gray-300 text-[#697383] font-semibold rounded-lg">
               Cancel
             </button>
           </div>
           <div>
             <button
               onClick={handleSubmit(onSubmit)}
-              className="text-white font-semibold flex gap-2 items-center bg-[#6d68fb] px-4  py-2 justify-center rounded-lg border  border-gray-300"
+              className="text-white font-semibold flex gap-2 items-center bg-[#6d68fb] px-4 py-2 justify-center rounded-lg border border-gray-300"
             >
               Save
             </button>
@@ -81,7 +89,7 @@ const PostSettings = () => {
       <div className="text-[#3a4151] pt-3 lg:flex md:flex lg:gap-12 md:gap-8 ">
         <SettingsMenu
           selectedSetting={selectedSetting}
-          setSelectedSetting={setSelectedSetting}
+          setSelectedSetting={handleSelectSetting}
         />
         {components[selectedSetting]}
       </div>
