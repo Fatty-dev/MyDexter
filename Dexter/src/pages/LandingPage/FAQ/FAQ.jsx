@@ -98,13 +98,13 @@ const FAQ = () => {
             key={index}
             className="border-gray-300 py-2 transition-all duration-300"
           >
-            <div className='border rounded-lg  py-4 px-4 shadow-md '>
+            <div className='border rounded-lg py-4 px-4 shadow-md '>
             {/* FAQ Question Button */}
             <button
               onClick={() => toggleFAQ(index)}
-              className="flex justify-between items-center w-full text-left focus:outline-none"
+              className="flex justify-between items-start md:items-center w-full text-left focus:outline-none"
             >
-              <span className="font-normal text-[#475467] text-lg">
+              <span className="font-normal text-[#475467] text-md md:text-lg">
                 {faq.question}
               </span>
               {/* Chevron Icon */}

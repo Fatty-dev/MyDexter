@@ -27,7 +27,7 @@ navigate("/dashboard")
   const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className="container mx-auto flex flex-col lg:flex-row justify-between items-center py-4 bg-white">
+    <nav className="container mx-auto flex flex-col lg:flex-row justify-between items-center pt-6 md:pt-8 py-4 bg-white">
       <div className="flex justify-between w-[90%] md:w-full lg:w-auto">
         <div
           className="text-xl font-bold cursor-pointer text-primary"
