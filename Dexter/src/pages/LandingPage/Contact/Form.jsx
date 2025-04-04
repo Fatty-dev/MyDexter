@@ -18,9 +18,9 @@ const Form = () => {
 
         </div>
 
-        <div className="mb-[6rem]">
+        <div className="w-[90%] mx-auto md:w-auto mb-[6rem]">
         <form>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          <div className=" grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             {/* Name */}
             <div>
               <label

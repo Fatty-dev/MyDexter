@@ -48,10 +48,10 @@ const Grow = () => {
 
   return (
     <section className="py-20">
-      <div className="max-w-7xl mx-auto ">
+      <div className=" w-[90%] md:max-w-7xl mx-auto ">
         {/* Header */}
         <div className="mb-12">
-          <h1 className="text-[1rem] md:text-[2rem] font-semibold text-gray-900 mb-4">
+          <h1 className="text-[1.4rem] md:text-[2rem] font-semibold text-gray-900 mb-4">
           Beautiful analytics to <span className="text-indigo-600">grow smarter</span>
         </h1>
           <p className="mt-4 w-full sm:w-[80%] md:w-[70%] text-lg sm:text-xl text-gray-600">

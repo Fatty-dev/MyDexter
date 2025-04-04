@@ -71,7 +71,7 @@ const Features = () => {
 
         {/* Features Section */}
         <div className="">
-        <div className="grid grid-cols-1 md:bg-white sm:grid-cols-2 lg:grid-cols-3 gap-8 relative z-[50]">
+        <div className="grid grid-cols-1 w-[90%] mx-auto md:w-auto md:bg-white sm:grid-cols-2 lg:grid-cols-3 gap-8 relative z-[50]">
           {featuresDataset.map((feature) => (
             <div
               key={feature.id}

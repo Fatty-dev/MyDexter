@@ -151,7 +151,7 @@ const Sidebar = ({ isOpen }) => {
 
   return (
     <div
-      className={`fixed top-0 left-0 flex flex-col z-[2000] justify-between bg-white h-full shadow-xl transform transition-transform duration-300 ease-in-out ${
+      className={`fixed top-0 left-0 flex flex-col z-[2000] justify-start bg-white h-full shadow-xl transform transition-transform duration-300 ease-in-out ${
         expanded ? "w-64" : "w-16"
       } ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
     >
@@ -246,9 +246,9 @@ const Sidebar = ({ isOpen }) => {
               <BsPersonCircle size={24} />
             </div>
             {expanded && (
-              <span className="text-secondary text-sm font-medium">
-                {email}
-              </span>
+             <span className="text-secondary text-sm font-medium">
+             {email.length > 20 ? `${email.slice(0, 20)}...` : email}
+           </span>
             )}
 
             {/* Dropdown Menu */}

@@ -71,7 +71,7 @@ const Plans = () => {
 
       </div>
 
-<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full'>
+<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-[90%] mx-auto md:w-full'>
       {/* Descriptive Text */}
       <div className="mb-8 px-4">
         <div className='flex items-center gap-2 mb-3'>
@@ -156,7 +156,7 @@ const Plans = () => {
 
       {/* Features Comparison Table */}
       <div className="mx-auto mt-12 ">
-        <table className="w-full text-left border-collapse overflow-hidden ">
+        <table className="w-[90%] mx-auto md:w-full text-left border-collapse overflow-hidden ">
           <thead className="border-b text-xl font-semibold">
             <tr>
               <th className="px-4 py-2 text-[#0F182A] font-semibold">Features Comparison</th>
