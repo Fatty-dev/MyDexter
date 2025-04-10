@@ -1,10 +1,18 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const SuccessModal = ({ isOpen, handleClose }) => {
     if (!isOpen) return null; 
+    const navigate = useNavigate();
+
+    const home =  () => {
+        navigate("/dashboard")
+    }
+
+
 
     return (
-        <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-blue-50 bg-opacity-75">
+        <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-blue-50 bg-opacity-75">
             <div className="bg-white p-8 rounded-lg shadow-md text-center">
                 <svg
                     className="w-16 h-16 text-primary mx-auto mb-4"
@@ -20,7 +28,7 @@ const SuccessModal = ({ isOpen, handleClose }) => {
                 <h1 className="text-2xl font-semibold text-gray-800">Transaction Successful!</h1>
                 <p className="mt-2 text-gray-600">Your subscription has been successfully processed. Thank you for your purchase!</p>
                 <button 
-                    onClick={handleClose} 
+                    onClick={home} 
                     className="mt-4 inline-block bg-primary text-white py-2 px-4 rounded-md"
                 >
                     Go to Homepage

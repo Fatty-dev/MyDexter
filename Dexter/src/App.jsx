@@ -53,7 +53,7 @@ const App = () => {
           <Route path="" element={<Prompt />} />
           <Route path="chat/:chatId" element={<ChatBubble />} />
           <Route path="settings" element={<Settings />} />
-        <Route path="success" element={<SuccessModal />} />
+        <Route path="success" element={<SuccessModal/>} />
 
 
 
