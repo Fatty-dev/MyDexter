@@ -92,7 +92,7 @@ const FAQ = () => {
       </div>
 
       {/* FAQ Section */}
-      <div className="max-w-6xl mx-auto pb-16 px-4">
+      <div className="max-w-4xl xl:max-w-6xl mx-auto pb-16 px-4">
         {faqData.map((faq, index) => (
           <div
             key={index}

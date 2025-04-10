@@ -24,6 +24,8 @@ import BulkArticle from "./pages/Dashboard/BlogPost/BulkArticle/BulkArticle";
 import BlogLoading from "./pages/Dashboard/BlogPost/BlogLoading";
 import PostSettings from "./pages/Dashboard/BlogPost/postSettings/PostSettings";
 import { FormProvider, useForm } from "react-hook-form";
+import Parent from "./components/Common/Modals/Parent";
+import SuccessModal from "./components/Common/Modals/SuccessModal";
 
 const App = () => {
   const methods = useForm(); 
@@ -45,11 +47,15 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
+
         {/* Nested Routes under Dashboard */}
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route path="" element={<Prompt />} />
           <Route path="chat/:chatId" element={<ChatBubble />} />
           <Route path="settings" element={<Settings />} />
+        <Route path="success" element={<SuccessModal />} />
+
+
 
           <Route path="blog-post" element={<BlogPost />} />
           <Route path="blog-post/:postId" element={<PostDetails />} />

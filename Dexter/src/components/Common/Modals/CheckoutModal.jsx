@@ -1,14 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
 import { FaCreditCard, FaAmazon, FaUniversity } from "react-icons/fa";
 import { SiCashapp } from "react-icons/si";
 import logo from "../../../assets/Main_Logo.svg";
-import visaImage from "../../../assets/Visa.svg"; // Add your Visa/MasterCard image paths
+import visaImage from "../../../assets/Visa.svg"; 
 import mastercardImage from "../../../assets/Mastercard.svg";
+import { authApi } from "@/lib/config/axios-instance";
 
 const CheckoutModal = ({ onClose }) => {
+  const [isSubscribing, setIsSubscribing] = useState(false);
+
+  const subscribe = async () => {
+    setIsSubscribing(true);
+    try {
+      const response = await authApi.post(`subscription/subscribe`);
+      
+      if (response.data.success) {
+        // Redirect to the URL from the response
+        window.location.href = response.data.data.url;
+      } else {
+        toast.error("Subscription failed: " + response.data.message);
+      }
+    } catch (error) {
+      console.error("Error subscribing:", error);
+      toast.error("Failed to subscribe. Please try again.");
+    } finally {
+      setIsSubscribing(false);
+    }
+  };
+
+
   return (
-    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-[1000]">
+    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-[2000]">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-4xl">
         {/* Header */}
         <div className="flex justify-between items-center border-b px-6 py-3">
@@ -204,9 +227,13 @@ const CheckoutModal = ({ onClose }) => {
                 </span>
               </label>
             </div>
-            <button className="w-full bg-indigo-600 text-white py-2 mt-6 rounded-md hover:bg-indigo-700">
-              Subscribe
-            </button>
+            <button 
+  className={`w-full ${isSubscribing ? 'bg-gray-400' : 'bg-indigo-600'} text-white py-2 mt-6 rounded-md hover:bg-indigo-700`} 
+  onClick={subscribe} 
+  disabled={isSubscribing}
+>
+  {isSubscribing ? 'Subscribing...' : 'Subscribe'}
+</button>
           </div>
         </div>
       </div>
