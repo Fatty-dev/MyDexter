@@ -48,12 +48,14 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
 
 
+        <Route path="subscription/success" element={<SuccessModal isOpen/>} />
+
+
         {/* Nested Routes under Dashboard */}
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route path="" element={<Prompt />} />
           <Route path="chat/:chatId" element={<ChatBubble />} />
           <Route path="settings" element={<Settings />} />
-        <Route path="success" element={<SuccessModal/>} />
 
 
 

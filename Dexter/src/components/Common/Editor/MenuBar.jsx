@@ -40,6 +40,8 @@ const MenuBar = ({ editor, postId, content }) => {
             src: reader.result, // Base64 URL
           };
 
+          console.log({ file });
+
           // Upload the image to the server
           try {
             const formData = new FormData();
@@ -75,6 +77,8 @@ const MenuBar = ({ editor, postId, content }) => {
   const handleSave = async () => {
     // const content = editor.getHTML(); // Get the current content of the editor
     const images = uploadedImages.current; // Get the uploaded images metadata
+
+    console.log({ images });
 
     try {
       const response = await authApi.patch(

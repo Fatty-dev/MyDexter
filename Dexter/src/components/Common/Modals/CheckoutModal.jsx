@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
 import { FaCreditCard, FaAmazon, FaUniversity } from "react-icons/fa";
 import { SiCashapp } from "react-icons/si";
@@ -6,9 +6,12 @@ import logo from "../../../assets/Main_Logo.svg";
 import visaImage from "../../../assets/Visa.svg"; 
 import mastercardImage from "../../../assets/Mastercard.svg";
 import { authApi } from "@/lib/config/axios-instance";
+import { useSearchParams } from "react-router-dom";
 
 const CheckoutModal = ({ onClose }) => {
   const [isSubscribing, setIsSubscribing] = useState(false);
+  const [callBack , setCallBack] = useState (false);
+
 
   const subscribe = async () => {
     setIsSubscribing(true);
@@ -28,6 +31,9 @@ const CheckoutModal = ({ onClose }) => {
       setIsSubscribing(false);
     }
   };
+
+
+
 
 
   return (
