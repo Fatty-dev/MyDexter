@@ -9,26 +9,35 @@ export const publicApi = axios.create({
 });
 
 // protected endpoints
-
 export const authApi = axios.create({
   headers: { "Content-Type": "application/json" },
   baseURL: API_URL,
   withCredentials: true,
 });
 
+// Request interceptor to add the access token
 authApi.interceptors.request.use(async (config) => {
-  // get access token from storage
   const accessToken = localStorage.getItem("accessToken") || "";
-  // console.log({accessToken});
-
-  // const refreshToken = localStorage.getItem("refresh_token") ?? "";
   if (accessToken) config.headers["Authorization"] = `Bearer ${accessToken}`;
-  // config.headers["X-refresh"] = `${refreshToken}`;
-
   return config;
 });
 
-// authApi.interceptors.response.use(({ headers }) => {
-//   const newAccessToken = headers["x-access-token"];
-//   if (newAccessToken) localStorage.setItem("access_token", newAccessToken);
-// });
+// Response interceptor to handle token expiration
+authApi.interceptors.response.use(
+  (response) => {
+    // Check for a new access token in the response headers
+    const newAccessToken = response.headers["x-access-token"];
+    if (newAccessToken) {
+      localStorage.setItem("accessToken", newAccessToken);
+    }
+    return response;
+  },
+  (error) => {
+    // Handle 401 Unauthorized error
+    if (error.response && error.response.status === 401) {
+      // Redirect to login page
+      window.location.href = "/login"; // Adjust the path as needed
+    }
+    return Promise.reject(error);
+  }
+);
