@@ -193,7 +193,7 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
           {/* Prompt Input */}
           <div>
             <label className="text-sm font-medium text-gray-600">
-              AI Prompt (Optional)
+              AI Prompt
             </label>
             <textarea
               placeholder="Add custom instructions to tailor your post."

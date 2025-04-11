@@ -25,6 +25,7 @@ const PostDetails = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
   const [body, setBody] = useState(null);
+  const [image, setImage] = useState(null);
   const [messages, setMessages] = useState([]);
   const [dailyUsage, setDailyUsage] = useState(0);
   const [dailyLimit, setDailyLimit] = useState(0);
@@ -38,11 +39,20 @@ const PostDetails = () => {
 
   const getDetails = async () => {
     setLoading(true);
+    
     try {
       const { data } = await authApi.get(`blog/single?blogPostId=${postId}`);
       if (data) {
         const postData = data.data;
         setBody(postData.content);
+
+        console.log(postData.images);
+
+        if (postData.images && postData.images.length > 0) {
+          setImage(postData.images[0].url); 
+      } else {
+          setImage(null);
+      }
         setDailyUsage(postData.performance.organicTraffic);
         setDailyLimit(postData.performance.pagesPerSession);
       } else {
@@ -191,6 +201,7 @@ const PostDetails = () => {
                 body && (
                   <Editor
                     content={body}
+                    image= {image}
                     postId={postId}
                     editable={true}
                     onDataChange={(data) => setBody(data)}

@@ -27,7 +27,7 @@ const Sidebar = ({ isOpen }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { email } = useEmailStore();
-  const { type } = useUserSuscriptionTypeStore();
+  const { type, setType } = useUserSuscriptionTypeStore();
   const { chatId } = useParams();
 
   const isSignedUp = Boolean(localStorage.getItem("accessToken"));
@@ -39,7 +39,7 @@ const Sidebar = ({ isOpen }) => {
   const { expanded, toggleExpand } = useSidebar();
   const { resetPlatforms } = useUserPlatformSiteStore();
   
-  const dropdownRef = useRef(null); // Create a ref for the dropdown
+  const dropdownRef = useRef(null); 
 
   useEffect(() => {
     const fetchChatHistory = async () => {
@@ -63,6 +63,29 @@ const Sidebar = ({ isOpen }) => {
       setLoading(false);
     }
   }, [isSignedUp]);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await authApi.get("/settings/user/me");
+        if (response.data.success) {
+               // Extract the subscription type from the response
+               const subscriptionType = response.data.data.subscription.type;
+               setType(subscriptionType); 
+        } else {
+          toast.error("Failed to load profile.");
+        }
+      } catch (error) {
+        toast.error("Error fetching profile.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (isSignedUp) {
+      fetchProfile();
+    }
+  }, [isSignedUp, setType]);
 
   const toggleDropdown = () => setShowDropdown((prev) => !prev);
 

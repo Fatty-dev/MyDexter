@@ -39,16 +39,16 @@ const MenuBar = ({ editor, postId, content }) => {
             type: file.type,
             src: reader.result, // Base64 URL
           };
-
+  
           console.log({ file });
-
+  
           // Upload the image to the server
           try {
             const formData = new FormData();
-
             formData.append("images", file);
             formData.append("content", content);
-
+            formData.append("imagesMetadata", JSON.stringify([{ position: 1, altText: "A description of the image." }]));
+  
             // Use backticks for template literals
             const response = await authApi.patch(
               `/blog/update?blogPostId=${postId}`,
@@ -57,48 +57,53 @@ const MenuBar = ({ editor, postId, content }) => {
                 headers: { "Content-Type": "multipart/form-data" },
               }
             );
+  
             if (response.data.success) {
-              const imageUrl = response.data.imageUrl; // Assuming the response contains the image URL
-              uploadedImages.current.push(imageMetadata); // Store the image metadata
-              editor.chain().focus().setImage({ src: imageUrl }).run(); // Insert the image into the editor
+              const images = response.data.images; // Adjust based on actual response structure
+              if (images && images.length > 0) {
+                const imageUrl = images[0].url; // Assuming the first image is what you need
+                uploadedImages.current.push(imageMetadata);
+                editor.chain().focus().setImage({ src: imageUrl }).run();
+              }
             } else {
               toast.error("Image upload failed.");
             }
           } catch (error) {
             toast.error("Error uploading image.");
+            console.error(error); // Log the error for debugging
           }
         };
         reader.readAsDataURL(file);
       }
     },
-    [editor, postId]
+    [editor, postId, content] // Ensure 'content' is included in dependencies
   );
 
-  const handleSave = async () => {
-    // const content = editor.getHTML(); // Get the current content of the editor
-    const images = uploadedImages.current; // Get the uploaded images metadata
+  // const handleSave = async () => {
+  //   // const content = editor.getHTML(); // Get the current content of the editor
+  //   const images = uploadedImages.current; // Get the uploaded images metadata
 
-    console.log({ images });
+  //   console.log({ images });
 
-    try {
-      const response = await authApi.patch(
-        `/blog/update?blogPostId=${postId}`,
-        {
-          content,
-          imageMetadata: images,
-          images: images.map((image) => image.src), // Assuming you want to send the Base64 URLs as well
-        }
-      );
+  //   try {
+  //     const response = await authApi.patch(
+  //       `/blog/update?blogPostId=${postId}`,
+  //       {
+  //         content,
+  //         imageMetadata: images,
+  //         images: images.map((image) => image.src), // Assuming you want to send the Base64 URLs as well
+  //       }
+  //     );
 
-      if (response.data.success) {
-        toast.success("Blog post updated successfully!");
-      } else {
-        toast.error("Failed to update the blog post.");
-      }
-    } catch (error) {
-      toast.error("Error updating the blog post.");
-    }
-  };
+  //     if (response.data.success) {
+  //       toast.success("Blog post updated successfully!");
+  //     } else {
+  //       toast.error("Failed to update the blog post.");
+  //     }
+  //   } catch (error) {
+  //     toast.error("Error updating the blog post.");
+  //   }
+  // };
 
   if (!editor) {
     return null;

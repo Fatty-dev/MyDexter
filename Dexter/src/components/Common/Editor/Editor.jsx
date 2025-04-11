@@ -11,14 +11,16 @@ import { marked } from "marked";
 import { useState, useRef, useEffect } from "react";
 import { useSelectionStore } from "@/lib/store/global.store";
 
-const Editor = ({ onDataChange, content, editable, postId }) => {
+const Editor = ({  onDataChange, content, editable, postId, image }) => {
   const [showIcon, setShowIcon] = useState(false);
   const [iconPosition, setIconPosition] = useState({ top: 0, left: 0 });
   const editorRef = useRef(null);
   const { updateValue } = useSelectionStore();
 
   // Parse content using `marked`
-  const parsedContent = content ? marked(content) : "";
+  const parsedContent = image 
+  ? `<img src="${image.src}" alt="${image.altText}" class="rounded" />` + (content ? marked(content) : "")
+  : (content ? marked(content) : "");
 
   const editor = useEditor({
     editable,
@@ -109,32 +111,32 @@ const Editor = ({ onDataChange, content, editable, postId }) => {
     if (editor) {
       editor.commands.setContent(parsedContent); // Update the editor content when it changes
     }
-  }, [content, editor]);
+  }, [content, image, editor]); // Add image to the dependencies
 
   return (
     <div className="relative bg-white" ref={editorRef}>
-      {editable && (
-        <div className="w-full sticky top-0 z-50 bg-white shadow">
-          <MenuBar editor={editor} postId={postId} content={content} />
-        </div>
-      )}
-      <div>
-        <EditorContent editor={editor} />
+    {editable && (
+      <div className="w-full sticky top-0 z-50 bg-white shadow">
+        <MenuBar editor={editor} postId={postId} content={content} image={image} />
       </div>
-
-      {showIcon && (
-        <button
-          className="absolute bg-red-500 text-white p-2 rounded cursor-pointer"
-          style={{
-            top: `${iconPosition.top}px`,
-            left: `${iconPosition.left}px`,
-          }}
-          onClick={copySelectedText}
-        >
-          📋
-        </button>
-      )}
+    )}
+    <div>
+      <EditorContent editor={editor} />
     </div>
+
+    {showIcon && (
+      <button
+        className="absolute bg-red-500 text-white p-2 rounded cursor-pointer"
+        style={{
+          top: `${iconPosition.top}px`,
+          left: `${iconPosition.left}px`,
+        }}
+        onClick={copySelectedText}
+      >
+        📋
+      </button>
+    )}
+  </div>
   );
 };
 
