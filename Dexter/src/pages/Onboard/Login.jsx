@@ -5,7 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { publicApi } from "../../lib/config/axios-instance";
 import toast from "react-hot-toast";
 import logo from "../../assets/Main_Logo.svg";
-import useEmailStore, {  useUserPlatformSiteStore, useUserSuscriptionTypeStore } from "../../lib/store/global.store";
+import useEmailStore, {
+  useAuthStore,
+  useUserPlatformSiteStore,
+  useUserSuscriptionTypeStore,
+} from "../../lib/store/global.store";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,6 +18,8 @@ const Login = () => {
 
   const { setEmail } = useEmailStore();
   const { setType } = useUserSuscriptionTypeStore();
+  const { setExpiresIn } = useAuthStore();
+
   const {
     register,
     handleSubmit,
@@ -35,6 +41,9 @@ const Login = () => {
         password: data.password,
       });
 
+      const expiresIn = new Date().getTime() + 86400 * 1000
+      setExpiresIn(expiresIn);
+
       localStorage.setItem("accessToken", res.data.accessToken);
 
       const user = res.data.user;
@@ -42,7 +51,7 @@ const Login = () => {
 
       const connectedAppsKeys = Object.keys(user?.platforms ?? {});
       if (connectedAppsKeys) {
-        connectedAppsKeys.forEach(key => {
+        connectedAppsKeys.forEach((key) => {
           setSite(key, user?.platforms[key].sites[0]);
         });
       }
@@ -50,7 +59,9 @@ const Login = () => {
       setType(res.data.user.subscription.type);
       navigate("/dashboard");
     } catch (error) {
-      const errorMessage = error.response?.data?.message || "Something went wrong.";
+      console.log(error)
+      const errorMessage =
+        error.response?.data?.message || "Something went wrong.";
       toast.error(errorMessage);
     } finally {
       setLoading(false);

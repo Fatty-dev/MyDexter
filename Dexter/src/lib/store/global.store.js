@@ -62,3 +62,16 @@ export const useSidebar = create()(
     { name: "use-sidebar" }
   )
 );
+
+export const useAuthStore = create()(
+  persist(
+    (set, get) => ({
+      expiresIn: null,
+      setExpiresIn: (time) => {
+        set({ expiresIn: time });
+      },
+      clearExpiresIn: () => set({ expiresIn: null })
+    }),
+    { name: "use-auth-dex" }
+  )
+);

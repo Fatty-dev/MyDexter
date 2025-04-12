@@ -11,6 +11,7 @@ import analytics from "../../assets/analytics.svg";
 import collapse from "../../assets/collapse.svg";
 import logoIcon from "../../assets/logo-icon.svg";
 import useEmailStore, {
+  useAuthStore,
   useSidebar,
   useUserPlatformSiteStore,
   useUserSuscriptionTypeStore,
@@ -28,6 +29,7 @@ const Sidebar = ({ isOpen }) => {
   const location = useLocation();
   const { email } = useEmailStore();
   const { type, setType } = useUserSuscriptionTypeStore();
+  const { clearExpiresIn } = useAuthStore()
   const { chatId } = useParams();
 
   const isSignedUp = Boolean(localStorage.getItem("accessToken"));
@@ -314,6 +316,7 @@ const Sidebar = ({ isOpen }) => {
                   onClick={() => {
                     localStorage.removeItem("accessToken");
                     navigate("/login");
+                    clearExpiresIn()
                     resetPlatforms();
                   }}
                 >
