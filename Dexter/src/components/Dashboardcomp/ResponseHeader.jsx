@@ -4,8 +4,10 @@ import { FiX } from "react-icons/fi";
 import { CgMenuRight } from "react-icons/cg";
 import Sidebar from "./Sidebar";
 import ProModal from "../Common/Modals/ProModal";
+import { useUserSuscriptionTypeStore } from "@/lib/store/global.store";
 
 const ResponseHeader = ({ chatTitle, timestamp }) => {
+  const { type, setType } = useUserSuscriptionTypeStore();
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const formattedTime = new Date(timestamp).toLocaleTimeString([], {
@@ -15,7 +17,7 @@ const ResponseHeader = ({ chatTitle, timestamp }) => {
   const toggleSidebar = () => setIsOpen(!isOpen);
 
   return (
-    <div className="sticky z-[1000] top-0 bg-[#F3F4F6] w-full  mx-auto ml-0 md:ml-[15px] py-0 md:py-4 border-b">
+    <div className="sticky z-[1000] top-0 bg-[#F3F4F6] w-full mx-auto ml-0 md:ml-[15px] py-0 md:py-4 border-b">
       <div className="flex flex-col md:flex-row items-start md:items-center px-4 justify-between gap-4">
         {/* Left Section */}
         <div className="flex items-center gap-2">
@@ -31,9 +33,14 @@ const ResponseHeader = ({ chatTitle, timestamp }) => {
           </p>
 
           {/* Right Section - Button */}
-          <button className="bg-primary text-white rounded-full px-4 py-2 text-sm mr-0 md:mr-8"  onClick={() => setIsModalOpen(true)}>
-            Try Pro for Free
-          </button>
+          {type === "free" && (
+            <button
+              className="bg-primary text-white rounded-full px-4 py-2 text-sm mr-0 md:mr-8"
+              onClick={() => setIsModalOpen(true)}
+            >
+              Try Pro for Free
+            </button>
+          )}
         </div>
         {isModalOpen && <ProModal onClose={() => setIsModalOpen(false)} />}
 
