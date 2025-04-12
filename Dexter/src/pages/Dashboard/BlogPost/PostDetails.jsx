@@ -69,16 +69,36 @@ const PostDetails = () => {
     getDetails();
   }, []);
 
-  const publish = async (postId) => {
+  // const wordpressPublish = async (postId) => {
+  //   if (Object.keys(sites).length === 0) {
+  //     setShowConfirmPlatform(true);
+  //     return;
+  //   }
+  
+  //   setIsPublishing(true); // Set publish loading to true
+  //   try {
+  //     await authApi.post(`/publish/wordpress/?blogPostId=${postId}`, {
+  //       siteId: sites["wordpress"]?.siteId,
+  //     });
+  //     toast.success("Post Published successfully!");
+  //     navigate("/dashboard/blog-post");
+  //   } catch (error) {
+  //     console.error("Error publishing post:", error);
+  //     toast.error("Failed to publish the post. Please try again.");
+  //   } finally {
+  //     setIsPublishing(false); // Set publish loading to false
+  //   }
+  // };
+
+  const shopifyPublish = async (postId) => {
     if (Object.keys(sites).length === 0) {
       setShowConfirmPlatform(true);
       return;
     }
-  
     setIsPublishing(true); // Set publish loading to true
     try {
-      await authApi.post(`/publish/wordpress/?blogPostId=${postId}`, {
-        siteId: sites["wordpress"]?.siteId,
+      await authApi.post(`/publish/shopify/?blogPostId=${postId}`, {
+        shopifyId: "67f8d0b9857136268a5cbbfa",
       });
       toast.success("Post Published successfully!");
       navigate("/dashboard/blog-post");
@@ -89,6 +109,7 @@ const PostDetails = () => {
       setIsPublishing(false); // Set publish loading to false
     }
   };
+  
 
   const addMessage = (newMessage) => {
     setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -164,7 +185,7 @@ const PostDetails = () => {
   className={`text-white flex gap-2 items-center bg-[#6d68fb] px-2 py-1 lg:p-2 font-semibold border border-gray-300 justify-center rounded-md transition-opacity duration-300 ${
     isPublishing ? "opacity-50 cursor-not-allowed" : "opacity-100"
   }`}
-  onClick={() => publish(postId)}
+  onClick={() => shopifyPublish(postId)}
   disabled={isPublishing} // Disable the button while publishing
 >
   {isPublishing ? (
