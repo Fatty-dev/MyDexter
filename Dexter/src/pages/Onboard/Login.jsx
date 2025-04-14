@@ -8,7 +8,7 @@ import logo from "../../assets/Main_Logo.svg";
 import useEmailStore, {
   useAuthStore,
   useUserPlatformSiteStore,
-  useUserSuscriptionTypeStore,
+  useUserSubscriptionTypeStore,
 } from "../../lib/store/global.store";
 
 const Login = () => {
@@ -17,7 +17,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const { setEmail } = useEmailStore();
-  const { setType } = useUserSuscriptionTypeStore();
+  const { setType } = useUserSubscriptionTypeStore();
   const { setExpiresIn } = useAuthStore();
 
   const {
@@ -69,11 +69,17 @@ const Login = () => {
     }
   };
 
+  const home = () => {
+    navigate('/dashboard');
+  }
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4 sm:px-0">
       <div className="w-full max-w-md mx-auto bg-white rounded-lg shadow-lg p-6">
-        <div className="text-center">
+        <div className="text-center" >
+          <div className="cursor-pointer" onClick={home}>
           <img src={logo} alt="MyDexter Logo" className="mx-auto mb-4" />
+          </div>
           <p className="text-gray-500 text-sm mb-6">
             Your personal AI-powered SEO specialist
           </p>
@@ -112,7 +118,7 @@ const Login = () => {
               type={showPassword ? "text" : "password"}
               id="password"
               disabled={loading}
-              placeholder="Create a password"
+              placeholder="Enter password"
               {...register("password", { required: "Password is required" })}
               className="w-full px-2 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary placeholder:text-sm"
             />

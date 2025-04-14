@@ -19,47 +19,59 @@ const PostHistory = () => {
   const [blogPost, setBlogPost] = useState([]);
   const { sites } = useUserPlatformSiteStore();
 
+  const fetchBlogPosts = async () => {
+    const accessToken = localStorage.getItem("accessToken") || "";
+  
+    // Check if the user is logged in
+    if (!accessToken) {
+      // Simply return without making the API call
+      return; // Exit the function early
+    }
+  
+    setIsLoading(true); // Set loading state to true
+    try {
+      const response = await authApi.get(`/blog`); // Fetch blog posts
+      setBlogPosts(response.data.data.blogPost); // Update state with fetched posts
+    } catch (error) {
+      // Log any errors that occur during the fetch
+      console.error("Error fetching blog posts:", error);
+    } finally {
+      setIsLoading(false); // Set loading state to false
+    }
+  };
+  
   useEffect(() => {
-    const fetchBlogPosts = async () => {
-      setIsLoading(true);
-      try {
-        const response = await authApi.get(`/blog`);
-        if (response.data.success) {
-          setBlogPost(response.data.data.blogPost);
-        } else {
-          toast.error("Failed to fetch posts");
-        }
-      } catch (error) {
-        toast.error("Error fetching posts.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchBlogPosts();
+    fetchBlogPosts(); // Call the function to fetch blog posts on component mount
   }, []);
 
   useEffect(() => {
     const fetchHistory = async () => {
-      setIsLoading(true);
+       // Check if the user is logged in
+    if (!accessToken) {
+      // Simply return without making the API call
+      return; // Exit the function early
+    }
+      setIsLoading(true); // Set loading state to true
       try {
         const response = await authApi.get(`/blog/history?platform=wordpress&siteId=${sites.siteId}`);
         if (response.data.success) {
-          setBlogPost(response.data.data.blogPost);
+          setBlogPost(response.data.data.blogPost); // Update state with fetched blog posts
         } else {
-          toast.error("Failed to fetch posts");
+          // Optionally handle the case where the response is not successful
+          console.error("Failed to fetch posts:", response.data.message);
         }
       } catch (error) {
-        toast.error("Error fetching posts.");
+        // Log any errors that occur during the fetch
+        console.error("Error fetching posts:", error);
       } finally {
-        setIsLoading(false);
+        setIsLoading(false); // Set loading state to false
       }
     };
-
+  
     if (sites.siteId) { 
-      fetchHistory();
+      fetchHistory(); // Call the function to fetch history if siteId is available
     }
-  }, [sites.siteId]); 
+  }, [sites.siteId]);
 
   const getSingleBlogPost = (postId) => {
     navigate(`/dashboard/blog-post/${postId}`);

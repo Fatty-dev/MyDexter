@@ -3,9 +3,15 @@ import { FaLinkedin, FaFacebookF } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaFacebook } from "react-icons/fa";
 import logo from "../../assets/Main_Logo.svg";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
   // Dataset
+  const navigate = useNavigate();
+
+  const handleHome = () => {
+    navigate("/");
+  };
   const footerData = {
     logo: {
       src: logo, // Replace with your actual logo path
@@ -47,7 +53,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row items-start gap-8 md:gap-4">
           {/* Logo and Description */}
           <div className="flex flex-col items-start mb-6 md:mb-0">
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4" onClick={handleHome}>
               <img
                 src={footerData.logo.src}
                 alt="Logo"

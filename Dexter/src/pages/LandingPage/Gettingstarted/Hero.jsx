@@ -1,10 +1,16 @@
 import React from 'react';
 import { IoArrowForward } from "react-icons/io5";
 import Laptop from '../../../assets/Macbook.png';
+import { useNavigate } from 'react-router-dom';
 
 
 const Hero = () => {
-  return (
+  const navigate = useNavigate();
+
+  const getStarted = () => {
+    navigate("/dashboard")
+  }
+    return (
     <div className="">
       {/* Hero Container */}
       <div className="max-w-6xl mx-auto px-4 lg:pt-8 pb-8 text-center">
@@ -25,7 +31,7 @@ const Hero = () => {
         </p>
 
         {/* Button */}
-        <button className="bg-primary text-white font-semibold text-lg px-6 py-3 rounded-full hover:bg-primary transition mt-4">
+        <button className="bg-primary text-white font-semibold text-lg px-6 py-3 rounded-full hover:bg-primary transition mt-4" onClick={getStarted}>
           Get Started
         </button>
       </div>

@@ -4,10 +4,10 @@ import { FiX } from "react-icons/fi";
 import { CgMenuRight } from "react-icons/cg";
 import Sidebar from "./Sidebar";
 import ProModal from "../Common/Modals/ProModal";
-import { useUserSuscriptionTypeStore } from "@/lib/store/global.store";
+import { useUserSubscriptionTypeStore } from "@/lib/store/global.store";
 
 const ResponseHeader = ({ chatTitle, timestamp }) => {
-  const { type, setType } = useUserSuscriptionTypeStore();
+  const { type, setType } = useUserSubscriptionTypeStore();
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const formattedTime = new Date(timestamp).toLocaleTimeString([], {

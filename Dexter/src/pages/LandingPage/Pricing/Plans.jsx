@@ -2,8 +2,15 @@ import React, {useState} from 'react';
 import { FaCheck, FaTimes, FaStar } from 'react-icons/fa';
 import { GiCheckMark } from "react-icons/gi";
 import { GoDash } from "react-icons/go";
+import { useNavigate } from 'react-router-dom';
 
 const Plans = () => {
+
+  const navigate = useNavigate();
+
+  const getStarted = () => {
+    navigate("/dashboard")
+  }
   // Dataset for Features Comparison
   const features = [
     { feature: 'Dexter AI SEO Chatbot', free: 'Up to 10', pro: 'Up to 100' },
@@ -117,7 +124,7 @@ const Plans = () => {
           </div>
 
           {/* Button Section */}
-          <button className="border w-full text-[#475467]flex items-end justify-center py-2 px-4 rounded-lg font-medium">
+          <button className="border w-full text-[#475467]flex items-end justify-center py-2 px-4 rounded-lg font-medium" onClick={getStarted}>
             Get Started Now
           </button>
         </div>
@@ -146,7 +153,7 @@ const Plans = () => {
           </div>
 
           {/* Button Section */}
-          <button className="border w-full text-[#475467] flex items-end justify-center py-2 px-4 rounded-lg font-medium">
+          <button className="border w-full text-[#475467] flex items-end justify-center py-2 px-4 rounded-lg font-medium" onClick={getStarted}>
           Try it free for 5 days!
           </button>
         </div>

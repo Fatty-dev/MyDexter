@@ -38,14 +38,15 @@ export const useUserPlatformSiteStore = create()(
   )
 );
 
-export const useUserSuscriptionTypeStore = create()(
+export const useUserSubscriptionTypeStore = create()(
   persist(
     (set) => ({
       type: "free",
       setType: (type) => set({ type }),
+      clearSubscription: () => set({ type: "free" }),
     }),
     {
-      name: "use-suscriptiontype",
+      name: "use-subscriptiontype",
     }
   )
 );

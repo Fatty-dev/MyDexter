@@ -14,7 +14,7 @@ import useEmailStore, {
   useAuthStore,
   useSidebar,
   useUserPlatformSiteStore,
-  useUserSuscriptionTypeStore,
+  useUserSubscriptionTypeStore,
 } from "../../lib/store/global.store";
 import { authApi } from "../../lib/config/axios-instance";
 import { IoSettingsOutline } from "react-icons/io5";
@@ -28,7 +28,7 @@ const Sidebar = ({ isOpen }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { email } = useEmailStore();
-  const { type, setType } = useUserSuscriptionTypeStore();
+  const { type, setType , clearSubscription } = useUserSubscriptionTypeStore();
   const { clearExpiresIn } = useAuthStore()
   const { chatId } = useParams();
 
@@ -174,6 +174,10 @@ const Sidebar = ({ isOpen }) => {
     setOpenModal(true);
   };
 
+  const handleFAQ = () => {
+    navigate('/faq')
+  }
+
   return (
     <div
       className={`fixed top-0 left-0 flex flex-col z-[1000] justify-start bg-white h-full shadow-xl transform transition-transform duration-300 ease-in-out ${
@@ -318,6 +322,7 @@ const Sidebar = ({ isOpen }) => {
                     navigate("/login");
                     clearExpiresIn()
                     resetPlatforms();
+                    clearSubscription()
                   }}
                 >
                   <BsBoxArrowRight className="mr-2 text-[#667085]" />
@@ -335,7 +340,7 @@ const Sidebar = ({ isOpen }) => {
         <div className="px-6 mt-6 pb-6 border-t md:px-6">
           <ul className="space-y-2 text-secondary font-semibold mt-4">
             <li className="cursor-pointer hover:text-primary">Why My Dexter?</li>
-            <li className="cursor-pointer hover:text-primary">FAQ</li>
+            <li className="cursor-pointer hover:text-primary" onClick={handleFAQ}>FAQ</li>
             <li className="cursor-pointer hover:text-primary">Terms & Policies</li>
           </ul>
           <p className="mt-4 text-xs text-secondary">© 2024 My Dexter</p>

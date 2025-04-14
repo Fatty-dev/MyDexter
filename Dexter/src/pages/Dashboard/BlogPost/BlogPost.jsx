@@ -29,25 +29,54 @@ const BlogPost = () => {
   const { sites } = useUserPlatformSiteStore();
 
   const fetchBlogPosts = async () => {
+    const accessToken = localStorage.getItem("accessToken") || "";
+  
+    // Check if the user is logged in
+    if (!accessToken) {
+      // Simply return without making the API call
+      return; // Exit the function early
+    }
+  
     setIsLoading(true);
     try {
       const response = await authApi.get(`/blog`);
-
       setBlogPosts(response.data.data.blogPost);
     } catch (error) {
-      console.log({ error });
-      toast.error("Error fetching posts.");
+      // Handle any errors that occur during the fetch
+      console.error("Error fetching blog posts:", error);
     } finally {
       setIsLoading(false);
     }
   };
-
+  
   useEffect(() => {
     fetchBlogPosts();
   }, []);
 
+  // const handleBulkArticle = () => {
+  //   navigate("/dashboard/bulk-article");
+  // };
+
+  const handleLoginCheck = () => {
+    const accessToken = localStorage.getItem("accessToken") || "";
+    if (!accessToken) {
+      toast.error('Please log in to use this feature!'); // Show toast if not logged in
+      return false; // Indicate that the user is not logged in
+    }
+    return true; // Indicate that the user is logged in
+  };
+  
   const handleBulkArticle = () => {
-    navigate("/dashboard/bulk-article");
+    if (handleLoginCheck()) {
+      navigate("/dashboard/bulk-article");
+
+    }
+  };
+  
+  const handleStartPost = () => {
+    if (handleLoginCheck()) {
+      setCreatePostModalOpen(true); // Open the modal if logged in
+    }
   };
   return (
     <div className="w-full max-w-[90%] mx-auto mt-6">
@@ -126,21 +155,21 @@ const BlogPost = () => {
         </p>
       </div>
       <div className="flex flex-col sm:flex-row lg:gap-4 gap-3 whitespace-nowrap">
-        <button
-          className="bg-white flex items-center py-2 px-4 gap-2 text-[#475467] rounded"
-          onClick={handleBulkArticle}
-        >
-          Create Articles in Bulk
-          <PiCopySimpleBold />
-        </button>
-        <button
-          className="flex items-center gap-2 px-4 py-2 text-white rounded bg-primary"
-          onClick={() => setCreatePostModalOpen(true)}
-        >
-          Start Your 1-Click Post
-          <FaRegEdit />
-        </button>
-      </div>
+    <button
+      className="bg-white flex items-center py-2 px-4 gap-2 text-[#475467] rounded"
+      onClick={handleBulkArticle}
+    >
+      Create Articles in Bulk
+      <PiCopySimpleBold />
+    </button>
+    <button
+      className="flex items-center gap-2 px-4 py-2 text-white rounded bg-primary"
+      onClick={handleStartPost}
+    >
+      Start Your 1-Click Post
+      <FaRegEdit />
+    </button>
+  </div>
     </div>
   
     {/* Blog Post Grid */}

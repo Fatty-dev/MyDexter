@@ -47,6 +47,9 @@ const Signup = () => {
     }
   };
   
+  const home = () => {
+    navigate('/dashboard');
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4 sm:px-0">
@@ -54,7 +57,9 @@ const Signup = () => {
     
         <div className="text-center">
           <h2 className="text-xl font-medium mb-1">Sign up to</h2>
+          <div className="cursor-pointer" onClick={home}>
           <img src={logo} alt="MyDexter Logo" className="mx-auto mb-4" />
+          </div>
           <p className="text-gray-500 text-sm mb-6">
             Your personal AI-powered SEO specialist
           </p>
