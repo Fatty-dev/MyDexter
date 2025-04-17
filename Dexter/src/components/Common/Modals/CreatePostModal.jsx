@@ -20,6 +20,7 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
   const [keywords, setKeywords] = useState([]);
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
+  const [enteredKeyword, setEnteredKeyword] = useState(false); // New state to track Enter key press
   const {
     register,
     handleSubmit,
@@ -40,6 +41,7 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
         setKeywords((prev) => [...prev, value]);
       }
       e.target.value = "";
+      setEnteredKeyword(true); // Set to true when Enter is pressed
     }
   };
   
@@ -82,6 +84,11 @@ const CreatePostModal = ({ setCreatePostModalOpen }) => {
   };
   
   const onSubmit = async (data) => {
+    if (!enteredKeyword) {
+      toast.error("Please press Enter after adding keywords.");
+      return; // Prevent submission if Enter was not pressed
+    }
+  
     setLoading(true);
     try {
       // Join keywords into a string

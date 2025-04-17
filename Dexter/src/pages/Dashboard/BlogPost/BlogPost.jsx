@@ -117,21 +117,46 @@ const BlogPost = () => {
       </h1>
   
       <div className="flex items-center gap-4 md:gap-6">
-        <div className="flex items-center px-2 py-1 gap-1 border rounded-full">
-          <img src={container} alt="" className="w-5" />
-          <p className="text-sm md:text-md">Wordpress</p>
-        </div>
-  
-         {sites["wordpress"]?.url && (
-         <button
-         className="text-primary flex items-center gap-2"
-         onClick={() => setTimeout(() => window.open(sites["wordpress"].url, "_blank"), 100)}
-       >
-            {sites["wordpress"].url}
+  {Object.keys(sites).map((platform) => {
+    const siteData = sites[platform];
+
+    if (platform === "shopify") {
+      const storeName = siteData.storeName; // Get the store name
+      return (
+        
+        <div className="flex items-center gap-1 " key={platform}>
+          <div className="px-3 py-1 flex items-center gap-2 border rounded-full">
+            <img src={container} alt=""/>
+          <p className="text-sm md:text-md">{platform}</p>
+          </div>
+
+          <button
+            className="text-primary flex items-center gap-2"
+            onClick={() => setTimeout(() => window.open(`https://${storeName}`, "_blank"), 100)}
+          >
+            {storeName}
             <HiOutlineChevronDown className="text-[#667085]" />
           </button>
-        )} 
-      </div>
+        </div>
+      );
+    } else if (platform === "wordpress") {
+      const wordpressUrl = siteData.url; // Get the WordPress site URL
+      return (
+        <div className="flex items-center px-2 py-1 gap-1 border rounded-full" key={platform}>
+          <p className="text-sm md:text-md">Connected Site: Wordpress</p>
+          <button
+            className="text-primary flex items-center gap-2"
+            onClick={() => setTimeout(() => window.open(wordpressUrl, "_blank"), 100)}
+          >
+            {wordpressUrl}
+            <HiOutlineChevronDown className="text-[#667085]" />
+          </button>
+        </div>
+      );
+    }
+    return null; // Return null if no connected site is found
+  })}
+</div>
     </div>
     <hr className="my-2" />
     <div className="flex items-center justify-between px-4 py-2 my-4 text-white rounded-lg bg-primary">

@@ -31,7 +31,7 @@ const PostHistory = () => {
     setIsLoading(true); // Set loading state to true
     try {
       const response = await authApi.get(`/blog`); // Fetch blog posts
-      setBlogPosts(response.data.data.blogPost); // Update state with fetched posts
+      setBlogPost(response.data.data.blogPost); // Update state with fetched posts
     } catch (error) {
       // Log any errors that occur during the fetch
       console.error("Error fetching blog posts:", error);

@@ -25,11 +25,11 @@ export const useUserPlatformSiteStore = create()(
   persist(
     (set) => ({
       sites: {},
-      setSite: (platform, site, siteId) =>
+      setSite: (platform, site) =>
         set((state) => ({
           sites: { 
             ...state.sites, 
-            [platform]: { site, siteId } 
+            [platform]: site // Store the entire site object
           },
         })),
       resetPlatforms: () => set({ sites: {} })

@@ -40,28 +40,26 @@ const Login = () => {
         email: data.email,
         password: data.password,
       });
-
-      const expiresIn = new Date().getTime() + 86400 * 1000
-      setExpiresIn(expiresIn);
-
-      localStorage.setItem("accessToken", res.data.accessToken);
-
+  
       const user = res.data.user;
       setEmail(user.email);
-
-      const connectedAppsKeys = Object.keys(user?.platforms ?? {});
-      if (connectedAppsKeys) {
-        connectedAppsKeys.forEach((key) => {
-          setSite(key, user?.platforms[key].sites[0]);
-        });
+  
+      // Check for connected OAuth services
+      if (user.oauth.shopify && user.oauth.shopify.length > 0) {
+        const connectedShopify = user.oauth.shopify[0]; // Get the first connected Shopify store
+        console.log("Connected Shopify Store Name:", connectedShopify.storeName); // Log the store name
+        setSite("shopify", connectedShopify); // Set the site for Shopify
+      } else if (user.oauth.wordpress && user.oauth.wordpress.sites.length > 0) {
+        const connectedWordPress = user.oauth.wordpress.sites[0]; // Get the first WordPress site
+        console.log("Connected WordPress URL:", connectedWordPress.url); // Log the WordPress URL
+        setSite("wordpress", connectedWordPress); // Set the site for WordPress
       }
-
-      setType(res.data.user.subscription.type);
+  
+      setType(user.subscription.type);
       navigate("/dashboard");
     } catch (error) {
-      console.log(error)
-      const errorMessage =
-        error.response?.data?.message || "Something went wrong.";
+      console.log(error);
+      const errorMessage = error.response?.data?.message || "Something went wrong.";
       toast.error(errorMessage);
     } finally {
       setLoading(false);
