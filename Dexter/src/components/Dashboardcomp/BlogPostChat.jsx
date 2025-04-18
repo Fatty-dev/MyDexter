@@ -42,6 +42,8 @@ const BlogPostChat = ({ postId ,  updateBody}) => {
   
       if (response.data.success) {
         // Call the updateBody function to update the content in PostDetails
+        console.log({newContent: response.data.data.newContent});
+        
         updateBody(response.data.data.newContent);
         updateValue("");
         toast.success("Blog post updated successfully!");

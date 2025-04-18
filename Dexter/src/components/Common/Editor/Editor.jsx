@@ -17,7 +17,7 @@ const Editor = ({ onDataChange, content, editable, postId, image }) => {
   const editorRef = useRef(null);
   const { updateValue } = useSelectionStore();
 
-  // Parse content using `marked`
+  // Parse content using marked
   const parsedContent = useMemo(() => {
     let htmlContent = marked(content);
 
@@ -27,7 +27,7 @@ const Editor = ({ onDataChange, content, editable, postId, image }) => {
     }
 
     return htmlContent;
-  }, []);
+  }, [content, image]);
 
   const editor = useEditor({
     editable,
@@ -65,8 +65,12 @@ const Editor = ({ onDataChange, content, editable, postId, image }) => {
     ],
     content: parsedContent,
     editorProps: {
+      handleDOMEvents: {
+        focus: () => true, // Prevent scrolling to editor on focus
+      },
       attributes: {
-        class: "mt-7 p-5 bg-white space-y-5 rounded-lg focus:outline-none",
+        class:
+          "mt-7 p-5 bg-white space-y-5 rounded-lg focus:outline-none scroll-mt-20",
       },
     },
     onUpdate: ({ editor }) => {
@@ -75,16 +79,16 @@ const Editor = ({ onDataChange, content, editable, postId, image }) => {
     },
   });
 
-  // Function to handle the copy action
+  // Copy selected text handler
   const copySelectedText = () => {
     const selection = window.getSelection();
     if (!selection || selection.isCollapsed) return;
 
     const selectedText = selection.toString();
-    updateValue(selectedText); // Store the selected text in the global state
+    updateValue(selectedText);
   };
 
-  // Function to show the copy icon when text is selected
+  // Handle text selection and show icon
   const handleTextSelection = () => {
     const selection = window.getSelection();
     if (!selection || selection.isCollapsed) {
@@ -104,24 +108,22 @@ const Editor = ({ onDataChange, content, editable, postId, image }) => {
     setShowIcon(true);
   };
 
-  // Add event listener to track text selection
   useEffect(() => {
     document.addEventListener("selectionchange", handleTextSelection);
-
     return () => {
       document.removeEventListener("selectionchange", handleTextSelection);
     };
   }, []);
 
-  // Update the editor content when the content prop changes
+  // Prevent scroll jump when content is updated
   useEffect(() => {
-    if (editor) {
-      editor.commands.setContent(parsedContent); // Update the editor content when it changes
+    if (editor && editor.isEmpty) {
+      editor.commands.setContent(parsedContent);
     }
-  }, [content, image, editor]); // Add image to the dependencies
+  }, [editor]); 
 
   return (
-    <div className="relative bg-white" ref={editorRef}>
+    <div className="relative bg-white" ref={editorRef} style={{ scrollBehavior: "smooth" }}>
       {editable && (
         <div className="w-full sticky top-0 z-50 bg-white shadow">
           <MenuBar
