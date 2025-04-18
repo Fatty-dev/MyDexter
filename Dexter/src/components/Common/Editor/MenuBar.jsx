@@ -29,6 +29,7 @@ const MenuBar = ({ editor, postId, content }) => {
   const handleFileChange = useCallback(
     async (event) => {
       const file = event.target.files[0];
+
       if (file) {
         const reader = new FileReader();
         reader.onloadend = async () => {
@@ -39,34 +40,38 @@ const MenuBar = ({ editor, postId, content }) => {
             type: file.type,
             src: reader.result, // Base64 URL
           };
-  
-          console.log({ file });
-  
+
           // Upload the image to the server
           try {
             const formData = new FormData();
             formData.append("images", file);
             formData.append("content", content);
-            formData.append("imagesMetadata", JSON.stringify([{ position: 1, altText: "A description of the image." }]));
-  
+            formData.append(
+              "imagesMetadata",
+              JSON.stringify([
+                { position: 1, altText: "A description of the image." },
+              ])
+            );
+
             // Use backticks for template literals
-            const response = await authApi.patch(
+            const {
+              data: { data },
+            } = await authApi.patch(
               `/blog/update?blogPostId=${postId}`,
               formData,
               {
                 headers: { "Content-Type": "multipart/form-data" },
               }
             );
-  
-            if (response.data.success) {
-              const images = response.data.images; // Adjust based on actual response structure
-              if (images && images.length > 0) {
-                const imageUrl = images[0].url; // Assuming the first image is what you need
-                uploadedImages.current.push(imageMetadata);
-                editor.chain().focus().setImage({ src: imageUrl }).run();
-              }
-            } else {
-              toast.error("Image upload failed.");
+
+            const images = data.images; // Adjust based on actual response structure
+
+            if (images && images.length > 0) {
+              const imageUrl = images[0].url; // Assuming the first image is what you need
+              uploadedImages.current.push(imageMetadata);
+              console.log("got here", imageUrl);
+
+              editor.chain().focus().setImage({ src: imageUrl }).run();
             }
           } catch (error) {
             toast.error("Error uploading image.");
@@ -202,6 +207,7 @@ const MenuBar = ({ editor, postId, content }) => {
       <button onClick={addImage} className="editor-btn">
         <PiImageSquareBold />
       </button>
+
       <input
         type="file"
         accept="image/*"

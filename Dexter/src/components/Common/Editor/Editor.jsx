@@ -8,19 +8,26 @@ import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import Image from "@tiptap/extension-image";
 import { marked } from "marked";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { useSelectionStore } from "@/lib/store/global.store";
 
-const Editor = ({  onDataChange, content, editable, postId, image }) => {
+const Editor = ({ onDataChange, content, editable, postId, image }) => {
   const [showIcon, setShowIcon] = useState(false);
   const [iconPosition, setIconPosition] = useState({ top: 0, left: 0 });
   const editorRef = useRef(null);
   const { updateValue } = useSelectionStore();
 
   // Parse content using `marked`
-  const parsedContent = image 
-  ? `<img src="${image.src}" alt="${image.altText}" class="rounded" />` + (content ? marked(content) : "")
-  : (content ? marked(content) : "");
+  const parsedContent = useMemo(() => {
+    let htmlContent = marked(content);
+
+    if (image) {
+      const imgHTML = `<img src="${image.url}" alt="${image.altText}" />`;
+      htmlContent = imgHTML + htmlContent;
+    }
+
+    return htmlContent;
+  }, []);
 
   const editor = useEditor({
     editable,
@@ -115,28 +122,33 @@ const Editor = ({  onDataChange, content, editable, postId, image }) => {
 
   return (
     <div className="relative bg-white" ref={editorRef}>
-    {editable && (
-      <div className="w-full sticky top-0 z-50 bg-white shadow">
-        <MenuBar editor={editor} postId={postId} content={content} image={image} />
+      {editable && (
+        <div className="w-full sticky top-0 z-50 bg-white shadow">
+          <MenuBar
+            editor={editor}
+            postId={postId}
+            content={content}
+            image={image}
+          />
+        </div>
+      )}
+      <div>
+        <EditorContent editor={editor} />
       </div>
-    )}
-    <div>
-      <EditorContent editor={editor} />
-    </div>
 
-    {showIcon && (
-      <button
-        className="absolute bg-red-500 text-white p-2 rounded cursor-pointer"
-        style={{
-          top: `${iconPosition.top}px`,
-          left: `${iconPosition.left}px`,
-        }}
-        onClick={copySelectedText}
-      >
-        📋
-      </button>
-    )}
-  </div>
+      {showIcon && (
+        <button
+          className="absolute bg-red-500 text-white p-2 rounded cursor-pointer"
+          style={{
+            top: `${iconPosition.top}px`,
+            left: `${iconPosition.left}px`,
+          }}
+          onClick={copySelectedText}
+        >
+          📋
+        </button>
+      )}
+    </div>
   );
 };
 

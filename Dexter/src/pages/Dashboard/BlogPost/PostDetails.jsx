@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import { CgMenuRight } from "react-icons/cg";
-import { FaArrowLeft, FaBars } from "react-icons/fa"; 
+import { FaArrowLeft, FaBars } from "react-icons/fa";
 import Editor from "../../../components/Common/Editor/Editor";
 import { MdArrowOutward } from "react-icons/md";
 import PostOverview from "./PostOverview";
@@ -18,6 +18,7 @@ import toast from "react-hot-toast";
 import { IoMdClose } from "react-icons/io";
 import ConfirmPlatform from "@/components/Common/Modals/ConfirmPlatform";
 import Sidebar from "@/components/Dashboardcomp/Sidebar";
+import { convertContentWithImages } from "@/lib/utils/utils";
 
 const PostDetails = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,27 +33,27 @@ const PostDetails = () => {
   const [loading, setLoading] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false); // New state for publish loading
   const [showConfirmPlatform, setShowConfirmPlatform] = useState(false);
-  const [isOverviewVisible, setIsOverviewVisible] = useState(false); 
+  const [isOverviewVisible, setIsOverviewVisible] = useState(false);
 
   const { expanded } = useSidebar();
   const { sites } = useUserPlatformSiteStore();
 
   const getDetails = async () => {
     setLoading(true);
-    
+
     try {
       const { data } = await authApi.get(`blog/single?blogPostId=${postId}`);
+
       if (data) {
         const postData = data.data;
-        setBody(postData.content);
+        const content = postData.content;
+        const images = postData.images || [];
 
-        console.log(postData.images);
+        const updatedHTML = convertContentWithImages(content, images);
+        setBody(updatedHTML);
 
-        if (postData.images && postData.images.length > 0) {
-          setImage(postData.images[0].url); 
-      } else {
-          setImage(null);
-      }
+        if (images && images.length > 0) setImage(postData.images[0]);
+
         setDailyUsage(postData.performance.organicTraffic);
         setDailyLimit(postData.performance.pagesPerSession);
       } else {
@@ -74,7 +75,7 @@ const PostDetails = () => {
   //     setShowConfirmPlatform(true);
   //     return;
   //   }
-  
+
   //   setIsPublishing(true); // Set publish loading to true
   //   try {
   //     await authApi.post(`/publish/wordpress/?blogPostId=${postId}`, {
@@ -109,7 +110,6 @@ const PostDetails = () => {
       setIsPublishing(false); // Set publish loading to false
     }
   };
-  
 
   const addMessage = (newMessage) => {
     setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -128,7 +128,7 @@ const PostDetails = () => {
     setBody((prevBody) => {
       const selectedText = value; // Get the highlighted text
       if (!selectedText) return prevBody; // If no text is selected, return the previous body
-  
+
       // Replace the selected text with the new content
       return prevBody.replace(selectedText, newContent);
     });
@@ -165,7 +165,7 @@ const PostDetails = () => {
         >
           <Sidebar isOpen={isOpen} />
         </div>
-        
+
         <div
           className=" ml-8 md:ml-0  flex items-center cursor-pointer gap-2 mb-4"
           onClick={handleBack}
@@ -181,26 +181,26 @@ const PostDetails = () => {
             </button>
           </div>
           <div>
-          <button
-  className={`text-white flex gap-2 items-center bg-[#6d68fb] px-2 py-1 lg:p-2 font-semibold border border-gray-300 justify-center rounded-md transition-opacity duration-300 ${
-    isPublishing ? "opacity-50 cursor-not-allowed" : "opacity-100"
-  }`}
-  onClick={() => shopifyPublish(postId)}
-  disabled={isPublishing} // Disable the button while publishing
->
-  {isPublishing ? (
-    <>
-      <span>Publishing...</span>
-      {/* You can add a spinner here if you want */}
-      <div className="loader"></div> {/* Example spinner */}
-    </>
-  ) : (
-    <>
-      Publish
-      <MdArrowOutward className="text-white text-[15px]" />
-    </>
-  )}
-</button>
+            <button
+              className={`text-white flex gap-2 items-center bg-[#6d68fb] px-2 py-1 lg:p-2 font-semibold border border-gray-300 justify-center rounded-md transition-opacity duration-300 ${
+                isPublishing ? "opacity-50 cursor-not-allowed" : "opacity-100"
+              }`}
+              onClick={() => shopifyPublish(postId)}
+              disabled={isPublishing} // Disable the button while publishing
+            >
+              {isPublishing ? (
+                <>
+                  <span>Publishing...</span>
+                  {/* You can add a spinner here if you want */}
+                  <div className="loader"></div> {/* Example spinner */}
+                </>
+              ) : (
+                <>
+                  Publish
+                  <MdArrowOutward className="text-white text-[15px]" />
+                </>
+              )}
+            </button>
           </div>
           {/* Hamburger Icon */}
           <div className="lg:hidden">
@@ -212,7 +212,9 @@ const PostDetails = () => {
         </div>
       </div>
 
-      <div className={`bg-white flex relative max-h-[calc(100vh-80px)] overflow-y-auto`}>
+      <div
+        className={`bg-white flex relative max-h-[calc(100vh-80px)] overflow-y-auto`}
+      >
         <div className={`flex-[4] relative ${expanded ? "px-4" : ""}`}>
           <div className="max-w-4xl mx-auto">
             <div className="">
@@ -222,7 +224,7 @@ const PostDetails = () => {
                 body && (
                   <Editor
                     content={body}
-                    image= {image}
+                    image={image}
                     postId={postId}
                     editable={true}
                     onDataChange={(data) => setBody(data)}
