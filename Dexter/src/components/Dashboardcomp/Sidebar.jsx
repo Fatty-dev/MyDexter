@@ -187,6 +187,10 @@ const Sidebar = ({ isOpen }) => {
     navigate("/faq");
   };
 
+  const hyperLink =() => {
+    navigate('/dashboard')
+  }
+
   return (
     <div
       className={`fixed top-0 left-0 flex flex-col z-[1000] justify-start bg-white h-full shadow-xl transform transition-transform duration-300 ease-in-out ${
@@ -205,6 +209,7 @@ const Sidebar = ({ isOpen }) => {
             alt="Dexter AI Logo"
             width={30}
             className={!expanded ? "w-[1rem]" : "w-[11rem]"}
+            onClick={hyperLink}
           />
         )}
         <button className="" onClick={toggleExpand}>

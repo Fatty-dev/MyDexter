@@ -48,7 +48,7 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
 
 
-        <Route path="subscription/success" element={<SuccessModal isOpen/>} />
+        <Route path="success" element={<SuccessModal isOpen/>} />
 
 
         {/* Nested Routes under Dashboard */}
