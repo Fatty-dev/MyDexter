@@ -125,6 +125,8 @@ const PostDetails = () => {
   };
 
   const updateBody = (newContent) => {
+    console.log(newContent);
+    
     setBody((prevBody) => {
       const selectedText = value; // Get the highlighted text
       if (!selectedText) return prevBody; // If no text is selected, return the previous body
