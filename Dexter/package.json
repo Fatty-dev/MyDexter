@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@tiptap/core": "^2.4.0",
     "@tiptap/extension-bullet-list": "^2.11.0",
     "@tiptap/extension-color": "^2.4.0",

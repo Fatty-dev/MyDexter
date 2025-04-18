@@ -1,6 +1,5 @@
 import axios from "axios";
 import { API_URL } from "../../constants";
-import { jwtDecode } from "jwt-decode";
 import { useAuthStore } from "../store/global.store";
 
 // public endpoints
@@ -20,11 +19,13 @@ export const authApi = axios.create({
 
 authApi.interceptors.request.use(async (config) => {
   // get access token from storage
-  const accessToken = localStorage.getItem("accessToken") || "";
+  const { accessToken: token } = useAuthStore.getState()
+  const accessToken = token || localStorage.getItem("accessToken") || "";
 
   // console.log({accessToken});
 
   const refreshToken = localStorage.getItem("refresh_token") ?? "";
+  
   if (accessToken) {
     const { expiresIn } = useAuthStore.getState();
     const tokenHasExpired = new Date().getTime() >= expiresIn;

@@ -10,6 +10,8 @@ import useEmailStore, {
   useUserPlatformSiteStore,
   useUserSubscriptionTypeStore,
 } from "../../lib/store/global.store";
+import { jwtDecode } from "jwt-decode";
+
 
 const Login = () => {
   const navigate = useNavigate();
@@ -18,7 +20,7 @@ const Login = () => {
 
   const { setEmail } = useEmailStore();
   const { setType } = useUserSubscriptionTypeStore();
-  const { setExpiresIn } = useAuthStore();
+  const { setExpiresIn, setAccessToken } = useAuthStore();
 
   const {
     register,
@@ -33,33 +35,50 @@ const Login = () => {
 
   const { setSite } = useUserPlatformSiteStore();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (body) => {
     setLoading(true);
+
     try {
-      const { data: res } = await publicApi.post("/auth/login", {
-        email: data.email,
-        password: data.password,
+      const {
+        data: { data },
+      } = await publicApi.post("/auth/login", {
+        email: body.email,
+        password: body.password,
       });
-  
-      const user = res.data.user;
+
+
+      localStorage.setItem("accessToken", data.accessToken)
+
+      setExpiresIn(jwtDecode(data.accessToken).exp * 1000)
+
+      const user = data.user;
       setEmail(user.email);
-  
+
+      setAccessToken(data.accessToken);
+
       // Check for connected OAuth services
       if (user.oauth.shopify && user.oauth.shopify.length > 0) {
         const connectedShopify = user.oauth.shopify[0]; // Get the first connected Shopify store
-        console.log("Connected Shopify Store Name:", connectedShopify.storeName); // Log the store name
+        console.log(
+          "Connected Shopify Store Name:",
+          connectedShopify.storeName
+        ); // Log the store name
         setSite("shopify", connectedShopify); // Set the site for Shopify
-      } else if (user.oauth.wordpress && user.oauth.wordpress.sites.length > 0) {
+      } else if (
+        user.oauth.wordpress &&
+        user.oauth.wordpress.sites.length > 0
+      ) {
         const connectedWordPress = user.oauth.wordpress.sites[0]; // Get the first WordPress site
         console.log("Connected WordPress URL:", connectedWordPress.url); // Log the WordPress URL
         setSite("wordpress", connectedWordPress); // Set the site for WordPress
       }
-  
+
       setType(user.subscription.type);
       navigate("/dashboard");
     } catch (error) {
       console.log(error);
-      const errorMessage = error.response?.data?.message || "Something went wrong.";
+      const errorMessage =
+        error.response?.data?.message || "Something went wrong.";
       toast.error(errorMessage);
     } finally {
       setLoading(false);
@@ -68,15 +87,15 @@ const Login = () => {
   };
 
   const home = () => {
-    navigate('/dashboard');
-  }
+    navigate("/dashboard");
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4 sm:px-0">
       <div className="w-full max-w-md mx-auto bg-white rounded-lg shadow-lg p-6">
-        <div className="text-center" >
+        <div className="text-center">
           <div className="cursor-pointer" onClick={home}>
-          <img src={logo} alt="MyDexter Logo" className="mx-auto mb-4" />
+            <img src={logo} alt="MyDexter Logo" className="mx-auto mb-4" />
           </div>
           <p className="text-gray-500 text-sm mb-6">
             Your personal AI-powered SEO specialist

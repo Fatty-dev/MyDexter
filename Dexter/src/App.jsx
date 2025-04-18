@@ -70,6 +70,8 @@ const App = () => {
           <Route path="strategies" element={<Strategies />} />
           <Route path="analytics" element={<Analytics />} />
         </Route>
+
+
       </Routes>
     </BrowserRouter>
     </FormProvider>

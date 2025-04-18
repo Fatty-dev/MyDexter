@@ -27,12 +27,12 @@ export const useUserPlatformSiteStore = create()(
       sites: {},
       setSite: (platform, site) =>
         set((state) => ({
-          sites: { 
-            ...state.sites, 
-            [platform]: site // Store the entire site object
+          sites: {
+            ...state.sites,
+            [platform]: site, // Store the entire site object
           },
         })),
-      resetPlatforms: () => set({ sites: {} })
+      resetPlatforms: () => set({ sites: {} }),
     }),
     { name: "use-platformsite" }
   )
@@ -68,10 +68,14 @@ export const useAuthStore = create()(
   persist(
     (set, get) => ({
       expiresIn: null,
+      accessToken: "",
       setExpiresIn: (time) => {
         set({ expiresIn: time });
       },
-      clearExpiresIn: () => set({ expiresIn: null })
+      setAccessToken: (accessToken) =>
+        set((state) => ({ ...state, accessToken })),
+      clearExpiresIn: () => set({ expiresIn: null }),
+      resetAuthStore: () => set({ expiresIn: null, accessToken: "" }),
     }),
     { name: "use-auth-dex" }
   )

@@ -28,11 +28,9 @@ const Sidebar = ({ isOpen }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { email } = useEmailStore();
-  const { type, setType , clearSubscription } = useUserSubscriptionTypeStore();
-  const { clearExpiresIn } = useAuthStore()
+  const { type, setType, clearSubscription } = useUserSubscriptionTypeStore();
+  const { clearExpiresIn, accessToken, resetAuthStore } = useAuthStore();
   const { chatId } = useParams();
-
-  const isSignedUp = Boolean(localStorage.getItem("accessToken"));
 
   const [recentChats, setRecentChats] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -40,8 +38,19 @@ const Sidebar = ({ isOpen }) => {
   const [openModal, setOpenModal] = useState(false);
   const { expanded, toggleExpand } = useSidebar();
   const { resetPlatforms } = useUserPlatformSiteStore();
-  
-  const dropdownRef = useRef(null); 
+
+  const dropdownRef = useRef(null);
+
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+
+    clearExpiresIn();
+    resetPlatforms();
+    clearSubscription();
+    resetAuthStore();
+
+    navigate("/login");
+  };
 
   useEffect(() => {
     const fetchChatHistory = async () => {
@@ -59,21 +68,21 @@ const Sidebar = ({ isOpen }) => {
       }
     };
 
-    if (isSignedUp) {
+    if (accessToken) {
       fetchChatHistory();
     } else {
       setLoading(false);
     }
-  }, [isSignedUp]);
+  }, [accessToken]);
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const response = await authApi.get("/settings/user/me");
         if (response.data.success) {
-               // Extract the subscription type from the response
-               const subscriptionType = response.data.data.subscription.type;
-               setType(subscriptionType); 
+          // Extract the subscription type from the response
+          const subscriptionType = response.data.data.subscription.type;
+          setType(subscriptionType);
         } else {
           toast.error("Failed to load profile.");
         }
@@ -84,10 +93,10 @@ const Sidebar = ({ isOpen }) => {
       }
     };
 
-    if (isSignedUp) {
+    if (accessToken) {
       fetchProfile();
     }
-  }, [isSignedUp, setType]);
+  }, [accessToken, setType]);
 
   const toggleDropdown = () => setShowDropdown((prev) => !prev);
 
@@ -101,7 +110,7 @@ const Sidebar = ({ isOpen }) => {
 
     // Bind the event listener
     document.addEventListener("mousedown", handleClickOutside);
-    
+
     // Cleanup the event listener on component unmount
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -137,7 +146,7 @@ const Sidebar = ({ isOpen }) => {
             path: "/dashboard/strategies",
           },
         ]
-      : isSignedUp
+      : accessToken
       ? [
           { id: 1, label: "Dexter AI", icon: ai, path: "/dashboard" },
           {
@@ -175,8 +184,8 @@ const Sidebar = ({ isOpen }) => {
   };
 
   const handleFAQ = () => {
-    navigate('/faq')
-  }
+    navigate("/faq");
+  };
 
   return (
     <div
@@ -235,7 +244,7 @@ const Sidebar = ({ isOpen }) => {
       </nav>
 
       {/* Recent Chats Section */}
-      {isSignedUp && expanded && (
+      {accessToken && expanded && (
         <div className="mt-6 border-t  px-6 md:px-4">
           <p className="text-secondary my-4 text-sm font-semibold mb-2">
             RECENT CHATS
@@ -265,7 +274,7 @@ const Sidebar = ({ isOpen }) => {
       )}
 
       {/* Conditional Footer Section */}
-      {isSignedUp && (
+      {accessToken && (
         <div className="mt-auto px-6 pb-6">
           <div className="flex items-center space-x-2 relative">
             <div
@@ -275,9 +284,9 @@ const Sidebar = ({ isOpen }) => {
               <BsPersonCircle size={24} />
             </div>
             {expanded && (
-             <span className="text-secondary text-sm font-medium">
-             {email.length > 20 ? `${email.slice(0, 20)}...` : email}
-           </span>
+              <span className="text-secondary text-sm font-medium">
+                {email.length > 20 ? `${email.slice(0, 20)}...` : email}
+              </span>
             )}
 
             {/* Dropdown Menu */}
@@ -317,13 +326,7 @@ const Sidebar = ({ isOpen }) => {
                 </div>
                 <div
                   className="flex items-center border-t px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-500"
-                  onClick={() => {
-                    localStorage.removeItem("accessToken");
-                    navigate("/login");
-                    clearExpiresIn()
-                    resetPlatforms();
-                    clearSubscription()
-                  }}
+                  onClick={logout}
                 >
                   <BsBoxArrowRight className="mr-2 text-[#667085]" />
                   <span className="text-[#344054] text-medium text-sm">
@@ -336,12 +339,21 @@ const Sidebar = ({ isOpen }) => {
         </div>
       )}
 
-      {!isSignedUp && (
+      {!accessToken && (
         <div className="px-6 mt-6 pb-6 border-t md:px-6">
           <ul className="space-y-2 text-secondary font-semibold mt-4">
-            <li className="cursor-pointer hover:text-primary">Why My Dexter?</li>
-            <li className="cursor-pointer hover:text-primary" onClick={handleFAQ}>FAQ</li>
-            <li className="cursor-pointer hover:text-primary">Terms & Policies</li>
+            <li className="cursor-pointer hover:text-primary">
+              Why My Dexter?
+            </li>
+            <li
+              className="cursor-pointer hover:text-primary"
+              onClick={handleFAQ}
+            >
+              FAQ
+            </li>
+            <li className="cursor-pointer hover:text-primary">
+              Terms & Policies
+            </li>
           </ul>
           <p className="mt-4 text-xs text-secondary">© 2024 My Dexter</p>
         </div>
