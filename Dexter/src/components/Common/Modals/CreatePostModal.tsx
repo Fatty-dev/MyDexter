@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { FiEdit } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { FiRefreshCcw } from "react-icons/fi";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { popupVariant } from "../../../lib/utils";

@@ -8,7 +8,7 @@ import { BiImport } from "react-icons/bi";
 import { PiCopySimpleBold } from "react-icons/pi";
 import { FiInfo } from "react-icons/fi";
 import { authApi } from "@/lib/config/axios-instance";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "@/components/Dashboardcomp/Sidebar";
 

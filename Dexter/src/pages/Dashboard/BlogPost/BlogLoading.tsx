@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { CgMenuRight } from "react-icons/cg";
 import Loader from "../../../components/Common/Loader/Loader";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { authApi } from "../../../lib/config/axios-instance";
 import Sidebar from "@/components/Dashboardcomp/Sidebar";

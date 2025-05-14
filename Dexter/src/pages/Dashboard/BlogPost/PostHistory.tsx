@@ -8,7 +8,7 @@ import { FaArrowDownLong, FaArrowUpLong } from "react-icons/fa6";
 import DataTable from "../../../components/Common/Table/DataTable";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { authApi } from "@/lib/config/axios-instance";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { metrics, tableHeaderTitleList } from "../../../lib/data";
 import { Link, useNavigate } from "react-router-dom";
 import {

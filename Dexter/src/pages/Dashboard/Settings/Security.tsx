@@ -1,26 +1,28 @@
 import { authApi } from "@/lib/config/axios-instance";
 import React, { useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
 const Security = () => {
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const logOutAll = async () => {
     setLoading(true);
     try {
       // Call the endpoint for logging out of all devices
-      const { data } = await authApi.post("/settings/user/security/logout-all", {
-        // Assuming you need to send an authorization token or similar
-        Authorization: `Bearer ${localStorage.getItem("token")}`, // Adjust as necessary
-      });
+      const { data } = await authApi.post(
+        "/settings/user/security/logout-all",
+        {
+          // Assuming you need to send an authorization token or similar
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // Adjust as necessary
+        }
+      );
 
       // Check if the response is successful
       if (data.success) {
         toast.success("Successfully logged out of all devices.");
-        navigate('/login'); // Navigate to login page after successful deletion
-
+        navigate("/login"); // Navigate to login page after successful deletion
       } else {
         toast.error(data.message || "Failed to log out of all devices.");
       }
@@ -69,7 +71,9 @@ const Security = () => {
         <button
           onClick={logOutAll}
           disabled={loading}
-          className={`self-start border whitespace-nowrap border-[#908dfc] rounded-lg p-2 text-[#908dfc] hover:bg-[#908dfc] hover:text-gray-900 transition-all duration-300 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+          className={`self-start border whitespace-nowrap border-[#908dfc] rounded-lg p-2 text-[#908dfc] hover:bg-[#908dfc] hover:text-gray-900 transition-all duration-300 ${
+            loading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
         >
           {loading ? "Logging out..." : "Log out all"}
         </button>

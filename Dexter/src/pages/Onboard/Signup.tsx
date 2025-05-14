@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import logo from "../../assets/Main_Logo.svg";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import { publicApi } from "../../lib/config/axios-instance";
+import { toast } from "sonner";
+import { useMutation } from "@tanstack/react-query";
+import { registerUser } from "@/lib/services/auth.service";
 
 interface Inputs {
   email: string;
@@ -22,37 +23,39 @@ const Signup = () => {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const [loading, setLoading] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const toggleConfirmPasswordVisibility = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
+  const { mutate, isPending: loading } = useMutation({
+    mutationKey: ["signup"],
+    mutationFn: registerUser,
+  });
 
-  const onSubmit = async (data: any) => {
-    setLoading(true);
-    try {
-      const response = await publicApi.post("/auth/register", {
-        email: data.email.toLowerCase(), // Convert email to lowercase
-        password: data.password,
-      });
-      toast.success("Signup successful! Redirecting to login...");
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
-    } catch (error: any) {
-      const errorMessage =
-        error.response?.data?.message || "Something went wrong.";
-      toast.error(errorMessage);
-    } finally {
-      setLoading(false);
-      reset();
+  const onSubmit = async (data: Inputs) => {
+    if (data.password !== data.confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
     }
+
+    mutate(
+      { email: data.email, password: data.password },
+      {
+        onSuccess: () => {
+          toast.success("Signup successful! Redirecting to login...");
+          reset();
+          setTimeout(() => {
+            navigate("/login");
+          }, 2000);
+        },
+        onError: (error) => {
+          const errorMessage = error.message || "Something went wrong.";
+          toast.error(errorMessage);
+        },
+      }
+    );
   };
 
   const home = () => {
@@ -142,7 +145,7 @@ const Signup = () => {
               Confirm Password
             </label>
             <input
-              type={showConfirmPassword ? "text" : "password"}
+              type={showPassword ? "text" : "password"}
               id="confirmPassword"
               disabled={loading}
               placeholder="Confirm your password"
@@ -157,9 +160,9 @@ const Signup = () => {
             <button
               type="button"
               className="absolute top-8 right-3 text-gray-500 focus:outline-none"
-              onClick={toggleConfirmPasswordVisibility}
+              onClick={togglePasswordVisibility}
             >
-              {showConfirmPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+              {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
             </button>
             {errors.confirmPassword && (
               <p className="text-red-500 text-xs mt-1">

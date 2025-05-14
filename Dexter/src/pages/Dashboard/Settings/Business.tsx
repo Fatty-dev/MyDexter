@@ -2,7 +2,7 @@ import { useState } from "react";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import { IoMdAdd } from "react-icons/io";
 import { authApi } from "@/lib/config/axios-instance";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 const Business = () => {
   const [loading, setLoading] = useState(false);

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { popupVariant } from "../../../lib/utils/index";
 import { authApi } from "@/lib/config/axios-instance";

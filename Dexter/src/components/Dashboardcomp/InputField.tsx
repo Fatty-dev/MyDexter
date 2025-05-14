@@ -3,7 +3,7 @@ import { useState, useRef, type ChangeEvent } from "react";
 import { PiMagicWand } from "react-icons/pi";
 import { useNavigate, useParams } from "react-router-dom";
 import { authApi, publicApi } from "../../lib/config/axios-instance";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import Loader from "../Common/Loader/Loader";
 import type { Message } from "@/lib/types/chat";
 

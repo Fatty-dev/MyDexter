@@ -5,7 +5,7 @@ import profile_logo from "../../../assets/logo.svg";
 import ResponseHeader from "../../../components/Dashboardcomp/ResponseHeader";
 import InputField from "../../../components/Dashboardcomp/InputField";
 import { authApi, publicApi } from "../../../lib/config/axios-instance";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import SkeletonLoader from "../../../components/Dashboardcomp/SkeletonLoader";
 import type { Message } from "@/lib/types/chat";
 

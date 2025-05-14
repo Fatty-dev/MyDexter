@@ -14,7 +14,7 @@ import {
 } from "@/lib/store/global.store";
 import BlogPostChat from "@/components/Dashboardcomp/BlogPostChat";
 import SkeletonLoader from "@/components/Dashboardcomp/SkeletonLoader";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { IoMdClose } from "react-icons/io";
 import ConfirmPlatform from "@/components/Common/Modals/ConfirmPlatform";
 import Sidebar from "@/components/Dashboardcomp/Sidebar";

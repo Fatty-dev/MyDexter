@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { publicApi } from "../../lib/config/axios-instance";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import logo from "../../assets/Main_Logo.svg";
 import useEmailStore, {
   useAuthStore,
@@ -11,6 +11,8 @@ import useEmailStore, {
   useUserSubscriptionTypeStore,
 } from "../../lib/store/global.store";
 import { jwtDecode } from "jwt-decode";
+import { useMutation } from "@tanstack/react-query";
+import { login } from "@/lib/services/auth.service";
 
 interface Inputs {
   email: string;
@@ -20,7 +22,6 @@ interface Inputs {
 const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const { setEmail } = useEmailStore();
   const { setType } = useUserSubscriptionTypeStore();
@@ -37,58 +38,44 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
+  const { mutate, isPending: loading } = useMutation({
+    mutationKey: ["login"],
+    mutationFn: login,
+  });
+
   const { setSite } = useUserPlatformSiteStore();
 
-  const onSubmit = async (body: any) => {
-    setLoading(true);
+  const onSubmit = async (body: Inputs) =>
+    mutate(body, {
+      onSuccess: (data) => {
+        setExpiresIn(jwtDecode(data.accessToken).exp! * 1000);
+        setEmail(data.user.email);
+        setAccessToken(data.accessToken);
 
-    try {
-      const {
-        data: { data },
-      } = await publicApi.post("/auth/login", {
-        email: body.email,
-        password: body.password,
-      });
+        if (data.user.oauth.shopify && data.user.oauth.shopify.length > 0) {
+          const connectedShopify = data.user.oauth.shopify[0];
+          console.log(
+            "Connected Shopify Store Name:",
+            connectedShopify.storeName
+          );
+          setSite("shopify", connectedShopify);
+        } else if (
+          data.user.oauth.wordpress &&
+          data.user.oauth.wordpress.sites.length > 0
+        ) {
+          const connectedWordPress = data.user.oauth.wordpress.sites[0];
+          console.log("Connected WordPress URL:", connectedWordPress.url);
+          setSite("wordpress", connectedWordPress);
+        }
 
-      localStorage.setItem("accessToken", data.accessToken);
-
-      // @ts-ignore
-      setExpiresIn(jwtDecode(data.accessToken).exp * 1000);
-
-      const user = data.user;
-      setEmail(user.email);
-
-      setAccessToken(data.accessToken);
-
-      // Check for connected OAuth services
-      if (user.oauth.shopify && user.oauth.shopify.length > 0) {
-        const connectedShopify = user.oauth.shopify[0]; // Get the first connected Shopify store
-        console.log(
-          "Connected Shopify Store Name:",
-          connectedShopify.storeName
-        ); // Log the store name
-        setSite("shopify", connectedShopify); // Set the site for Shopify
-      } else if (
-        user.oauth.wordpress &&
-        user.oauth.wordpress.sites.length > 0
-      ) {
-        const connectedWordPress = user.oauth.wordpress.sites[0]; // Get the first WordPress site
-        console.log("Connected WordPress URL:", connectedWordPress.url); // Log the WordPress URL
-        setSite("wordpress", connectedWordPress); // Set the site for WordPress
-      }
-
-      setType(user.subscription.type);
-      navigate("/dashboard");
-    } catch (error: any) {
-      console.log(error);
-      const errorMessage =
-        error.response?.data?.message || "Something went wrong.";
-      toast.error(errorMessage);
-    } finally {
-      setLoading(false);
-      reset();
-    }
-  };
+        setType(data.user.subscription.type);
+        navigate("/dashboard");
+      },
+      onError: (error) => {
+        const errorMessage = error?.message || "Something went wrong.";
+        toast.error(errorMessage);
+      },
+    });
 
   const home = () => {
     navigate("/dashboard");

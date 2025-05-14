@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import logo from "../../assets/Main_Logo.svg";
 import blog from "../../assets/blog.svg";
@@ -14,7 +14,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { MdOutlineContactSupport } from "react-icons/md";
 import { BsBoxArrowRight, BsPersonLinesFill } from "react-icons/bs";
 import prologo from "../../assets/proLogo.svg";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import ProModal from "../Common/Modals/ProModal";
 import { authApi } from "../../lib/config/axios-instance";
 import useEmailStore, {
@@ -23,6 +23,7 @@ import useEmailStore, {
   useUserPlatformSiteStore,
   useUserSubscriptionTypeStore,
 } from "../../lib/store/global.store";
+import { useModal } from "@/lib/contexts/modal-context";
 
 interface Props {
   isOpen?: boolean;
@@ -42,6 +43,8 @@ const Sidebar = ({ isOpen }: Props) => {
   const [openModal, setOpenModal] = useState(false);
   const { expanded, toggleExpand } = useSidebar();
   const { resetPlatforms } = useUserPlatformSiteStore();
+
+  const { showModal: showSignInModal } = useModal();
 
   const dropdownRef = useRef(null);
 
@@ -124,67 +127,70 @@ const Sidebar = ({ isOpen }: Props) => {
     };
   }, [dropdownRef]);
 
-  const navigationItems =
-    type === "pro"
-      ? [
-          {
-            id: 1,
-            label: "Overview",
-            icon: overview,
-            path: "/dashboard/Overview",
-          },
-          { id: 2, label: "Dexter AI", icon: ai, path: "/dashboard" },
-          {
-            id: 3,
-            label: "Analytics",
-            icon: analytics,
-            path: "/dashboard/analytics",
-          },
-          {
-            id: 4,
-            label: "Blog Post",
-            icon: blog,
-            path: "/dashboard/blog-post",
-          },
-          {
-            id: 5,
-            label: "Strategies",
-            icon: strategies,
-            path: "/dashboard/strategies",
-          },
-        ]
-      : accessToken
-      ? [
-          { id: 1, label: "Dexter AI", icon: ai, path: "/dashboard" },
-          {
-            id: 2,
-            label: "Analytics",
-            icon: analytics,
-            path: "/dashboard/analytics",
-          },
-          {
-            id: 3,
-            label: "Blog Post",
-            icon: blog,
-            path: "/dashboard/blog-post",
-          },
-        ]
-      : [
-          { id: 1, label: "Dexter AI", icon: ai, path: "/dashboard" },
-          {
-            id: 2,
-            label: "Analytics",
-            icon: analytics,
-            path: "/dashboard/analytics",
-          },
-          {
-            id: 3,
-            label: "Blog Post",
-            icon: blog,
-            path: "/dashboard/blog-post",
-          },
-          { id: 4, label: "Sign In", icon: signin, path: "/login" },
-        ];
+  const navigationItems = useMemo(
+    () =>
+      type === "pro"
+        ? [
+            {
+              id: 1,
+              label: "Overview",
+              icon: overview,
+              path: "/dashboard/Overview",
+            },
+            { id: 2, label: "Dexter AI", icon: ai, path: "/dashboard" },
+            {
+              id: 3,
+              label: "Analytics",
+              icon: analytics,
+              path: "/dashboard/analytics",
+            },
+            {
+              id: 4,
+              label: "Blog Post",
+              icon: blog,
+              path: "/dashboard/blog-post",
+            },
+            {
+              id: 5,
+              label: "Strategies",
+              icon: strategies,
+              path: "/dashboard/strategies",
+            },
+          ]
+        : accessToken
+        ? [
+            { id: 1, label: "Dexter AI", icon: ai, path: "/dashboard" },
+            {
+              id: 2,
+              label: "Analytics",
+              icon: analytics,
+              path: "/dashboard/analytics",
+            },
+            {
+              id: 3,
+              label: "Blog Post",
+              icon: blog,
+              path: "/dashboard/blog-post",
+            },
+          ]
+        : [
+            { id: 1, label: "Dexter AI", icon: ai, path: "/dashboard" },
+            {
+              id: 2,
+              label: "Analytics",
+              icon: analytics,
+              path: "/dashboard/analytics",
+            },
+            {
+              id: 3,
+              label: "Blog Post",
+              icon: blog,
+              path: "/dashboard/blog-post",
+            },
+            { id: 4, label: "Sign In", icon: signin, path: "/login" },
+          ],
+    [type]
+  );
 
   const showModal = () => {
     setOpenModal(true);
@@ -351,7 +357,7 @@ const Sidebar = ({ isOpen }: Props) => {
         </div>
       )}
 
-      {!accessToken && (
+      {!accessToken && expanded && (
         <div className="px-6 mt-6 pb-6 border-t md:px-6">
           <ul className="space-y-2 text-secondary font-semibold mt-4">
             <li className="cursor-pointer hover:text-primary">

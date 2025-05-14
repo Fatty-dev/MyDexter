@@ -6,7 +6,6 @@ import { useAuthStore } from "../store/global.store";
 export const publicApi = axios.create({
   headers: { "Content-Type": "application/json" },
   baseURL: API_URL,
-  withCredentials: true,
 });
 
 // protected endpoints

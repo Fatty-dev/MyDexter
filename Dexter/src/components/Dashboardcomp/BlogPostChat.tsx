@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../Common/Loader/Loader";
 import { authApi } from "@/lib/config/axios-instance";
 import { useSelectionStore } from "@/lib/store/global.store";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 interface BlogPostChatProps {
   postId: string;

@@ -13,7 +13,7 @@ import { useUserPlatformSiteStore } from "@/lib/store/global.store";
 import { FiX } from "react-icons/fi";
 import { CgMenuRight } from "react-icons/cg";
 import Sidebar from "@/components/Dashboardcomp/Sidebar";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 const Analytics = () => {
   const [isOpen, setIsOpen] = useState(false);

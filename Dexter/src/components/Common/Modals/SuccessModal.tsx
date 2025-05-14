@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { authApi } from "../../../lib/config/axios-instance";
 

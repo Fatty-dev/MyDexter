@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Background from "../../../assets/Background.png";
 import { publicApi } from "../../../lib/config/axios-instance";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 const Update = () => {
   const [email, setEmail] = useState(""); // State to store email input

@@ -4,7 +4,7 @@ import { scores } from "../../../lib/data";
 import { useUserPlatformSiteStore } from "../../../lib/store/global.store";
 import { useEffect, useState } from "react";
 import { authApi } from "../../../lib/config/axios-instance";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import Metrics from "../../../components/Common/Metrics";
 
 const metaData = {

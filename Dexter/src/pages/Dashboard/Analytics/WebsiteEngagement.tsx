@@ -6,7 +6,7 @@ import { IoIosArrowDown, IoMdClose } from "react-icons/io";
 import { BsBoxArrowLeft } from "react-icons/bs";
 import { authApi } from "@/lib/config/axios-instance";
 import { useUserPlatformSiteStore } from "@/lib/store/global.store";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 interface Props {
   setShowDetails: (showDetails: string | null) => void;

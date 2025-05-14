@@ -6,7 +6,7 @@ import logo from "../../../assets/Main_Logo.svg";
 import visaImage from "../../../assets/Visa.svg";
 import mastercardImage from "../../../assets/Mastercard.svg";
 import { authApi } from "@/lib/config/axios-instance";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 interface CheckoutModalProps {
   onClose?: () => void;

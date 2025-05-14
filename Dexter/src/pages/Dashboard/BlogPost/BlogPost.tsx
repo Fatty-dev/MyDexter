@@ -13,7 +13,7 @@ import PostHistory from "./PostHistory";
 import { HiOutlineChevronDown } from "react-icons/hi2";
 import CreatePostModal from "../../../components/Common/Modals/CreatePostModal";
 import { useUserPlatformSiteStore } from "@/lib/store/global.store";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { authApi } from "@/lib/config/axios-instance";
 import Sidebar from "@/components/Dashboardcomp/Sidebar";
 

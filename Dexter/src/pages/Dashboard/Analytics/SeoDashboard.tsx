@@ -1,4 +1,3 @@
-import { Chart } from "@/components/charts/Chart";
 import Metrics from "@/components/Common/Metrics";
 import { CiCircleQuestion } from "react-icons/ci";
 import { GoEye } from "react-icons/go";
@@ -7,7 +6,8 @@ import { scores } from "@/lib/data";
 import { useUserPlatformSiteStore } from "@/lib/store/global.store";
 import { authApi } from "@/lib/config/axios-instance";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
+import { Chart } from "@/components/Common/Chart/Chart";
 
 const SeoDashboard = () => {
   const visibilityScore = {

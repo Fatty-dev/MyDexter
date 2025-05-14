@@ -16,7 +16,7 @@ import { TbSpacingVertical } from "react-icons/tb";
 import { PiImageSquareBold } from "react-icons/pi";
 import { Editor as TiptapEditor } from "@tiptap/react";
 import { authApi } from "@/lib/config/axios-instance";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 type MenuBarProps = {
   editor: TiptapEditor | null;

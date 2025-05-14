@@ -4,7 +4,7 @@ import { Controller } from "react-hook-form";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import USFlag from "@/assets/US.svg";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { authApi } from "@/lib/config/axios-instance";
 
 interface Props {

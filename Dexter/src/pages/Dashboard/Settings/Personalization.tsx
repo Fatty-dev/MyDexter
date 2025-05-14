@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { HiOutlineChevronRight } from "react-icons/hi";
 import { authApi } from "@/lib/config/axios-instance"; // Adjust the import based on your project structure
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 const Personalization = () => {
   const [isOn, setIsOn] = useState(true);

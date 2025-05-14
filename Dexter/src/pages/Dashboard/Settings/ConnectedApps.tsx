@@ -4,7 +4,7 @@ import shopify from "@/assets/shopify.svg";
 import wordpress from "@/assets/wordpress.svg";
 import wix from "@/assets/wix.svg";
 import { authApi } from "@/lib/config/axios-instance";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { useUserPlatformSiteStore } from "@/lib/store/global.store";
 
 const apps = [

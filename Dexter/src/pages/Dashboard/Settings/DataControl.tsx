@@ -4,7 +4,7 @@ import { popupVariant } from "../../../lib/utils/index";
 import { authApi } from "@/lib/config/axios-instance";
 import { HiOutlineChevronRight } from "react-icons/hi";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 const DataControl = () => {
   const [loading, setLoading] = useState(false);
