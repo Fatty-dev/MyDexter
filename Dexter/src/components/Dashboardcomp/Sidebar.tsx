@@ -28,6 +28,7 @@ import { getChatHistory } from "@/lib/services/chat.service";
 import useDropDown from "@/lib/hooks/useDropdown";
 import { fadeToTopVariant } from "@/lib/utils/variants";
 import { AnimatePresence, motion } from "framer-motion";
+import { LoginModal } from "@/pages/Onboard/Login";
 
 interface Props {
   isOpen?: boolean;
@@ -54,8 +55,6 @@ const Sidebar = ({ isOpen }: Props) => {
   } = useDropDown();
 
   const logout = () => {
-    localStorage.removeItem("accessToken");
-
     clearExpiresIn();
     resetPlatforms();
     clearSubscription();
@@ -70,6 +69,7 @@ const Sidebar = ({ isOpen }: Props) => {
     queryKey: ["history"],
     queryFn: getChatHistory,
     refetchOnWindowFocus: false,
+    enabled: !!accessToken,
   });
 
   useEffect(() => {
@@ -138,9 +138,15 @@ const Sidebar = ({ isOpen }: Props) => {
               icon: blog,
               path: "/dashboard/blog-post",
             },
-            { id: 4, label: "Sign In", icon: signin, path: "/login" },
+            {
+              id: 4,
+              label: "Sign In",
+              icon: signin,
+              path: "/login",
+              onClick: () => showSignInModal(<LoginModal />),
+            },
           ],
-    [type]
+    [type, accessToken]
   );
 
   const showModal = () => {
@@ -196,7 +202,9 @@ const Sidebar = ({ isOpen }: Props) => {
                 ? "bg-hover text-[#344054]"
                 : "hover:text-primary hover:bg-hover"
             }`}
-            onClick={() => navigate(item.path)}
+            onClick={() =>
+              item.onClick ? item.onClick() : navigate(item.path)
+            }
           >
             <img
               src={item.icon}

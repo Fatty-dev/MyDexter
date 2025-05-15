@@ -44,8 +44,8 @@ const App = () => {
   return (
     <FormProvider {...methods}>
       <QueryClientProvider client={queryClient}>
-        <ModalProvider>
-          <BrowserRouter>
+        <BrowserRouter>
+          <ModalProvider>
             <Routes>
               <Route path="/" element={<LandingpageLayout />}>
                 <Route path="/" element={<Home />} />
@@ -84,8 +84,8 @@ const App = () => {
                 <Route path="analytics" element={<Analytics />} />
               </Route>
             </Routes>
-          </BrowserRouter>
-        </ModalProvider>
+          </ModalProvider>
+        </BrowserRouter>
 
         <Toaster position="top-right" />
         <ReactQueryDevtools client={queryClient} />
