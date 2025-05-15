@@ -28,6 +28,7 @@ import { ModalProvider } from "./lib/contexts/modal-context";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "sonner";
+import Terms from "./pages/LandingPage/Terms";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -51,6 +52,7 @@ const App = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="getting-started" element={<Gettingstarted />} />
                 <Route path="faq" element={<FAQ />} />
+                <Route path="terms" element={<Terms />} />
                 <Route path="pricing" element={<Pricing />} />
                 <Route path="blog" element={<Blog />} />
                 <Route path="blog-details" element={<BlogDetails />} />
