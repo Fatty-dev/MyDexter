@@ -3,6 +3,9 @@ export interface Message {
   content: string;
   role: "user" | "assistant";
   timestamp: string;
+
+  // for typing effect
+  typing?: boolean;
 }
 
 export interface ChatHistory {

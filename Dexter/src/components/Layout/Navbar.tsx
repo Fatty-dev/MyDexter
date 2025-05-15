@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { HiMenu, HiX } from "react-icons/hi";
 import logo from "../../assets/Main_Logo.svg";
@@ -24,7 +24,8 @@ const Navbar = () => {
     navigate("/dashboard");
   };
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path: string) =>
+    useMemo(() => location.pathname === path, [location.pathname, path]);
 
   return (
     <nav className="container mx-auto flex flex-col lg:flex-row justify-between items-center pt-6 md:pt-8 py-4 bg-white">

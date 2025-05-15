@@ -15,65 +15,36 @@ import {
   useAuthStore,
   useUserPlatformSiteStore,
 } from "@/lib/store/global.store";
+import { useQuery } from "@tanstack/react-query";
+import { getBlogPosts } from "@/lib/services/blog.service";
 
 const PostHistory = () => {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-  const [blogPost, setBlogPost] = useState([]);
   const { sites } = useUserPlatformSiteStore();
   const { accessToken } = useAuthStore();
 
-  const fetchBlogPosts = async () => {
-    // Check if the user is logged in
-    if (!accessToken) {
-      // Simply return without making the API call
-      return; // Exit the function early
-    }
-
-    setIsLoading(true); // Set loading state to true
-    try {
-      const response = await authApi.get(`/blog`); // Fetch blog posts
-      setBlogPost(response.data.data.blogPost); // Update state with fetched posts
-    } catch (error) {
-      // Log any errors that occur during the fetch
-      console.error("Error fetching blog posts:", error);
-    } finally {
-      setIsLoading(false); // Set loading state to false
-    }
-  };
-
-  useEffect(() => {
-    fetchBlogPosts(); // Call the function to fetch blog posts on component mount
-  }, []);
+  const { data: blogPosts, isPending: isLoading } = useQuery({
+    queryKey: ["blogPosts"],
+    queryFn: getBlogPosts,
+    enabled: !!accessToken,
+  });
 
   useEffect(() => {
     const fetchHistory = async () => {
-      // Check if the user is logged in
-      if (!accessToken) {
-        // Simply return without making the API call
-        return; // Exit the function early
-      }
-      setIsLoading(true); // Set loading state to true
       try {
         const response = await authApi.get(
           `/blog/history?platform=wordpress&siteId=${sites.siteId}`
         );
-        if (response.data.success) {
-          setBlogPost(response.data.data.blogPost); // Update state with fetched blog posts
-        } else {
-          // Optionally handle the case where the response is not successful
-          console.error("Failed to fetch posts:", response.data.message);
-        }
+
+        const data = response.data.data.blogPost;
+        console.log({ data });
       } catch (error) {
-        // Log any errors that occur during the fetch
         console.error("Error fetching posts:", error);
-      } finally {
-        setIsLoading(false); // Set loading state to false
       }
     };
 
     if (sites.siteId) {
-      fetchHistory(); // Call the function to fetch history if siteId is available
+      fetchHistory();
     }
   }, [sites.siteId]);
 
@@ -123,7 +94,7 @@ const PostHistory = () => {
       </div>
 
       <div className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-6 p-4 md:p-6 rounded-lg bg-[#f5f7f9]">
-        {(blogPost.length === 0
+        {(blogPosts?.length === 0
           ? metrics.map((metric) => ({ ...metric, value: 0, max: 0 }))
           : metrics
         ).map((metric, index) => (
@@ -190,7 +161,7 @@ const PostHistory = () => {
 
       {isLoading ? (
         <p className="text-center text-gray-500">Loading...</p>
-      ) : blogPost.length === 0 ? (
+      ) : blogPosts?.length === 0 ? (
         <div className="text-center mt-4">
           <p className="font-bold text-gray-400">
             All blog posts will appear here
@@ -201,14 +172,14 @@ const PostHistory = () => {
           </p>
         </div>
       ) : (
-        // @ts-ignore
         <DataTable
           tableHeaderTitleList={tableHeaderTitleList}
           isLoading={isLoading}
-          postsData={blogPost}
+          postsData={blogPosts || []}
+          isFetching={isLoading}
         >
-          {blogPost.map((post: any) => (
-            <tr key={post.id}>
+          {blogPosts?.map((post) => (
+            <tr key={post._id}>
               <td
                 className="py-5 text-sm bg-white border-b cursor-pointer border-gray-200"
                 onClick={() => getSingleBlogPost(post._id)}
@@ -221,7 +192,7 @@ const PostHistory = () => {
                     />
                     <span>
                       <img
-                        src={post.image || postImage}
+                        src={post.images[0] || postImage}
                         alt="Post Image"
                         className="object-cover "
                       />
@@ -243,7 +214,7 @@ const PostHistory = () => {
                         >
                           <span>
                             {keyword.slice(0, 15)}
-                            {keyword.length > 8 ? "..." : ""}
+                            {keyword.length > 15 ? "..." : ""}
                           </span>
                         </p>
                       ))
@@ -259,17 +230,17 @@ const PostHistory = () => {
               <td className="text-sm bg-white border-b md:pr-4 border-gray-200 ">
                 <p
                   className={`${
-                    post.traffic < 5
+                    post.estimatedMonthlyTraffic < 5
                       ? "text-[#ba352a] bg-[#fef3f2]  border-[#fedad7]"
                       : "text-[#2d8d64] bg-[#ecfdf3] border-[#caf5dc] "
                   } whitespace-no-wrap flex text-[10px] font-bold  items-center border w-[40px] gap-1  justify-center rounded-full  p-1`}
                 >
-                  {post.traffic < 5 ? (
+                  {post.estimatedMonthlyTraffic < 5 ? (
                     <FaArrowDownLong className="text-[#ba352a]" />
                   ) : (
                     <FaArrowUpLong className="text-[#2d8d64]" />
                   )}
-                  {post.traffic}%
+                  {post.estimatedMonthlyTraffic}%
                 </p>
               </td>
               <td className="text-sm bg-white border-b table-cell border-gray-200 max-md:hidden md:px-4">
@@ -289,9 +260,9 @@ const PostHistory = () => {
                       style={{
                         width: `${post.rating}%`,
                         backgroundColor: `${
-                          post.rating < 50
+                          post.rating && post.rating < 50
                             ? "#ef3a29"
-                            : post.rating > 75
+                            : post.rating && post.rating > 75
                             ? "#17b26a"
                             : "#ffad05"
                         }`,
@@ -311,7 +282,7 @@ const PostHistory = () => {
                 className="cursor-pointer max-md:pl-2 md:px-3 text-sm bg-white border-b py-5 border-gray-200 text-gray-900"
                 onClick={() => EditBlogPost(post._id)}
               >
-                <Link to={`/dashboard/blog-post/${post.id}`}>
+                <Link to={`/dashboard/blog-post/${post._id}`}>
                   <FiEdit2 className="text-[15px] max-md:text-[10px]" />
                 </Link>
               </td>

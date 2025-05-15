@@ -3,14 +3,11 @@ import ProLogo from "../../../assets/proLogo.svg";
 import { RiCloseLine } from "react-icons/ri";
 import { PiStarFourFill } from "react-icons/pi";
 import { motion } from "framer-motion";
-// import { popupVariant } from "../../../lib/utils";
 import CheckoutModal from "./CheckoutModal";
+import Modal from ".";
+import { useModal } from "@/lib/contexts/modal-context";
+import { opacityVariant } from "@/lib/utils/variants";
 
-const variant = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  exit: { opacity: 0 },
-};
 const freePlanFeatures = [
   "Up to 10 searches per day",
   "All SEO information",
@@ -35,11 +32,10 @@ const ProModal = ({ onClose }: { onClose?: () => void }) => {
     setOpenCheckout(true);
   };
 
+  const { hideModal } = useModal();
+
   return (
-    <motion.div
-      {...variant}
-      className="fixed inset-0 z-[2000] flex items-center justify-center bg-gray-900 bg-opacity-50"
-    >
+    <Modal {...opacityVariant} onClose={hideModal}>
       <motion.div
         // {...popupVariant}
         className={`bg-white rounded-lg shadow-lg w-[90%] max-w-3xl ${
@@ -48,7 +44,7 @@ const ProModal = ({ onClose }: { onClose?: () => void }) => {
       >
         {/* Close Button */}
         <div className="flex justify-end py-3 text-[#98A2B3] px-4">
-          <button onClick={onClose}>
+          <button onClick={hideModal}>
             <RiCloseLine size={22} />
           </button>
         </div>
@@ -140,7 +136,7 @@ const ProModal = ({ onClose }: { onClose?: () => void }) => {
       {openCheckout && (
         <CheckoutModal onClose={() => (setOpenCheckout(false), onClose?.())} />
       )}
-    </motion.div>
+    </Modal>
   );
 };
 

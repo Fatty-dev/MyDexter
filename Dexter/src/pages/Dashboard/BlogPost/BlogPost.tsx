@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { FiMenu, FiX } from "react-icons/fi";
+import React, { useState } from "react";
+import { FiX } from "react-icons/fi";
 import { CgMenuRight } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 import { FaRegEdit } from "react-icons/fa";
@@ -8,61 +8,44 @@ import { HiOutlineChevronRight } from "react-icons/hi";
 import { RiHome6Line } from "react-icons/ri";
 import { MdClose } from "react-icons/md";
 import container from "../../../assets/container.svg";
-import Guy from "../../../assets/Guy.svg";
 import PostHistory from "./PostHistory";
 import { HiOutlineChevronDown } from "react-icons/hi2";
 import CreatePostModal from "../../../components/Common/Modals/CreatePostModal";
-import { useUserPlatformSiteStore } from "@/lib/store/global.store";
+import {
+  useAuthStore,
+  useUserPlatformSiteStore,
+} from "@/lib/store/global.store";
 import { toast } from "sonner";
-import { authApi } from "@/lib/config/axios-instance";
 import Sidebar from "@/components/Dashboardcomp/Sidebar";
+import { useQuery } from "@tanstack/react-query";
+import { getBlogPosts } from "@/lib/services/blog.service";
+import BlogPostCard from "./BlogPostCard";
 
 const BlogPost = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const toggleSidebar = () => setIsOpen(!isOpen);
   const [createPostModalOpen, setCreatePostModalOpen] = React.useState(false);
-  const [blogPosts, setBlogPosts] = useState<any>([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   const { sites } = useUserPlatformSiteStore();
 
-  const fetchBlogPosts = async () => {
-    const accessToken = localStorage.getItem("accessToken") || "";
+  const { accessToken } = useAuthStore();
 
-    // Check if the user is logged in
-    if (!accessToken) {
-      // Simply return without making the API call
-      return; // Exit the function early
-    }
-
-    setIsLoading(true);
-    try {
-      const response = await authApi.get(`/blog`);
-      setBlogPosts(response.data.data.blogPost);
-    } catch (error) {
-      // Handle any errors that occur during the fetch
-      console.error("Error fetching blog posts:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchBlogPosts();
-  }, []);
+  const { data: blogPosts, isPending: isLoading } = useQuery({
+    queryKey: ["blogPosts"],
+    queryFn: getBlogPosts,
+  });
 
   // const handleBulkArticle = () => {
   //   navigate("/dashboard/bulk-article");
   // };
 
   const handleLoginCheck = () => {
-    const accessToken = localStorage.getItem("accessToken") || "";
     if (!accessToken) {
-      toast.error("Please log in to use this feature!"); // Show toast if not logged in
-      return false; // Indicate that the user is not logged in
+      toast.error("Please log in to use this feature!");
+      return false;
     }
-    return true; // Indicate that the user is logged in
+    return true;
   };
 
   const handleBulkArticle = () => {
@@ -73,7 +56,7 @@ const BlogPost = () => {
 
   const handleStartPost = () => {
     if (handleLoginCheck()) {
-      setCreatePostModalOpen(true); // Open the modal if logged in
+      setCreatePostModalOpen(true);
     }
   };
   return (
@@ -207,10 +190,12 @@ const BlogPost = () => {
 
       {/* Blog Post Grid */}
       {isLoading ? (
-        <div className="p-4 mb-6 mt-4 bg-white rounded-lg shadow">
-          Blog post Loading....
+        <div className="grid mt-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10">
+          {Array.from({ length: 3 }).map((_, index) => (
+            <BlogPostSkeleton key={index} />
+          ))}
         </div>
-      ) : blogPosts.length === 0 ? (
+      ) : blogPosts?.length === 0 ? (
         <div className="p-4 mb-6 bg-white rounded-lg shadow ">No blogpost</div>
       ) : (
         <div className="p-4 mb-6 bg-white rounded-lg shadow">
@@ -223,65 +208,8 @@ const BlogPost = () => {
             </button>
           </div>
           <div className="grid mt-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {blogPosts.map((blog: any) => (
-              <div
-                key={blog.id}
-                className="relative overflow-hidden transition-shadow duration-300 bg-white border rounded-lg shadow-lg group hover:shadow-xl"
-              >
-                {/* Card Header */}
-                <div className="bg-[#E4E4F2] p-4">
-                  <h3 className="text-black font-semibold flex items-center justify-center gap-2">
-                    <FaRegEdit size={22} className="text-[#94A3B8]" />
-                    Blog post
-                  </h3>
-                </div>
-
-                {/* Card Content */}
-                <div className="px-4 pt-4">
-                  <h4 className="font-bold text-gray-800 text-md">
-                    {blog.title}
-                  </h4>
-                  <p className="mt-1 line-clamp-3 text-sm text-gray-600">
-                    {blog.content}
-                  </p>
-                  <img
-                    src={blog.image || Guy}
-                    alt="Blog"
-                    className="object-cover w-full h-32 mt-4"
-                  />
-                </div>
-
-                {/* Footer Metadata */}
-                <div className="p-4 border-t">
-                  <h5 className="font-medium text-gray-800">{blog.title}</h5>
-                  <p className="mt-1 text-sm text-gray-500">
-                    {blog.Keywords || "No Keyword"}
-                  </p>
-                  <div className="flex items-center gap-2 mt-2 text-sm">
-                    <div className="px-2 py-1 text-yellow-600 bg-yellow-100 rounded-full">
-                      {blog.status}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Hover Buttons */}
-                <div className="absolute inset-0 flex flex-col items-center justify-end gap-2 p-4 transition-opacity duration-300 bg-white opacity-0 pointer-events-none bg-opacity-80 group-hover:opacity-100 group-hover:pointer-events-auto">
-                  <button
-                    className="flex items-center justify-center w-full gap-2 px-4 py-2 text-white rounded bg-primary"
-                    onClick={() => console.log("Start Post for", blog.id)}
-                  >
-                    Start Your 1-Click Post
-                    <FaRegEdit />
-                  </button>
-                  <button
-                    className="bg-white w-full border flex items-center gap-2 justify-center text-[#475467] px-4 py-2 rounded"
-                    onClick={() => console.log("Bulk Article for", blog.id)}
-                  >
-                    Create Articles in Bulk
-                    <PiCopySimpleBold />
-                  </button>
-                </div>
-              </div>
+            {blogPosts?.map((blog: any) => (
+              <BlogPostCard key={blog._id} blog={blog} />
             ))}
           </div>
         </div>
@@ -294,6 +222,29 @@ const BlogPost = () => {
       {createPostModalOpen && (
         <CreatePostModal setCreatePostModalOpen={setCreatePostModalOpen} />
       )}
+    </div>
+  );
+};
+
+export const BlogPostSkeleton = () => {
+  return (
+    <div className="p-4 bg-white rounded-xl shadow-md">
+      <div className="flex items-center space-x-2 mb-2">
+        <div className="w-4 h-4 bg-gray-300 rounded-full animate-pulse" />
+        <div className="w-24 h-4 bg-gray-300 rounded animate-pulse" />
+      </div>
+
+      <div className="h-5 w-3/4 bg-gray-300 rounded mb-1 animate-pulse" />
+      <div className="h-4 w-full bg-gray-200 rounded mb-2 animate-pulse" />
+      <div className="h-4 w-11/12 bg-gray-200 rounded mb-2 animate-pulse" />
+      <div className="h-4 w-10/12 bg-gray-200 rounded mb-4 animate-pulse" />
+
+      <div className="w-full h-40 bg-gray-300 rounded-lg mb-4 animate-pulse" />
+
+      <div className="h-5 w-3/4 bg-gray-300 rounded mb-1 animate-pulse" />
+      <div className="h-4 w-24 bg-gray-200 rounded mb-4 animate-pulse" />
+
+      <div className="h-8 w-28 bg-yellow-200 text-yellow-600 text-center text-sm font-semibold rounded-lg animate-pulse" />
     </div>
   );
 };

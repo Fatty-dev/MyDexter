@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { FiUser } from "react-icons/fi";
 import profile_logo from "../../../assets/logo.svg";
@@ -8,14 +8,15 @@ import SkeletonLoader from "../../../components/Dashboardcomp/SkeletonLoader";
 import type { Message } from "@/lib/types/chat";
 import { useQuery } from "@tanstack/react-query";
 import { getChatDetail } from "@/lib/services/chat.service";
+import AIChatResponseFormatter from "@/components/Common/Chat/response-formatter";
+import useChatStore from "@/lib/store/chat.store";
 
 const ChatBubblePage = () => {
-  const location = useLocation();
   const { chatId } = useParams();
   const [messages, setMessages] = useState<Message[]>([]);
   const [dailyUsage, setDailyUsage] = useState(0);
   const [dailyLimit, setDailyLimit] = useState(0);
-  const [chatTitle, setChatTitle] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const { data: details, isPending: loading } = useQuery({
     queryKey: ["chat", chatId],
@@ -23,6 +24,8 @@ const ChatBubblePage = () => {
     refetchOnWindowFocus: false,
     enabled: !!chatId,
   });
+
+  const { isNewChat } = useChatStore();
 
   const addMessage = (newMessage: Message) => {
     setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -33,11 +36,24 @@ const ChatBubblePage = () => {
     setDailyLimit(limit);
   };
 
+  const scrollToBottom = (): void => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  useEffect(() => {
+    setMessages([]);
+    scrollToBottom();
+  }, [chatId]);
+
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center pt-4 pb-20">
+    <div className="min-h-screen bg-[#f8f8f8] flex flex-col items-center pb-20">
       <ResponseHeader
         chatTitle={details?.title || "Chat"}
-        timestamp={new Date().toLocaleString()}
+        timestamp={details?.lastUpdated}
       />
 
       {/* Chat body */}
@@ -66,22 +82,25 @@ const ChatBubblePage = () => {
                 </div>
               )}
 
-              <div
-                className={`${
-                  message.role === "user"
-                    ? "text-[#344054] bg-[#F0F0F9]"
-                    : "text-black"
-                } rounded-lg lg:px-3 whitespace-pre-line px-2 max-w-lg py-2`}
-              >
-                {message.content}
-                <div className="text-xs text-gray-500 mt-1">
-                  {message.timestamp}
+              {message.role === "assistant" ? (
+                <AIChatResponseFormatter
+                  apiResponse={{ response: message.content }}
+                  scrollToBottom={scrollToBottom}
+                  displayTypingEffect={isNewChat || message.typing}
+                />
+              ) : (
+                <div
+                  className={`text-[#344054] bg-[#F0F0F9] py-2 rounded-lg lg:px-3 whitespace-pre-line px-2 max-w-lg`}
+                >
+                  {message.content}
                 </div>
-              </div>
+              )}
             </div>
           ))
         )}
       </div>
+
+      <div ref={messagesEndRef} className="h-8" />
 
       {/* Chat footer */}
       <div className="fixed bg-gray-100 bottom-0 w-full">

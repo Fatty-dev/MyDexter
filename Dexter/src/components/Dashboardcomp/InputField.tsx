@@ -8,6 +8,8 @@ import Loader from "../Common/Loader/Loader";
 import type { ChatSession, Message } from "@/lib/types/chat";
 import { useAuthStore } from "@/lib/store/global.store";
 import { ApiResponse } from "@/lib/types/api";
+import { queryClient } from "@/App";
+import useChatStore from "@/lib/store/chat.store";
 
 interface InputFieldProps {
   addMessage: (message: Message) => void;
@@ -32,14 +34,16 @@ const InputField: React.FC<InputFieldProps> = ({ addMessage, updateUsage }) => {
     }
   };
 
+  const { setIsNewChat } = useChatStore();
+
   const handleSubmit = async () => {
     if (input.trim()) {
       setLoading(true);
       try {
         if (chatId) {
-          await chat({ message: input, chatId });
+          await chat({ message: input.trim(), chatId });
         } else {
-          await publicChat({ message: input });
+          await publicChat({ message: input.trim() });
         }
       } finally {
         reset();
@@ -123,11 +127,14 @@ const InputField: React.FC<InputFieldProps> = ({ addMessage, updateUsage }) => {
         ),
       });
 
+      setIsNewChat(true);
       updateUsage(data.usage.dailyUsage, data.usage.dailyLimit);
 
       if (!chatId) {
         navigate(`/dashboard/chat/${data.chatId}`, { state: data });
       }
+
+      queryClient.invalidateQueries({ queryKey: ["history"] });
     } catch (error: any) {
       console.error(error);
       const errorMessage =

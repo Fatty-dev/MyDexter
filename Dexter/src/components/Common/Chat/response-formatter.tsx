@@ -126,7 +126,11 @@ const Message: FC<MessageProps> = ({
   };
 
   return (
-    <div className={`flex gap-4 p-4 ${type === "user" ? "bg-white" : ""}`}>
+    <div
+      className={`flex gap-4 px-4 max-w-lg ${
+        type === "user" ? "bg-white" : ""
+      }`}
+    >
       <div className="flex flex-col flex-1">
         <div className="relative">
           {type === "assistant" && typing ? (

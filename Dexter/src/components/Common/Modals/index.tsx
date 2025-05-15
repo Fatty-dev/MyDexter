@@ -65,7 +65,7 @@ const Modal: FC<ModalProps> = ({
           {/* background */}
           <motion.div
             {...opacityVariant}
-            className="fixed top-0 left-0 min-w-full min-h-full bg-black/20 backdrop-blur-md flex items-center justify-center"
+            className="fixed top-0 left-0 min-w-full min-h-full bg-black/30 backdrop-blur-sm flex items-center justify-center"
             onClick={isAutomatic ? onClose : () => {}}
           ></motion.div>
 

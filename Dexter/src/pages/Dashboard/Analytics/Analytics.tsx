@@ -14,6 +14,7 @@ import { FiX } from "react-icons/fi";
 import { CgMenuRight } from "react-icons/cg";
 import Sidebar from "@/components/Dashboardcomp/Sidebar";
 import { toast } from "sonner";
+import useUserInfo from "@/lib/hooks/useUserInfo";
 
 const Analytics = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +23,8 @@ const Analytics = () => {
   const { sites } = useUserPlatformSiteStore();
   const [analytics, setAnalytics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { user } = useUserInfo();
 
   useEffect(() => {
     console.log("Sites object:", sites);
@@ -78,74 +81,93 @@ const Analytics = () => {
       >
         <Sidebar isOpen={isOpen} />
       </div>
-      <div className="ml-8 md:ml-0 flex items-center gap-2 mb-6">
-        <RiHome6Line className="text-gray-500" />
-        <h1 className="text-sm text-gray-500">Assistant</h1>
-        <HiOutlineChevronRight className="text-gray-500" />
-        <p className="text-sm text-gray-500">Analytics</p>
-      </div>
 
-      {/* Header */}
-      <div className="flex flex-col gap-1">
-        <h1 className="text-3xl font-semibold text-[#131c2e] tracking-wide">
-          Analytics
-        </h1>
-        <div className="flex items-center justify-between ">
-          <p className="text-[#7b7b83]  text-[14px]">
-            Track key metrics, uncover opportunities, and optimize your SEO
-            strategy with ease.
-          </p>
-
-          <div className="flex items-center gap-2 mb-2 ">
-            <div className="flex items-center bg-[#ffffff] justify-center gap-2 px-3 py-1  border border-[#eceff2] rounded-full ">
-              <BsGlobe className="text-[#abb4c1]" size={16} />
-              <span className=" text-[#404b5e] text-[14px]">Domain</span>
-            </div>
-
-            {/* @ts-ignore */}
-            {sites["wordpress"]?.url && (
-              <button
-                className="text-primary flex items-center gap-2"
-                onClick={() =>
-                  setTimeout(
-                    // @ts-ignore
-                    () => window.open(sites["wordpress"].url, "_blank"),
-                    100
-                  )
-                }
-              >
-                {/* @ts-ignore */}
-                {sites["wordpress"].url}
+      <div className="relative">
+        {user?.subscription.type === "free" && (
+          <div className="absolute top-0 right-0 w-full h-full bg-white/60 backdrop-blur-sm z-10 flex items-center justify-center">
+            <div className="text-center space-y-5">
+              <div>
+                <h1 className="text-2xl font-bold">Upgrade to Pro</h1>
+                <p className="text-gray-500">
+                  Get access to all features and benefits of My Dexter Pro.
+                </p>
+              </div>
+              <button className="bg-primary text-white px-4 py-2 rounded-md">
+                Upgrade to Pro
               </button>
-            )}
+            </div>
+          </div>
+        )}
 
-            <IoIosArrowDown className="text-[#798294]" />
+        <div className="ml-8 md:ml-0 flex items-center gap-2 mb-6">
+          <RiHome6Line className="text-gray-500" />
+          <h1 className="text-sm text-gray-500">Assistant</h1>
+          <HiOutlineChevronRight className="text-gray-500" />
+          <p className="text-sm text-gray-500">Analytics</p>
+        </div>
+
+        {/* Header */}
+        <div className="flex flex-col gap-1">
+          <h1 className="text-3xl font-semibold text-[#131c2e] tracking-wide">
+            Analytics
+          </h1>
+          <div className="flex items-center justify-between ">
+            <p className="text-[#7b7b83]  text-[14px]">
+              Track key metrics, uncover opportunities, and optimize your SEO
+              strategy with ease.
+            </p>
+
+            <div className="flex items-center gap-2 mb-2 ">
+              <div className="flex items-center bg-[#ffffff] justify-center gap-2 px-3 py-1  border border-[#eceff2] rounded-full ">
+                <BsGlobe className="text-[#abb4c1]" size={16} />
+                <span className=" text-[#404b5e] text-[14px]">Domain</span>
+              </div>
+
+              {/* @ts-ignore */}
+              {sites["wordpress"]?.url && (
+                <button
+                  className="text-primary flex items-center gap-2"
+                  onClick={() =>
+                    setTimeout(
+                      // @ts-ignore
+                      () => window.open(sites["wordpress"].url, "_blank"),
+                      100
+                    )
+                  }
+                >
+                  {/* @ts-ignore */}
+                  {sites["wordpress"].url}
+                </button>
+              )}
+
+              <IoIosArrowDown className="text-[#798294]" />
+            </div>
           </div>
         </div>
+
+        <hr className="my-2" />
+        <div className="flex items-center justify-between px-4 py-2 my-4 text-white rounded-lg bg-primary">
+          <p className="mt-1 text-sm font-medium">
+            Hello Daniel, you have{" "}
+            <span className="mr-[0.125rem] underline">
+              1 new analytics report{" "}
+            </span>{" "}
+            available.
+          </p>
+          <MdClose size={22} />
+        </div>
+
+        <SeoDashboard />
+
+        <div className="flex gap-4 mt-4 max-md:flex-col md:flex-col lg:flex-row">
+          <DomainOptimization setShowDetails={setShowDetails} />
+          <WebsiteEngagement setShowDetails={setShowDetails} />
+        </div>
+
+        {showDetails && (
+          <Details showDetails={showDetails} setShowDetails={setShowDetails} />
+        )}
       </div>
-
-      <hr className="my-2" />
-      <div className="flex items-center justify-between px-4 py-2 my-4 text-white rounded-lg bg-primary">
-        <p className="mt-1 text-sm font-medium">
-          Hello Daniel, you have{" "}
-          <span className="mr-[0.125rem] underline">
-            1 new analytics report{" "}
-          </span>{" "}
-          available.
-        </p>
-        <MdClose size={22} />
-      </div>
-
-      <SeoDashboard />
-
-      <div className="flex gap-4 mt-4 max-md:flex-col md:flex-col lg:flex-row">
-        <DomainOptimization setShowDetails={setShowDetails} />
-        <WebsiteEngagement setShowDetails={setShowDetails} />
-      </div>
-
-      {showDetails && (
-        <Details showDetails={showDetails} setShowDetails={setShowDetails} />
-      )}
     </div>
   );
 };

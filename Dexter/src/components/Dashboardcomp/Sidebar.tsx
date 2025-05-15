@@ -1,5 +1,5 @@
-import { useEffect, useState, useRef, useMemo } from "react";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useEffect, useState, useMemo } from "react";
+import { useNavigate, useLocation, useParams, Link } from "react-router-dom";
 import logo from "../../assets/Main_Logo.svg";
 import blog from "../../assets/blog.svg";
 import overview from "../../assets/overview.svg";
@@ -29,6 +29,7 @@ import useDropDown from "@/lib/hooks/useDropdown";
 import { fadeToTopVariant } from "@/lib/utils/variants";
 import { AnimatePresence, motion } from "framer-motion";
 import { LoginModal } from "@/pages/Onboard/Login";
+import useChatStore from "@/lib/store/chat.store";
 
 interface Props {
   isOpen?: boolean;
@@ -47,6 +48,9 @@ const Sidebar = ({ isOpen }: Props) => {
   const { resetPlatforms } = useUserPlatformSiteStore();
 
   const { showModal: showSignInModal } = useModal();
+
+  const { setIsNewChat } = useChatStore();
+
   const {
     dropdownRef,
     isOpen: isDropdownOpen,
@@ -70,6 +74,7 @@ const Sidebar = ({ isOpen }: Props) => {
     queryFn: getChatHistory,
     refetchOnWindowFocus: false,
     enabled: !!accessToken,
+    staleTime: 1000 * 60 * 5,
   });
 
   useEffect(() => {
@@ -149,21 +154,13 @@ const Sidebar = ({ isOpen }: Props) => {
     [type, accessToken]
   );
 
-  const showModal = () => {
-    setOpenModal(true);
-  };
-
-  const handleFAQ = () => {
-    navigate("/faq");
-  };
-
   const hyperLink = () => {
     navigate("/dashboard");
   };
 
   return (
     <div
-      className={`fixed top-0 left-0 flex flex-col z-[1000] justify-start bg-white h-full shadow-xl transform transition-transform duration-300 ease-in-out ${
+      className={`fixed top-0 left-0 flex flex-col z-[1000] justify-start bg-white h-full shadow-xl  duration-300 ${
         expanded ? "w-64" : "w-16"
       } ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
     >
@@ -227,20 +224,35 @@ const Sidebar = ({ isOpen }: Props) => {
             RECENT CHATS
           </p>
           {loading ? (
-            <p className="text-sm text-gray-500">Loading chats...</p>
+            <div className="space-y-2">
+              {Array.from({ length: 5 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="animate-pulse bg-gray-100 p-2 rounded cursor-pointer text-xs text-[#C5C5C5] w-full flex items-center gap-2 justify-between relative group"
+                >
+                  <div className="h-4 w-1/2 bg-gray-300 rounded"></div>
+                  <div className="h-4 w-1/12 bg-gray-300 rounded"></div>
+                </div>
+              ))}
+            </div>
           ) : history?.length ? (
-            <ul className="space-y-2 overflow-y-auto h-[15rem] text-tetiary text-sm">
-              {history.map((chat: { _id: string; title: string }) => (
+            <ul className="space-y-2 overflow-y-auto max-h-[30rem] text-tetiary text-sm">
+              {history.map((chat) => (
                 <div
                   key={chat._id}
                   className={`cursor-pointer flex items-center py-2 px-2 rounded-md ${
                     chat._id === chatId
-                      ? "text-primary" // Active chat style
+                      ? "text-primary"
                       : "hover:text-primary hover:bg-hover"
                   }`}
-                  onClick={() => navigate(`/dashboard/chat/${chat._id}`)} // Use chat._id here
+                  onClick={() => {
+                    navigate(`/dashboard/chat/${chat._id}`);
+                    setIsNewChat(false);
+                  }}
                 >
-                  <span className="truncate">{chat.title}</span>
+                  <span className="truncate">
+                    {chat.title.replace(/"/g, "")}
+                  </span>
                 </div>
               ))}
             </ul>
@@ -328,14 +340,11 @@ const Sidebar = ({ isOpen }: Props) => {
             <li className="cursor-pointer hover:text-primary">
               Why My Dexter?
             </li>
-            <li
-              className="cursor-pointer hover:text-primary"
-              onClick={handleFAQ}
-            >
-              FAQ
+            <li className="cursor-pointer hover:text-primary">
+              <Link to="/faq">FAQ</Link>
             </li>
             <li className="cursor-pointer hover:text-primary">
-              Terms & Policies
+              <Link to="/terms">Terms & Policies</Link>
             </li>
           </ul>
           <p className="mt-4 text-xs text-secondary">© 2024 My Dexter</p>

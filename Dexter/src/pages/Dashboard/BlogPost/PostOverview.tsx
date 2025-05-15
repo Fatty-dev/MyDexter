@@ -68,7 +68,7 @@ const PostOverview = () => {
       const { data } = await authApi.get(`blog/single?blogPostId=${postId}`);
       if (data) {
         const postData = data.data;
-        console.log(data.data.content);
+        // console.log(data.data.content);
 
         setPost(postData);
         // setDailyUsage(postData.performance.organicTraffic);

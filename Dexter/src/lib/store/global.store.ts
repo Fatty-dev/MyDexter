@@ -6,6 +6,33 @@ type EmailStore = {
   setEmail: (email: string) => void;
 };
 
+type SelectionStore = {
+  value: string;
+  updateValue: (value: string) => void;
+};
+
+type SubscriptionType = "free" | "premium" | "enterprise" | string;
+
+type SubscriptionStore = {
+  type: SubscriptionType;
+  setType: (type: SubscriptionType) => void;
+  clearSubscription: () => void;
+};
+
+type SidebarStore = {
+  expanded: boolean;
+  toggleExpand: () => void;
+};
+
+type AuthStore = {
+  expiresIn: number | null;
+  accessToken: string;
+  setExpiresIn: (time: number) => void;
+  setAccessToken: (accessToken: string) => void;
+  clearExpiresIn: () => void;
+  resetAuthStore: () => void;
+};
+
 const useEmailStore = create<EmailStore>()(
   persist(
     (set) => ({
@@ -15,11 +42,6 @@ const useEmailStore = create<EmailStore>()(
     { name: "use-email" }
   )
 );
-
-type SelectionStore = {
-  value: string;
-  updateValue: (value: string) => void;
-};
 
 export const useSelectionStore = create<SelectionStore>((set) => ({
   value: "",
@@ -49,14 +71,6 @@ export const useUserPlatformSiteStore = create<PlatformSiteStore>()(
   )
 );
 
-type SubscriptionType = "free" | "premium" | "enterprise" | string;
-
-type SubscriptionStore = {
-  type: SubscriptionType;
-  setType: (type: SubscriptionType) => void;
-  clearSubscription: () => void;
-};
-
 export const useUserSubscriptionTypeStore = create<SubscriptionStore>()(
   persist(
     (set) => ({
@@ -67,11 +81,6 @@ export const useUserSubscriptionTypeStore = create<SubscriptionStore>()(
     { name: "use-subscriptiontype" }
   )
 );
-
-type SidebarStore = {
-  expanded: boolean;
-  toggleExpand: () => void;
-};
 
 export const useSidebar = create<SidebarStore>()(
   persist(
@@ -84,15 +93,6 @@ export const useSidebar = create<SidebarStore>()(
     { name: "use-sidebar" }
   )
 );
-
-type AuthStore = {
-  expiresIn: number | null;
-  accessToken: string;
-  setExpiresIn: (time: number) => void;
-  setAccessToken: (accessToken: string) => void;
-  clearExpiresIn: () => void;
-  resetAuthStore: () => void;
-};
 
 export const useAuthStore = create<AuthStore>()(
   persist(

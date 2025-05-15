@@ -1,3 +1,4 @@
+import { Blog } from "@/lib/types/blog";
 import React from "react";
 import { FaMinus } from "react-icons/fa";
 
@@ -8,7 +9,7 @@ interface Props {
   }[];
   isFetching: boolean;
   isLoading: boolean;
-  postsData: any[];
+  postsData: Blog[];
   children: React.ReactNode;
 }
 
