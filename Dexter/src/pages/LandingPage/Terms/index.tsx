@@ -64,13 +64,13 @@ const Terms = () => {
           </h1>
         </div>
 
-        <div className="space-y-4 max-w-3xl mx-auto">
+        <div className="space-y-6 max-w-3xl mx-auto">
           {terms.map((term, index) => (
-            <div key={index} className="space-y-1">
-              <h2 className="text-xl font-semibold text-gray-900">
-                {index + 1}. {term.title}
+            <div key={index} className="space-y-2">
+              <h2 className="text-2xl font-semibold text-gray-900">
+                {term.title}
               </h2>
-              <p className="text-gray-600">{term.description}</p>
+              <p className="text-gray-600 leading-loose">{term.description}</p>
             </div>
           ))}
         </div>
