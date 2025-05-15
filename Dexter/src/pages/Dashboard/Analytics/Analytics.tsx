@@ -24,7 +24,7 @@ const Analytics = () => {
   const [analytics, setAnalytics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { user } = useUserInfo();
+  const { user, loading } = useUserInfo();
 
   useEffect(() => {
     console.log("Sites object:", sites);
@@ -56,6 +56,8 @@ const Analytics = () => {
 
     fetchAnalytics();
   }, [sites]);
+
+  if (loading) return <AnalyticsSkeleton />;
 
   return (
     <div className="w-[90%] mx-auto mt-[1.5rem]">
@@ -167,6 +169,60 @@ const Analytics = () => {
         {showDetails && (
           <Details showDetails={showDetails} setShowDetails={setShowDetails} />
         )}
+      </div>
+    </div>
+  );
+};
+
+const AnalyticsSkeleton = () => {
+  return (
+    <div className="p-6 space-y-4 max-w-7xl mx-auto">
+      {/* Title and Subtitle */}
+      <div className="space-y-2">
+        <div className="h-6 w-40 bg-gray-200 rounded animate-pulse" />
+        <div className="h-4 w-80 bg-gray-100 rounded animate-pulse" />
+      </div>
+
+      {/* Notification banner */}
+      <div className="h-10 w-full bg-purple-200 rounded-md animate-pulse" />
+
+      {/* SEO Dashboard */}
+      <div className="bg-gray-800 rounded-xl p-6 text-white flex flex-col md:flex-row md:justify-between md:items-start space-y-6 md:space-y-0 md:space-x-6 animate-pulse">
+        {/* Left Stat Summary */}
+        <div className="space-y-3 w-full max-w-xs">
+          <div className="h-12 w-12 bg-gray-600 rounded-full" />
+          <div className="h-4 w-32 bg-gray-500 rounded" />
+          <div className="h-4 w-24 bg-gray-500 rounded" />
+          <div className="h-10 w-32 bg-blue-500 rounded-md" />
+        </div>
+
+        {/* Chart Placeholder */}
+        <div className="flex-1 h-48 bg-gray-700 rounded-lg" />
+      </div>
+
+      {/* Bottom Cards Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Domain Optimization Card */}
+        <div className="bg-white p-4 rounded-lg shadow animate-pulse space-y-4">
+          <div className="h-4 w-40 bg-gray-200 rounded" />
+          <div className="grid grid-cols-3 gap-4">
+            <div className="h-16 bg-gray-100 rounded" />
+            <div className="h-16 bg-gray-100 rounded" />
+            <div className="h-16 bg-gray-100 rounded" />
+          </div>
+          <div className="h-4 w-20 bg-gray-100 rounded" />
+        </div>
+
+        {/* Website Engagement Card */}
+        <div className="bg-white p-4 rounded-lg shadow animate-pulse space-y-4">
+          <div className="h-4 w-40 bg-gray-200 rounded" />
+          <div className="grid grid-cols-3 gap-4">
+            <div className="h-16 bg-gray-100 rounded" />
+            <div className="h-16 bg-gray-100 rounded" />
+            <div className="h-16 bg-gray-100 rounded" />
+          </div>
+          <div className="h-4 w-20 bg-gray-100 rounded" />
+        </div>
       </div>
     </div>
   );
