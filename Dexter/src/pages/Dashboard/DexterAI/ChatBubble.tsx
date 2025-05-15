@@ -4,10 +4,10 @@ import { FiUser } from "react-icons/fi";
 import profile_logo from "../../../assets/logo.svg";
 import ResponseHeader from "../../../components/Dashboardcomp/ResponseHeader";
 import InputField from "../../../components/Dashboardcomp/InputField";
-import { authApi, publicApi } from "../../../lib/config/axios-instance";
-import { toast } from "sonner";
 import SkeletonLoader from "../../../components/Dashboardcomp/SkeletonLoader";
 import type { Message } from "@/lib/types/chat";
+import { useQuery } from "@tanstack/react-query";
+import { getChatDetail } from "@/lib/services/chat.service";
 
 const ChatBubblePage = () => {
   const location = useLocation();
@@ -16,77 +16,13 @@ const ChatBubblePage = () => {
   const [dailyUsage, setDailyUsage] = useState(0);
   const [dailyLimit, setDailyLimit] = useState(0);
   const [chatTitle, setChatTitle] = useState("");
-  const [loading, setLoading] = useState(true);
 
-  const fetchChat = async () => {
-    setLoading(true); // Set loading to true before fetching
-    try {
-      const response = await authApi.get(`/chat/detail?chatId=${chatId}`);
-      if (response.data.success) {
-        const chatData = response.data.data;
-        setChatTitle(chatData.title);
-        setMessages(
-          chatData.messages.map((msg: any, index: number) => ({
-            id: index + 1,
-            text: msg.content,
-            sender: msg.role === "user" ? "outgoing" : "incoming",
-            timestamp: new Date(msg.timestamp).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            }),
-          }))
-        );
-        setDailyUsage(chatData.usage.dailyUsage);
-        setDailyLimit(chatData.usage.dailyLimit);
-      } else {
-        toast.error("Failed to fetch chat");
-      }
-    } catch (error) {
-      console.error("Error fetching chat:", error);
-      // toast.error("An error occurred while fetching chat");
-    } finally {
-      setLoading(false); // Set loading to false after fetching
-    }
-  };
-  useEffect(() => {
-    if (!chatId) return;
-    fetchChat();
-  }, [chatId]);
-
-  const fetchPublicChat = async () => {
-    setLoading(true); // Set loading to true before fetching
-    try {
-      const response = await publicApi.get(`/chat/detail?chatId=${chatId}`);
-      if (response.data.success) {
-        const chatData = response.data.data;
-        setChatTitle(chatData.title);
-        setMessages(
-          chatData.messages.map((msg: any, index: number) => ({
-            id: index + 1,
-            text: msg.content,
-            sender: msg.role === "user" ? "outgoing" : "incoming",
-            timestamp: new Date(msg.timestamp).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            }),
-          }))
-        );
-        setDailyUsage(chatData.usage.dailyUsage);
-        setDailyLimit(chatData.usage.dailyLimit);
-      } else {
-        toast.error("Failed to fetch chat");
-      }
-    } catch (error) {
-      console.error("Error fetching chat:", error);
-      // toast.error("An error occurred while fetching chat");
-    } finally {
-      setLoading(false); // Set loading to false after fetching
-    }
-  };
-  useEffect(() => {
-    if (!chatId) return;
-    fetchPublicChat();
-  }, [chatId]);
+  const { data: details, isPending: loading } = useQuery({
+    queryKey: ["chat", chatId],
+    queryFn: () => getChatDetail(chatId as string),
+    refetchOnWindowFocus: false,
+    enabled: !!chatId,
+  });
 
   const addMessage = (newMessage: Message) => {
     setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -100,7 +36,7 @@ const ChatBubblePage = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center pt-4 pb-20">
       <ResponseHeader
-        chatTitle={chatTitle || "Chat"}
+        chatTitle={details?.title || "Chat"}
         timestamp={new Date().toLocaleString()}
       />
 
@@ -109,14 +45,14 @@ const ChatBubblePage = () => {
         {loading ? (
           <SkeletonLoader />
         ) : (
-          messages.map((message) => (
+          [...(details?.messages || []), ...messages].map((message) => (
             <div
               key={message.id}
               className={`flex ${
-                message.sender === "outgoing" ? "justify-end" : "justify-start"
+                message.role === "user" ? "justify-end" : "justify-start"
               } mb-4`}
             >
-              {message.sender === "outgoing" ? (
+              {message.role === "user" ? (
                 <div className="flex items-center lg:ml-2 ml-1">
                   <FiUser className="text-gray-500 text-xl" />
                 </div>
@@ -132,7 +68,7 @@ const ChatBubblePage = () => {
 
               <div
                 className={`${
-                  message.sender === "outgoing"
+                  message.role === "user"
                     ? "text-[#344054] bg-[#F0F0F9]"
                     : "text-black"
                 } rounded-lg lg:px-3 whitespace-pre-line px-2 max-w-lg py-2`}

@@ -5,25 +5,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { authApi, publicApi } from "../../lib/config/axios-instance";
 import { toast } from "sonner";
 import Loader from "../Common/Loader/Loader";
-import type { Message } from "@/lib/types/chat";
+import type { ChatSession, Message } from "@/lib/types/chat";
+import { useAuthStore } from "@/lib/store/global.store";
+import { ApiResponse } from "@/lib/types/api";
 
 interface InputFieldProps {
   addMessage: (message: Message) => void;
   updateUsage: (usage: number, limit: number) => void;
-}
-
-interface ChatResponse {
-  data: {
-    chatId: string;
-    latestMessage: {
-      content: string;
-      timestamp: string;
-    };
-    usage: {
-      dailyUsage: number;
-      dailyLimit: number;
-    };
-  };
 }
 
 const InputField: React.FC<InputFieldProps> = ({ addMessage, updateUsage }) => {
@@ -32,6 +20,8 @@ const InputField: React.FC<InputFieldProps> = ({ addMessage, updateUsage }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
   const { chatId } = useParams<{ chatId?: string }>();
+
+  const { accessToken } = useAuthStore();
 
   const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
@@ -60,15 +50,14 @@ const InputField: React.FC<InputFieldProps> = ({ addMessage, updateUsage }) => {
 
   const chat = async (params: { message: string; chatId: string }) => {
     try {
-      const { data }: { data: ChatResponse["data"] } = await authApi.post(
-        "/chat/message",
-        params
-      );
+      const {
+        data: { data },
+      } = await authApi.post<ApiResponse<ChatSession>>("/chat/message", params);
 
       addMessage({
         id: Date.now(),
         content: params.message,
-        sender: "outgoing",
+        role: "user",
         timestamp: new Date().toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
@@ -78,7 +67,7 @@ const InputField: React.FC<InputFieldProps> = ({ addMessage, updateUsage }) => {
       addMessage({
         id: Date.now() + 1,
         content: data.latestMessage.content,
-        sender: "incoming",
+        role: "assistant",
         timestamp: new Date(data.latestMessage.timestamp).toLocaleTimeString(
           [],
           {
@@ -102,17 +91,19 @@ const InputField: React.FC<InputFieldProps> = ({ addMessage, updateUsage }) => {
   };
 
   const publicChat = async (params: { message: string }) => {
-    const isLoggedIn = !!localStorage.getItem("accessToken");
+    const isLoggedIn = !!accessToken;
+
     try {
-      const { data }: { data: ChatResponse["data"] } = await (isLoggedIn
-        ? authApi
-        : publicApi
-      ).post("/chat/message", params);
+      const {
+        data: { data },
+      } = await (isLoggedIn ? authApi : publicApi).post<
+        ApiResponse<ChatSession>
+      >("/chat/message", params);
 
       addMessage({
         id: Date.now(),
         content: params.message,
-        sender: "outgoing",
+        role: "user",
         timestamp: new Date().toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
@@ -122,7 +113,7 @@ const InputField: React.FC<InputFieldProps> = ({ addMessage, updateUsage }) => {
       addMessage({
         id: Date.now() + 1,
         content: data.latestMessage.content,
-        sender: "incoming",
+        role: "assistant",
         timestamp: new Date(data.latestMessage.timestamp).toLocaleTimeString(
           [],
           {

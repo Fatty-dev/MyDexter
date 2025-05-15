@@ -1,9 +1,11 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useSidebar } from "../../lib/store/global.store";
+import useUserInfo from "@/lib/hooks/useUserInfo";
 
 const DashboardLayout = () => {
   const { expanded } = useSidebar();
+  useUserInfo();
 
   return (
     <div className="flex min-h-screen">

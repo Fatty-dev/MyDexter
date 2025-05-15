@@ -14,9 +14,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { MdOutlineContactSupport } from "react-icons/md";
 import { BsBoxArrowRight, BsPersonLinesFill } from "react-icons/bs";
 import prologo from "../../assets/proLogo.svg";
-import { toast } from "sonner";
 import ProModal from "../Common/Modals/ProModal";
-import { authApi } from "../../lib/config/axios-instance";
 import useEmailStore, {
   useAuthStore,
   useSidebar,
@@ -24,6 +22,12 @@ import useEmailStore, {
   useUserSubscriptionTypeStore,
 } from "../../lib/store/global.store";
 import { useModal } from "@/lib/contexts/modal-context";
+import useUserInfo from "@/lib/hooks/useUserInfo";
+import { useQuery } from "@tanstack/react-query";
+import { getChatHistory } from "@/lib/services/chat.service";
+import useDropDown from "@/lib/hooks/useDropdown";
+import { fadeToTopVariant } from "@/lib/utils/variants";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface Props {
   isOpen?: boolean;
@@ -37,16 +41,17 @@ const Sidebar = ({ isOpen }: Props) => {
   const { clearExpiresIn, accessToken, resetAuthStore } = useAuthStore();
   const { chatId } = useParams();
 
-  const [recentChats, setRecentChats] = useState<any>([]);
-  const [loading, setLoading] = useState(true);
-  const [showDropdown, setShowDropdown] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const { expanded, toggleExpand } = useSidebar();
   const { resetPlatforms } = useUserPlatformSiteStore();
 
   const { showModal: showSignInModal } = useModal();
-
-  const dropdownRef = useRef(null);
+  const {
+    dropdownRef,
+    isOpen: isDropdownOpen,
+    toggleDropdown,
+    closeDropdown,
+  } = useDropDown();
 
   const logout = () => {
     localStorage.removeItem("accessToken");
@@ -59,73 +64,19 @@ const Sidebar = ({ isOpen }: Props) => {
     navigate("/login");
   };
 
-  useEffect(() => {
-    const fetchChatHistory = async () => {
-      try {
-        const response = await authApi.get("/chat/history");
-        if (response.data.success) {
-          setRecentChats(response.data.data);
-        } else {
-          toast.error("Failed to load chat history.");
-        }
-      } catch (error) {
-        toast.error("Error fetching chat history.");
-      } finally {
-        setLoading(false);
-      }
-    };
+  const { user } = useUserInfo();
 
-    if (accessToken) {
-      fetchChatHistory();
-    } else {
-      setLoading(false);
-    }
-  }, [accessToken]);
+  const { data: history, isPending: loading } = useQuery({
+    queryKey: ["history"],
+    queryFn: getChatHistory,
+    refetchOnWindowFocus: false,
+  });
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await authApi.get("/settings/user/me");
-        if (response.data.success) {
-          // Extract the subscription type from the response
-          const subscriptionType = response.data.data.subscription.type;
-          setType(subscriptionType);
-        } else {
-          toast.error("Failed to load profile.");
-        }
-      } catch (error) {
-        toast.error("Error fetching profile.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (accessToken) {
-      fetchProfile();
-    }
-  }, [accessToken, setType]);
-
-  const toggleDropdown = () => setShowDropdown((prev) => !prev);
-
-  // Effect to handle clicks outside the dropdown
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !(dropdownRef.current as HTMLElement).contains(event.target as Node)
-      ) {
-        setShowDropdown(false); // Close dropdown if clicked outside
-      }
-    };
-
-    // Bind the event listener
-    document.addEventListener("mousedown", handleClickOutside);
-
-    // Cleanup the event listener on component unmount
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [dropdownRef]);
+    if (!user) return;
+    const subscriptionType = user.subscription?.type;
+    setType(subscriptionType);
+  }, [user]);
 
   const navigationItems = useMemo(
     () =>
@@ -269,9 +220,9 @@ const Sidebar = ({ isOpen }: Props) => {
           </p>
           {loading ? (
             <p className="text-sm text-gray-500">Loading chats...</p>
-          ) : recentChats.length > 0 ? (
+          ) : history?.length ? (
             <ul className="space-y-2 overflow-y-auto h-[15rem] text-tetiary text-sm">
-              {recentChats.map((chat: { _id: string; title: string }) => (
+              {history.map((chat: { _id: string; title: string }) => (
                 <div
                   key={chat._id}
                   className={`cursor-pointer flex items-center py-2 px-2 rounded-md ${
@@ -294,65 +245,71 @@ const Sidebar = ({ isOpen }: Props) => {
       {/* Conditional Footer Section */}
       {accessToken && (
         <div className="mt-auto px-6 pb-6">
-          <div className="flex items-center space-x-2 relative">
+          <div className="relative" ref={dropdownRef}>
             <div
-              className="w-8 h-8 rounded-full text-gray-200 flex items-center justify-center cursor-pointer"
+              className="flex items-center space-x-2 cursor-pointer select-none"
               onClick={toggleDropdown}
             >
-              <BsPersonCircle size={24} />
-            </div>
-            {expanded && (
-              <span className="text-secondary text-sm font-medium">
-                {email.length > 20 ? `${email.slice(0, 20)}...` : email}
-              </span>
-            )}
-
-            {/* Dropdown Menu */}
-            {showDropdown && (
-              <div
-                ref={dropdownRef}
-                className={`absolute bottom-5 mt-2 bg-white shadow-lg rounded-md w-48 py-2 z-30 ${
-                  expanded ? "right-6" : "left-0"
-                }`}
-              >
-                <div
-                  className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                  onClick={() => navigate("/dashboard/settings")}
-                >
-                  <IoSettingsOutline className="mr-2 text-[#667085]" />
-                  <span className="text-[#344054] text-medium text-sm">
-                    Settings
-                  </span>
-                </div>
-                <div
-                  className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                  onClick={() => navigate("/plans")}
-                >
-                  <BsPersonLinesFill className="mr-2 text-[#667085]" />
-                  <span className="text-[#344054] text-medium text-sm">
-                    Plans
-                  </span>
-                </div>
-                <div
-                  className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                  onClick={() => navigate("/support")}
-                >
-                  <MdOutlineContactSupport className="mr-2 text-[#667085]" />
-                  <span className="text-[#344054] text-medium text-sm">
-                    Support
-                  </span>
-                </div>
-                <div
-                  className="flex items-center border-t px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-500"
-                  onClick={logout}
-                >
-                  <BsBoxArrowRight className="mr-2 text-[#667085]" />
-                  <span className="text-[#344054] text-medium text-sm">
-                    Log out
-                  </span>
-                </div>
+              <div className="w-8 h-8 rounded-full text-gray-200 flex items-center justify-center cursor-pointer">
+                <BsPersonCircle size={24} />
               </div>
-            )}
+              {expanded && (
+                <span className="text-secondary text-sm font-medium">
+                  {email.length > 20 ? `${email.slice(0, 20)}...` : email}
+                </span>
+              )}
+            </div>
+
+            {/* Dropdown */}
+            <AnimatePresence mode="wait">
+              {isDropdownOpen && (
+                <motion.div
+                  {...fadeToTopVariant}
+                  className={`absolute bottom-10 mt-2 bg-white shadow-lg rounded-md w-48 py-2 z-30 ${
+                    expanded ? "right-6" : "left-0"
+                  }`}
+                >
+                  <div
+                    className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => (
+                      navigate("/dashboard/settings"), closeDropdown()
+                    )}
+                  >
+                    <IoSettingsOutline className="mr-2 text-[#667085]" />
+                    <span className="text-[#344054] text-medium text-sm">
+                      Settings
+                    </span>
+                  </div>
+                  <div
+                    className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => (navigate("/plans"), closeDropdown())}
+                  >
+                    <BsPersonLinesFill className="mr-2 text-[#667085]" />
+                    <span className="text-[#344054] text-medium text-sm">
+                      Plans
+                    </span>
+                  </div>
+                  <div
+                    className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => (navigate("/support"), closeDropdown())}
+                  >
+                    <MdOutlineContactSupport className="mr-2 text-[#667085]" />
+                    <span className="text-[#344054] text-medium text-sm">
+                      Support
+                    </span>
+                  </div>
+                  <div
+                    className="flex items-center border-t px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-500"
+                    onClick={() => (logout(), closeDropdown())}
+                  >
+                    <BsBoxArrowRight className="mr-2 text-[#667085]" />
+                    <span className="text-[#344054] text-medium text-sm">
+                      Log out
+                    </span>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       )}
