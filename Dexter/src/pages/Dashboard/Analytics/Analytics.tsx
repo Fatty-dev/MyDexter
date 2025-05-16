@@ -32,10 +32,10 @@ const Analytics = () => {
       setIsLoading(true);
 
       // @ts-ignore
-      const siteId = sites["wordpress"]?.site?.siteId;
+      const siteId = sites["wordpress"]?.siteId;
 
       if (!siteId) {
-        console.error("siteId is not available");
+        console.log("siteId is not available");
         setIsLoading(false);
         return;
       }

@@ -69,18 +69,20 @@ const LoginBody = ({ isModal }: Props) => {
         setEmail(data.user.email);
         setAccessToken(data.accessToken);
 
-        if (data.user.oauth.shopify && data.user.oauth.shopify.length > 0) {
-          const connectedShopify = data.user.oauth.shopify[0];
+        const oauth = data.user.oauth;
+
+        if (oauth.shopify && oauth.shopify.length > 0) {
+          const connectedShopify = oauth.shopify[0];
           console.log(
             "Connected Shopify Store Name:",
             connectedShopify.storeName
           );
           setSite("shopify", connectedShopify);
-        } else if (
-          data.user.oauth.wordpress &&
-          data.user.oauth.wordpress.sites.length > 0
-        ) {
-          const connectedWordPress = data.user.oauth.wordpress.sites[0];
+        }
+
+        const wordpress = data.user.platforms.wordpress;
+        if (wordpress && wordpress.sites.length > 0) {
+          const connectedWordPress = wordpress.sites[0];
           console.log("Connected WordPress URL:", connectedWordPress.url);
           setSite("wordpress", connectedWordPress);
         }

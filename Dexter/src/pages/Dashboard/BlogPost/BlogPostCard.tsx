@@ -1,11 +1,11 @@
-import { Blog } from "@/lib/types/blog";
+import { BlogPost } from "@/lib/types/blog";
 import Guy from "../../../assets/Guy.svg";
 import { FaRegEdit } from "react-icons/fa";
 import { PiCopySimpleBold } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 
 interface BlogPostCardProps {
-  blog: Blog;
+  blog: BlogPost;
 }
 
 const BlogPostCard = ({ blog }: BlogPostCardProps) => {
@@ -23,19 +23,22 @@ const BlogPostCard = ({ blog }: BlogPostCardProps) => {
 
       {/* Card Content */}
       <div className="px-4 pt-4">
-        <h4 className="font-bold text-gray-800 text-md">{blog.title}</h4>
-        <p className="mt-1 line-clamp-3 text-sm text-gray-600">
-          {blog.content}
-        </p>
+        <h4 className="font-bold text-gray-800">{blog.title}</h4>
+
         <img
-          src={blog.images[0] || Guy}
+          src={blog.images[0].url || Guy}
           alt="Blog"
           className="object-cover w-full h-32 mt-4"
         />
       </div>
 
       <div className="p-4 border-t">
-        <h5 className="font-medium text-gray-800">{blog.title}</h5>
+        <p
+          className="mt-1 line-clamp-3 text-sm text-gray-600"
+          dangerouslySetInnerHTML={{
+            __html: blog.content,
+          }}
+        />
         <p className="mt-1 text-sm text-gray-500">
           {blog.keywords || "No Keyword"}
         </p>

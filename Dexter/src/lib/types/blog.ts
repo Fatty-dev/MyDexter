@@ -1,4 +1,4 @@
-export interface Blog {
+export interface BlogPost {
   _id: string;
   userId: string;
   mainKeyword: string[];
@@ -89,7 +89,7 @@ export interface Blog {
     };
     _id: string;
   };
-  images: any[];
+  images: BlogPostImage[];
   settings: {
     costEstimate: {
       generations: number;
@@ -124,9 +124,18 @@ export interface Blog {
   };
   performance: {
     _id: string;
+    organicTraffic: number;
+    pagesPerSession: number;
   };
   platformPublications: any[];
 
   // optional fields
   rating?: number;
+}
+
+export interface BlogPostImage {
+  _id: string;
+  url: string;
+  altText: string;
+  position: number;
 }
