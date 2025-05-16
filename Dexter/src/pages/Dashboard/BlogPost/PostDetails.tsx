@@ -19,18 +19,11 @@ import { IoMdClose } from "react-icons/io";
 import ConfirmPlatform from "@/components/Common/Modals/ConfirmPlatform";
 import Sidebar from "@/components/Dashboardcomp/Sidebar";
 import { convertContentWithImages } from "@/lib/utils/utils";
+import { getBlogPostById } from "@/lib/services/post.service";
+import { useQuery } from "@tanstack/react-query";
 
 interface Image {
   url: string;
-}
-
-interface BlogPost {
-  content: string;
-  images?: Image[];
-  performance: {
-    organicTraffic: number;
-    pagesPerSession: number;
-  };
 }
 
 const PostDetails: React.FC = () => {
@@ -43,7 +36,6 @@ const PostDetails: React.FC = () => {
   const [messages, setMessages] = useState<string[]>([]);
   const [dailyUsage, setDailyUsage] = useState(0);
   const [dailyLimit, setDailyLimit] = useState(0);
-  const [loading, setLoading] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
   const [showConfirmPlatform, setShowConfirmPlatform] = useState(false);
   const [isOverviewVisible, setIsOverviewVisible] = useState(false);
@@ -53,41 +45,35 @@ const PostDetails: React.FC = () => {
   const mainHeaderRef = useRef<HTMLDivElement>(null);
   const { value, updateValue } = useSelectionStore();
 
-  const getDetails = async () => {
-    setLoading(true);
-    try {
-      const { data } = await authApi.get<{ data: BlogPost }>(
-        `blog/single?blogPostId=${postId}`
-      );
-      if (data) {
-        const postData = data.data;
-        const updatedHTML = convertContentWithImages(
-          postData.content,
-          postData.images || []
-        );
-        setBody(updatedHTML);
-        if (postData.images?.length) setImage(postData.images[0]);
-        setDailyUsage(postData.performance.organicTraffic);
-        setDailyLimit(postData.performance.pagesPerSession);
-      }
-    } catch (error: any) {
-      console.error("Error fetching blog post:", error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { data, isPending: loading } = useQuery({
+    queryKey: ["blogPost", postId],
+    queryFn: () => getBlogPostById(postId!),
+  });
 
   useEffect(() => {
-    getDetails();
-  }, []);
+    if (!data) return;
+
+    const postData = data;
+    const updatedHTML = convertContentWithImages(
+      postData.content,
+      postData.images || []
+    );
+    setBody(updatedHTML);
+    if (postData.images?.length) setImage(postData.images[0]);
+    setDailyUsage(postData.performance.organicTraffic);
+    setDailyLimit(postData.performance.pagesPerSession);
+  }, [data]);
 
   const shopifyPublish = async (postId?: string) => {
     if (!postId) return;
+
     if (Object.keys(sites).length === 0) {
       setShowConfirmPlatform(true);
       return;
     }
+
     setIsPublishing(true);
+
     try {
       await authApi.post(`/publish/shopify/?blogPostId=${postId}`, {
         shopifyId: "67f8d0b9857136268a5cbbfa",

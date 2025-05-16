@@ -30,6 +30,7 @@ import { fadeToTopVariant } from "@/lib/utils/variants";
 import { AnimatePresence, motion } from "framer-motion";
 import { LoginModal } from "@/pages/Onboard/Login";
 import useChatStore from "@/lib/store/chat.store";
+import { queryClient } from "@/App";
 
 interface Props {
   isOpen?: boolean;
@@ -63,8 +64,9 @@ const Sidebar = ({ isOpen }: Props) => {
     resetPlatforms();
     clearSubscription();
     resetAuthStore();
+    queryClient.invalidateQueries({ queryKey: ["user"] });
 
-    navigate("/login");
+    window.location.href = "/dashboard";
   };
 
   const { user } = useUserInfo();
@@ -85,7 +87,7 @@ const Sidebar = ({ isOpen }: Props) => {
 
   const navigationItems = useMemo(
     () =>
-      type === "pro"
+      user?.subscription?.type === "pro"
         ? [
             {
               id: 1,
@@ -151,7 +153,7 @@ const Sidebar = ({ isOpen }: Props) => {
               onClick: () => showSignInModal(<LoginModal />),
             },
           ],
-    [type, accessToken]
+    [user?.subscription?.type, accessToken]
   );
 
   const hyperLink = () => {
