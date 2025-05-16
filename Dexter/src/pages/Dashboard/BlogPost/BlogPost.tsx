@@ -18,7 +18,7 @@ import {
 import { toast } from "sonner";
 import Sidebar from "@/components/Dashboardcomp/Sidebar";
 import { useQuery } from "@tanstack/react-query";
-import { getBlogPosts } from "@/lib/services/blog.service";
+import { getBlogPosts } from "@/lib/services/post.service";
 import BlogPostCard from "./BlogPostCard";
 
 const BlogPost = () => {

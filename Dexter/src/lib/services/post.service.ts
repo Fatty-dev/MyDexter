@@ -1,6 +1,6 @@
 import { authApi } from "../config/axios-instance";
 import { ApiResponse } from "../types/api";
-import { Blog } from "../types/blog";
+import { BlogPost } from "../types/blog";
 
 export const getBlogPosts = async () => {
   try {
@@ -8,7 +8,7 @@ export const getBlogPosts = async () => {
       data: {
         data: { blogPost },
       },
-    } = await authApi.get<ApiResponse<{ blogPost: Blog[] }>>("/blog");
+    } = await authApi.get<ApiResponse<{ blogPost: BlogPost[] }>>("/blog");
     return blogPost;
   } catch (error: any) {
     console.error("Error fetching blog posts:", error);
@@ -21,11 +21,11 @@ export const getBlogPosts = async () => {
 export const getBlogPostById = async (id: string) => {
   try {
     const {
-      data: {
-        data: { blogPost },
-      },
-    } = await authApi.get<ApiResponse<{ blogPost: Blog[] }>>(`/blog/${id}`);
-    return blogPost;
+      data: { data },
+    } = await authApi.get<ApiResponse<BlogPost>>(
+      `/blog/single?blogPostId=${id}`
+    );
+    return data;
   } catch (error: any) {
     console.error("Error fetching blog post by id:", error);
     throw new Error(
@@ -36,7 +36,7 @@ export const getBlogPostById = async (id: string) => {
 
 export const getBlogHistory = async () => {
   try {
-    const { data } = await authApi.get<ApiResponse<{ blogPost: Blog[] }>>(
+    const { data } = await authApi.get<ApiResponse<{ blogPost: BlogPost[] }>>(
       "/blog/history"
     );
     return data;

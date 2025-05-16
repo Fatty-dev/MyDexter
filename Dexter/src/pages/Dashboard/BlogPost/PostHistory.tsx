@@ -16,7 +16,7 @@ import {
   useUserPlatformSiteStore,
 } from "@/lib/store/global.store";
 import { useQuery } from "@tanstack/react-query";
-import { getBlogPosts } from "@/lib/services/blog.service";
+import { getBlogPosts } from "@/lib/services/post.service";
 
 const PostHistory = () => {
   const navigate = useNavigate();
@@ -192,7 +192,7 @@ const PostHistory = () => {
                     />
                     <span>
                       <img
-                        src={post.images[0] || postImage}
+                        src={post.images[0].url || postImage}
                         alt="Post Image"
                         className="object-cover "
                       />
