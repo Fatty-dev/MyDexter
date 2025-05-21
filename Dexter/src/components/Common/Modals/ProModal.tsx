@@ -7,6 +7,9 @@ import CheckoutModal from "./CheckoutModal";
 import Modal from ".";
 import { useModal } from "@/lib/contexts/modal-context";
 import { opacityVariant } from "@/lib/utils/variants";
+import useUserInfo from "@/lib/hooks/useUserInfo";
+import { useNavigate } from "react-router-dom";
+import { LoginModal } from "@/pages/Onboard/Login";
 
 const freePlanFeatures = [
   "Up to 10 searches per day",
@@ -32,7 +35,11 @@ const ProModal = ({ onClose }: { onClose?: () => void }) => {
     setOpenCheckout(true);
   };
 
-  const { hideModal } = useModal();
+  const navigate = useNavigate();
+
+  const { hideModal, showModal } = useModal();
+
+  const { user } = useUserInfo();
 
   return (
     <Modal {...opacityVariant} onClose={hideModal}>
@@ -88,9 +95,23 @@ const ProModal = ({ onClose }: { onClose?: () => void }) => {
                   </li>
                 ))}
               </ul>
-              <button className="mt-auto w-full py-2 border text-[#475467] rounded-lg font-semibold hover:bg-[#475467]">
-                Continue with Email
-              </button>
+              {!user ? (
+                <button
+                  className="mt-auto w-full py-2 border text-[#475467] rounded-lg font-semibold hover:bg-[#475467] hover:text-white"
+                  onClick={() => (
+                    navigate("/dashboard"), showModal(<LoginModal />)
+                  )}
+                >
+                  Continue with Email
+                </button>
+              ) : (
+                <button
+                  className="mt-auto w-full py-2 border text-[#475467] rounded-lg font-semibold hover:bg-[#475467] hover:text-white"
+                  onClick={() => (navigate("/dashboard"), hideModal())}
+                >
+                  New Chat
+                </button>
+              )}
             </div>
 
             {/* Pro Plan */}

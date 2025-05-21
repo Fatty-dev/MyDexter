@@ -8,7 +8,7 @@ const Hero = () => {
   const navigate = useNavigate();
 
   const tryPro = () => {
-    navigate("/dashboard");
+    navigate("/dashboard?type=pro");
   };
 
   return (
