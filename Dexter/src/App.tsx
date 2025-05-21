@@ -28,6 +28,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "sonner";
 import Terms from "./pages/LandingPage/Terms";
+import { FormProvider, useForm } from "react-hook-form";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -39,55 +40,59 @@ export const queryClient = new QueryClient({
 });
 
 const App = () => {
+  const methods = useForm();
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <ModalProvider>
-          <Routes>
-            <Route path="/" element={<LandingpageLayout />}>
-              <Route path="/" element={<Home />} />
-              <Route path="getting-started" element={<Gettingstarted />} />
-              <Route path="faq" element={<FAQ />} />
-              <Route path="terms" element={<Terms />} />
-              <Route path="pricing" element={<Pricing />} />
-              <Route path="blog" element={<Blog />} />
-              <Route path="blog-details" element={<BlogDetails />} />
-              <Route path="privacy" element={<Privacy />} />
-              <Route path="contact" element={<Contact />} />
-            </Route>
+    <FormProvider {...methods}>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <ModalProvider>
+            <Routes>
+              <Route path="/" element={<LandingpageLayout />}>
+                <Route path="/" element={<Home />} />
+                <Route path="getting-started" element={<Gettingstarted />} />
+                <Route path="faq" element={<FAQ />} />
+                <Route path="terms" element={<Terms />} />
+                <Route path="pricing" element={<Pricing />} />
+                <Route path="blog" element={<Blog />} />
+                <Route path="blog-details" element={<BlogDetails />} />
+                <Route path="privacy" element={<Privacy />} />
+                <Route path="contact" element={<Contact />} />
+              </Route>
 
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
 
-            {/* Nested Routes under Dashboard */}
-            <Route path="/dashboard" element={<DashboardLayout />}>
-              <Route path="" element={<Prompt />} />
-              <Route path="success" element={<SuccessModal isOpen />} />
+              {/* Nested Routes under Dashboard */}
+              <Route path="/dashboard" element={<DashboardLayout />}>
+                <Route path="" element={<Prompt />} />
+                <Route path="success" element={<SuccessModal isOpen />} />
 
-              <Route path="chat/:chatId" element={<ChatBubblePage />} />
-              <Route path="settings" element={<Settings />} />
+                <Route path="chat/:chatId" element={<ChatBubblePage />} />
+                <Route path="settings" element={<Settings />} />
 
-              <Route path="blog-post" element={<BlogPost />} />
-              <Route path="blog-post/:postId" element={<PostDetails />} />
-              <Route
-                path="blog-post/:postId/settings"
-                element={<PostSettings />}
-              />
+                <Route path="blog-post" element={<BlogPost />} />
+                <Route path="blog-post/:postId" element={<PostDetails />} />
+                <Route
+                  path="blog-post/:postId/settings"
+                  element={<PostSettings />}
+                />
 
-              <Route path="bulk-article" element={<BulkArticle />} />
-              <Route path="blog-loading" element={<BlogLoading />} />
+                <Route path="bulk-article" element={<BulkArticle />} />
+                <Route path="blog-loading" element={<BlogLoading />} />
 
-              <Route path="overview" element={<Overview />} />
-              <Route path="strategies" element={<Strategies />} />
-              <Route path="analytics" element={<Analytics />} />
-            </Route>
-          </Routes>
-        </ModalProvider>
-      </BrowserRouter>
+                <Route path="overview" element={<Overview />} />
+                <Route path="strategies" element={<Strategies />} />
+                <Route path="analytics" element={<Analytics />} />
+              </Route>
+            </Routes>
+          </ModalProvider>
+        </BrowserRouter>
 
-      <Toaster position="top-right" />
-      <ReactQueryDevtools client={queryClient} />
-    </QueryClientProvider>
+        <Toaster position="top-right" />
+        <ReactQueryDevtools client={queryClient} />
+      </QueryClientProvider>
+    </FormProvider>
   );
 };
 
