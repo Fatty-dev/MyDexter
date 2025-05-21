@@ -37,3 +37,24 @@ export const getUser = async () => {
     throw new Error(error?.response?.data?.message || "User not found");
   }
 };
+
+export const forgotPassword = async (body: { email: string }) => {
+  try {
+    const response = await publicApi.post("/auth/forgot-password", body);
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error?.response?.data?.message || "Forgot password failed");
+  }
+};
+
+export const resetPassword = async (body: {
+  newPassword: string;
+  token: string;
+}) => {
+  try {
+    const response = await publicApi.post("/auth/reset-password", body);
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error?.response?.data?.message || "Reset password failed");
+  }
+};

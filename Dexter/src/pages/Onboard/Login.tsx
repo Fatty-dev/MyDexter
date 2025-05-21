@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { publicApi } from "../../lib/config/axios-instance";
 import { toast } from "sonner";
 import logo from "../../assets/Main_Logo.svg";
@@ -15,6 +15,7 @@ import { useMutation } from "@tanstack/react-query";
 import { login } from "@/lib/services/auth.service";
 import { useModal } from "@/lib/contexts/modal-context";
 import Modal from "@/components/Common/Modals";
+import ForgotPasswordModal from "./ForgotPasswordModal";
 interface Inputs {
   email: string;
   password: string;
@@ -42,7 +43,7 @@ const LoginBody = ({ isModal }: Props) => {
   const { setType } = useUserSubscriptionTypeStore();
   const { setExpiresIn, setAccessToken } = useAuthStore();
 
-  const { hideModal } = useModal();
+  const { hideModal, showModal } = useModal();
 
   const {
     register,
@@ -80,7 +81,7 @@ const LoginBody = ({ isModal }: Props) => {
           setSite("shopify", connectedShopify);
         }
 
-        const wordpress = data.user.platforms.wordpress;
+        const wordpress = data.user.platforms?.wordpress;
         if (wordpress && wordpress.sites.length > 0) {
           const connectedWordPress = wordpress.sites[0];
           console.log("Connected WordPress URL:", connectedWordPress.url);
@@ -179,16 +180,27 @@ const LoginBody = ({ isModal }: Props) => {
           {loading ? "Loading..." : "Login"}
         </button>
       </form>
-      <p className="mt-4 text-center text-sm text-gray-500">
-        Not a My Dexter user yet?{" "}
-        <a
-          href="#"
-          className="text-primary font-medium hover:underline"
-          onClick={() => (navigate("/signup"), hideModal())}
-        >
-          Sign up here
-        </a>
-      </p>
+      <div>
+        <p className="mt-4 text-center text-sm text-gray-500">
+          Not a My Dexter user yet?{" "}
+          <Link
+            to="/signup"
+            className="text-primary font-medium hover:underline"
+            onClick={() => (navigate("/signup"), hideModal())}
+          >
+            Sign up here
+          </Link>
+        </p>
+        <p className="text-center text-sm text-gray-500">
+          Forgot your password?{" "}
+          <span
+            className="text-primary font-medium hover:underline cursor-pointer"
+            onClick={() => showModal(<ForgotPasswordModal />)}
+          >
+            Reset Password
+          </span>
+        </p>
+      </div>
     </div>
   );
 };

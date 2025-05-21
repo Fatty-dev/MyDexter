@@ -29,6 +29,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "sonner";
 import Terms from "./pages/LandingPage/Terms";
 import { FormProvider, useForm } from "react-hook-form";
+import ChangePasswordForm from "./pages/Onboard/ResetPassword";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -62,6 +63,10 @@ const App = () => {
 
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
+              <Route
+                path="/auth/reset-password"
+                element={<ChangePasswordForm />}
+              />
 
               {/* Nested Routes under Dashboard */}
               <Route path="/dashboard" element={<DashboardLayout />}>
