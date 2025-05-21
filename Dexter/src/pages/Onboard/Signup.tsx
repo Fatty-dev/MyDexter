@@ -23,6 +23,16 @@ const Signup = () => {
     formState: { errors },
   } = useForm<Inputs>();
 
+  const password = watch("password");
+  const confirmPassword = watch("confirmPassword");
+
+  // Password rules
+  const hasUpperCase = /[A-Z]/.test(password);
+  const hasNumber = /[0-9]/.test(password);
+  const hasMinLength = password?.length >= 8;
+  const hasSpecialChar = /[^A-Za-z0-9]/.test(password);
+  const passwordsMatch = password === confirmPassword;
+
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -157,6 +167,47 @@ const Signup = () => {
                   value === watch("password") || "Passwords do not match",
               })}
             />
+
+            <div className="text-xs mt-4">
+              <p className="font-semibold mb-1">Password must contain:</p>
+              <ul className="space-y-1">
+                <li
+                  className={
+                    hasUpperCase
+                      ? "text-green-500 line-through"
+                      : "text-gray-600"
+                  }
+                >
+                  At least 1 upper case letter (A-Z)
+                </li>
+                <li
+                  className={
+                    hasNumber ? "text-green-500 line-through" : "text-gray-600"
+                  }
+                >
+                  At least 1 number (0-9)
+                </li>
+                <li
+                  className={
+                    hasSpecialChar
+                      ? "text-green-500 line-through"
+                      : "text-gray-600"
+                  }
+                >
+                  At least 1 special character (!@#$...)
+                </li>
+                <li
+                  className={
+                    hasMinLength
+                      ? "text-green-500 line-through"
+                      : "text-gray-600"
+                  }
+                >
+                  At least 8 characters
+                </li>
+              </ul>
+            </div>
+
             <button
               type="button"
               className="absolute top-8 right-3 text-gray-500 focus:outline-none"

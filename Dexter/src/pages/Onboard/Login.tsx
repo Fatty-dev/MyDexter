@@ -184,7 +184,7 @@ const LoginBody = ({ isModal }: Props) => {
         <a
           href="#"
           className="text-primary font-medium hover:underline"
-          onClick={() => navigate("/signup")}
+          onClick={() => (navigate("/signup"), hideModal())}
         >
           Sign up here
         </a>
